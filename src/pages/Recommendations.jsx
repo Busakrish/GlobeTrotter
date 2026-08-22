@@ -122,7 +122,6 @@ export function Recommendations() {
       prev.includes(vibeId) ? prev.filter((v) => v !== vibeId) : [...prev, vibeId]
     );
   };
-  };
 
   // Fetch Personalized Recommendations
   const fetchPersonalizedRecommendations = async () => {
