@@ -169,7 +169,16 @@ export const createTrip = async (req, res) => {
       shopping: Math.round(numBudget * 0.05),
     };
 
-    const tripId = `trip-${Date.now()}`;
+    const tripId = req.body.id || req.body._id || `trip-${Date.now()}`;
+
+    // Build exact day-to-city allocation based on nights spent in each stop
+    const dayCityMap = [];
+    initialCities.forEach((cityStop) => {
+      const nights = Math.max(1, Number(cityStop.nights) || 1);
+      for (let n = 0; n < nights; n++) {
+        dayCityMap.push(cityStop);
+      }
+    });
 
     // Create default days
     const createdDays = [];
@@ -178,21 +187,40 @@ export const createTrip = async (req, res) => {
       dayDate.setDate(start.getDate() + (i - 1));
       const dateStr = dayDate.toISOString().split('T')[0];
 
-      const cityName = initialCities[0]?.name || 'Destination';
+      const cityStop = dayCityMap[i - 1] || initialCities[initialCities.length - 1] || { name: 'Destination' };
+      const cityName = cityStop.name || 'Destination';
+      const prevCityStop = i > 1 ? (dayCityMap[i - 2] || initialCities[0]) : null;
+      const isNewCityArrival = i > 1 && prevCityStop && prevCityStop.name !== cityName;
+
+      let dayTitle = `Day ${i} in ${cityName}`;
+      let morningActTitle = `${cityName} Heritage Landmark & Walking Tour`;
+      let morningActNotes = `Explore the historical highlights and iconic architecture of ${cityName}.`;
+
+      if (i === 1) {
+        dayTitle = `Arrival & ${cityName} Exploration`;
+        morningActTitle = `Hotel Check-in & ${cityName} Area Orientation`;
+        morningActNotes = `Arrive in ${cityName}, check in to hotel, and explore the immediate neighborhood.`;
+      } else if (isNewCityArrival) {
+        dayTitle = `Transit to ${cityName} & City Highlights`;
+        morningActTitle = `Transit / Check-in at ${cityName}`;
+        morningActNotes = `Travel from ${prevCityStop.name} to ${cityName} and settle in.`;
+      }
+
       const dayObj = {
         id: `day-${tripId}-${i}`,
         tripId,
         dayNumber: i,
         date: dateStr,
-        cityName,
-        title: i === 1 ? `Arrival & ${cityName} Exploration` : `Day ${i} in ${cityName}`,
+        city: cityName,
+        cityName: cityName,
+        title: dayTitle,
         weather: { condition: 'Sunny', temp: 28, icon: 'Sun' },
         activities: [
           {
             id: `act-${tripId}-${i}-1`,
             activityId: `act-${tripId}-${i}-1`,
-            title: i === 1 ? 'Hotel Check-in & Area Orientation' : 'Heritage Landmark & Walking Tour',
-            name: i === 1 ? 'Hotel Check-in & Area Orientation' : 'Heritage Landmark & Walking Tour',
+            title: morningActTitle,
+            name: morningActTitle,
             time: '10:00',
             startTime: '10:00',
             durationMinutes: 120,
@@ -200,20 +228,22 @@ export const createTrip = async (req, res) => {
             cost: 500,
             estimatedCost: 500,
             location: cityName,
+            notes: morningActNotes,
             completed: false,
           },
           {
             id: `act-${tripId}-${i}-2`,
             activityId: `act-${tripId}-${i}-2`,
-            title: 'Authentic Local Food & Dinner Experience',
-            name: 'Authentic Local Food & Dinner Experience',
-            time: '19:30',
-            startTime: '19:30',
+            title: `Authentic ${cityName} Local Food & Sunset Experience`,
+            name: `Authentic ${cityName} Local Food & Sunset Experience`,
+            time: '18:30',
+            startTime: '18:30',
             durationMinutes: 90,
             category: 'Food & Dining',
             cost: 800,
             estimatedCost: 800,
             location: cityName,
+            notes: `Enjoy authentic cuisine and evening ambiance in ${cityName}.`,
             completed: false,
           },
         ],
