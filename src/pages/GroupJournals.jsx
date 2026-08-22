@@ -6,11 +6,8 @@ import {
   Search,
   MapPin,
   Calendar,
-  Image as ImageIcon,
   Camera,
   ArrowRight,
-  ShieldCheck,
-  Sparkles,
   BookOpen,
 } from 'lucide-react';
 import { useGroupJournal } from '../context/GroupJournalContext';

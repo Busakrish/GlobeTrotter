@@ -6,22 +6,31 @@ import { getIsMongoConnected } from '../config/db.js';
 
 export const getTrips = async (req, res) => {
   try {
-    const userId = (req.user._id || req.user.id).toString();
+    const userId = (req.user._id || req.user.id || '').toString();
+    const isAdmin = req.user?.role === 'admin';
     let trips = [];
 
     if (getIsMongoConnected()) {
       try {
-        trips = await Trip.find({ userId }).sort({ createdAt: -1 });
+        trips = isAdmin
+          ? await Trip.find({}).sort({ createdAt: -1 })
+          : await Trip.find({ $or: [{ userId }, { collaborators: userId }] }).sort({ createdAt: -1 });
       } catch (e) {
         console.warn('[GetTrips DB Error]:', e.message);
       }
     }
 
     if (!trips.length) {
-      trips = DataStore.find('trips', { userId });
-      // If user has no trips yet in local store, also include demo trips for priya/admin if relevant
-      if (!trips.length && (userId === 'user-priya-sharma' || userId === 'user-101' || req.user.email?.includes('priya'))) {
-        trips = DataStore.getCollection('trips');
+      const allStoreTrips = DataStore.getCollection('trips');
+      if (isAdmin) {
+        trips = allStoreTrips;
+      } else {
+        trips = allStoreTrips.filter(
+          (t) =>
+            t.userId?.toString() === userId ||
+            (userId === 'user-priya-sharma' && (!t.userId || t.userId === 'user-priya-sharma')) ||
+            t.collaborators?.includes(userId)
+        );
       }
     }
 
@@ -309,26 +318,31 @@ export const updateTrip = async (req, res) => {
 export const deleteTrip = async (req, res) => {
   try {
     const { id } = req.params;
+    const cleanId = (id || '').toString();
 
     if (getIsMongoConnected()) {
       try {
-        if (id.match(/^[0-9a-fA-F]{24}$/)) {
-          await Trip.findByIdAndDelete(id);
+        if (cleanId.match(/^[0-9a-fA-F]{24}$/)) {
+          await Trip.findByIdAndDelete(cleanId);
         } else {
-          await Trip.findOneAndDelete({ id });
+          await Trip.findOneAndDelete({ $or: [{ id: cleanId }, { _id: cleanId }] });
         }
-        await ItineraryDay.deleteMany({ tripId: id });
-        await Expense.deleteMany({ tripId: id });
+        await ItineraryDay.deleteMany({ tripId: cleanId });
+        await Expense.deleteMany({ tripId: cleanId });
       } catch (e) {}
     }
 
-    DataStore.findByIdAndDelete('trips', id);
-    DataStore.deleteMany('itineraryDays', { tripId: id });
-    DataStore.deleteMany('expenses', { tripId: id });
+    DataStore.findByIdAndDelete('trips', cleanId);
+    DataStore.deleteMany('itineraryDays', { tripId: cleanId });
+    DataStore.deleteMany('expenses', { tripId: cleanId });
+    DataStore.deleteMany('checklists', { tripId: cleanId });
+    DataStore.deleteMany('packingLists', { tripId: cleanId });
+    DataStore.deleteMany('documents', { tripId: cleanId });
 
     return res.json({
       success: true,
       message: 'Trip and associated schedule deleted successfully',
+      deletedId: cleanId,
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });

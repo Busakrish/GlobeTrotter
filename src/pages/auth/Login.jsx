@@ -19,7 +19,7 @@ export function Login() {
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     if (!email || !password) {
@@ -27,18 +27,32 @@ export function Login() {
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      login(email, password);
+    try {
+      const res = await login(email, password);
       setLoading(false);
-      notifySuccess('Welcome back to GlobeTrotter!');
-      navigate('/dashboard');
-    }, 400);
+      if (res?.success) {
+        notifySuccess('Welcome back to GlobeTrotter!');
+        navigate(res.user?.role === 'admin' ? '/admin' : '/dashboard');
+      } else {
+        setError(res?.message || 'Invalid email address or password.');
+      }
+    } catch (err) {
+      setLoading(false);
+      setError(err.message || 'Login failed. Please try again.');
+    }
   };
 
-  const handleDemoLogin = (role) => {
-    loginAsDemo(role);
-    notifySuccess(`Logged in as ${role === 'admin' ? 'Administrator' : 'Demo Traveler'}`);
-    navigate(role === 'admin' ? '/admin' : '/dashboard');
+  const handleDemoLogin = async (role) => {
+    setLoading(true);
+    try {
+      const res = await loginAsDemo(role);
+      setLoading(false);
+      notifySuccess(`Logged in as ${role === 'admin' ? 'Administrator' : 'Demo Traveler'}`);
+      navigate(role === 'admin' ? '/admin' : '/dashboard');
+    } catch (e) {
+      setLoading(false);
+      navigate('/dashboard');
+    }
   };
 
   const handleGoogleLogin = () => {

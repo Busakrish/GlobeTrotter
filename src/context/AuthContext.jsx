@@ -122,10 +122,22 @@ export function AuthProvider({ children }) {
     return await login(email, password);
   };
 
-  const register = async (userData) => {
+  const register = async (userDataOrEmail, passwordArg, nameArg, travelStyleArg) => {
     setLoading(true);
+    let payload = {};
+    if (typeof userDataOrEmail === 'object' && userDataOrEmail !== null) {
+      payload = userDataOrEmail;
+    } else {
+      payload = {
+        email: userDataOrEmail,
+        password: passwordArg,
+        name: nameArg,
+        travelStyle: travelStyleArg || 'Balanced Explorer',
+      };
+    }
+
     try {
-      const res = await authApi.register(userData);
+      const res = await authApi.register(payload);
       if (res?.success && res.user) {
         setCurrentUser(res.user);
         if (res.token) setToken(res.token);
@@ -137,11 +149,11 @@ export function AuthProvider({ children }) {
       setLoading(false);
       const newUser = {
         id: 'user-' + Date.now(),
-        name: userData.name || 'Travel Enthusiast',
-        email: userData.email,
+        name: payload.name || 'Travel Enthusiast',
+        email: payload.email,
         role: 'traveler',
         profileImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-        travelStyle: userData.travelStyle || 'Balanced Explorer',
+        travelStyle: payload.travelStyle || 'Balanced Explorer',
         homeAirport: 'BOM (Mumbai, India)',
         preferredCurrency: 'INR',
         savedDestinations: [],

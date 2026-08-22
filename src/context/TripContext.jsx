@@ -163,31 +163,25 @@ export function TripProvider({ children }) {
   const refreshTripsFromBackend = useCallback(async () => {
     try {
       const res = await tripsApi.getAllTrips();
-      if (res?.success && Array.isArray(res.trips) && res.trips.length > 0) {
+      if (res?.success && Array.isArray(res.trips)) {
         setTrips((prevTrips) => {
-          const currentTrips = [...prevTrips];
-          res.trips.forEach((backendTrip) => {
-            const index = currentTrips.findIndex(
-              (t) =>
-                (t.id && (t.id === backendTrip.id || t.id === backendTrip._id)) ||
-                (t._id && (t._id === backendTrip._id || t._id === backendTrip.id))
-            );
-
-            if (index === -1) {
-              currentTrips.push(backendTrip);
-            } else {
-              const local = currentTrips[index];
-              currentTrips[index] = {
-                ...backendTrip,
-                ...local,
-                cities: (local.cities && local.cities.length > 0) ? local.cities : (backendTrip.cities || []),
-                days: (local.days && local.days.length > 0) ? local.days : (backendTrip.days || []),
-                expenses: (local.expenses && local.expenses.length > 0) ? local.expenses : (backendTrip.expenses || []),
-                packingList: (local.packingList && local.packingList.length > 0) ? local.packingList : (backendTrip.packingList || []),
-              };
-            }
+          if (res.trips.length === 0) {
+            return [];
+          }
+          const merged = res.trips.map((backendTrip) => {
+            const bId = (backendTrip.id || backendTrip._id || '').toString();
+            const local = prevTrips.find((t) => (t.id || t._id || '').toString() === bId);
+            if (!local) return backendTrip;
+            return {
+              ...backendTrip,
+              ...local,
+              cities: (local.cities && local.cities.length > 0) ? local.cities : (backendTrip.cities || []),
+              days: (local.days && local.days.length > 0) ? local.days : (backendTrip.days || []),
+              expenses: (local.expenses && local.expenses.length > 0) ? local.expenses : (backendTrip.expenses || []),
+              packingList: (local.packingList && local.packingList.length > 0) ? local.packingList : (backendTrip.packingList || []),
+            };
           });
-          return currentTrips;
+          return merged;
         });
       }
     } catch (e) {
@@ -399,16 +393,25 @@ export function TripProvider({ children }) {
   };
 
   const deleteTrip = async (id) => {
+    const cleanId = (id || '').toString();
     setTrips((prev) => {
-      const remaining = prev.filter((t) => t.id !== id && t._id !== id);
-      if (activeTripId === id) {
-        setActiveTripId(remaining[0]?.id || null);
+      const remaining = prev.filter(
+        (t) => (t.id || '').toString() !== cleanId && (t._id || '').toString() !== cleanId
+      );
+      if ((activeTripId || '').toString() === cleanId) {
+        setActiveTripId(remaining[0]?.id || remaining[0]?._id || null);
       }
       return remaining;
     });
 
+    setTripChecklists((prev) => {
+      const updated = { ...prev };
+      delete updated[cleanId];
+      return updated;
+    });
+
     try {
-      await tripsApi.deleteTrip(id);
+      await tripsApi.deleteTrip(cleanId);
     } catch (e) {
       console.warn('[TripContext] Backend deleteTrip sync:', e.message);
     }

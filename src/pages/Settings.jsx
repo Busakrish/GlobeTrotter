@@ -29,7 +29,21 @@ export function Settings() {
   // Settings State
   const [language, setLanguage] = useState('English (US)');
   const [travelStyle, setTravelStyle] = useState(currentUser?.travelStyle || 'Balanced Explorer');
-  const [theme, setTheme] = useState('light'); // 'light' | 'dark'
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('globetrotter_theme') || 'light';
+  });
+
+  // Apply theme to DOM when it changes
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme);
+    localStorage.setItem('globetrotter_theme', newTheme);
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    notifySuccess(`Switched to ${newTheme === 'dark' ? 'Dark' : 'Light'} mode!`);
+  };
 
   // Notification Toggles
   const [notifToggles, setNotifToggles] = useState({
@@ -220,10 +234,7 @@ export function Settings() {
         <div className="grid grid-cols-2 gap-4 max-w-sm">
           <button
             type="button"
-            onClick={() => {
-              setTheme('light');
-              notifySuccess('Switched to Light Mode (Stitch default)');
-            }}
+            onClick={() => handleThemeChange('light')}
             className={`p-4 rounded-2xl border flex items-center gap-3 transition-all ${
               theme === 'light'
                 ? 'bg-indigo-50 border-indigo-600 text-indigo-900 ring-2 ring-indigo-600/20'
@@ -233,16 +244,13 @@ export function Settings() {
             <Sun className="w-5 h-5 text-amber-500" />
             <div className="text-left">
               <p className="text-xs font-bold">Light Mode</p>
-              <span className="text-[10px] text-slate-500">Google Stitch default</span>
+              <span className="text-[10px] text-slate-500">Bright clean style</span>
             </div>
           </button>
 
           <button
             type="button"
-            onClick={() => {
-              setTheme('dark');
-              notifySuccess('Dark mode theme preview enabled');
-            }}
+            onClick={() => handleThemeChange('dark')}
             className={`p-4 rounded-2xl border flex items-center gap-3 transition-all ${
               theme === 'dark'
                 ? 'bg-slate-900 border-indigo-500 text-white ring-2 ring-indigo-500/20'
@@ -252,7 +260,7 @@ export function Settings() {
             <Moon className="w-5 h-5 text-indigo-400" />
             <div className="text-left">
               <p className="text-xs font-bold">Dark Mode</p>
-              <span className="text-[10px] text-slate-500">OLED Dark style</span>
+              <span className="text-[10px] text-slate-500">OLED dark style</span>
             </div>
           </button>
         </div>

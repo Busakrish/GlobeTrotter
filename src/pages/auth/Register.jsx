@@ -42,7 +42,7 @@ export function Register() {
 
   const strength = getPasswordStrength(formData.password);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -67,12 +67,25 @@ export function Register() {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      register(formData.email, formData.password, formData.name, formData.travelStyle);
+    try {
+      const res = await register({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+        travelStyle: formData.travelStyle,
+      });
       setLoading(false);
-      notifySuccess('Account created! Welcome to GlobeTrotter.');
-      navigate('/dashboard');
-    }, 400);
+      if (res?.success) {
+        notifySuccess('Account created! Welcome to GlobeTrotter.');
+        navigate('/dashboard');
+      } else {
+        setError(res?.message || 'Registration failed. Please try again.');
+      }
+    } catch (err) {
+      setLoading(false);
+      setError(err.message || 'Registration failed.');
+    }
   };
 
   return (

@@ -15,9 +15,6 @@ import {
   Check,
   UserPlus,
   BookOpen,
-  Sparkles,
-  ShieldCheck,
-  Layers,
 } from 'lucide-react';
 import { useGroupJournal } from '../context/GroupJournalContext';
 import { useAuth } from '../context/AuthContext';

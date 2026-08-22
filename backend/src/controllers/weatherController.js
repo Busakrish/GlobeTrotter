@@ -46,7 +46,7 @@ export const getWeatherForecast = async (req, res) => {
     let country = 'India';
 
     try {
-      const geoResponse = await fetch(geoUrl, { timeout: 4000 });
+      const geoResponse = await fetch(geoUrl, { signal: AbortSignal.timeout(3000) });
       if (geoResponse.ok) {
         const geoData = await geoResponse.json();
         if (geoData.results && geoData.results.length > 0) {
@@ -58,15 +58,20 @@ export const getWeatherForecast = async (req, res) => {
         }
       }
     } catch (geoErr) {
-      console.warn('[Weather] Geocoding fallback for', cityName, geoErr.message);
+      // Graceful fallback to default coordinates
     }
 
     // 2. Open-Meteo Live Forecast API
     const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto`;
 
-    const weatherResponse = await fetch(forecastUrl, { timeout: 5000 });
+    let weatherResponse;
+    try {
+      weatherResponse = await fetch(forecastUrl, { signal: AbortSignal.timeout(3000) });
+    } catch (fetchErr) {
+      weatherResponse = null;
+    }
     
-    if (weatherResponse.ok) {
+    if (weatherResponse && weatherResponse.ok) {
       const data = await weatherResponse.json();
       const current = data.current || {};
       const daily = data.daily || {};
