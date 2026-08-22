@@ -1,0 +1,38 @@
+export const initialNotifications = [
+  {
+    id: 'notif-1',
+    title: 'Upcoming Trip Countdown',
+    message: 'Your trip "Western Coast Highlights: Mumbai to Goa" starts in 18 days! Have you reviewed your packing checklist?',
+    time: '2 hours ago',
+    type: 'trip',
+    read: false,
+    link: '/trips/trip-1',
+  },
+  {
+    id: 'notif-2',
+    title: 'Smart Budget Alert: Optimal Balance',
+    message: 'You have utilized 51.6% of your allocated ₹45,000 budget for Mumbai to Goa. You have ₹21,780 remaining.',
+    time: '5 hours ago',
+    type: 'budget',
+    read: false,
+    link: '/trips/trip-1/budget',
+  },
+  {
+    id: 'notif-3',
+    title: 'AI Recommendation Match for You',
+    message: 'Based on your love for heritage and lakes, GlobeTrotter AI created a 6-day Mewar Royalty plan for Udaipur!',
+    time: '1 day ago',
+    type: 'ai',
+    read: true,
+    link: '/recommendations',
+  },
+  {
+    id: 'notif-4',
+    title: 'New Destination Added to Explore',
+    message: 'Discover high-altitude passes and azure lakes in our newly curated Leh Ladakh multi-stop guide.',
+    time: '2 days ago',
+    type: 'explore',
+    read: true,
+    link: '/explore/dest-leh',
+  },
+];
