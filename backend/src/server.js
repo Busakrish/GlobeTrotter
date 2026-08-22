@@ -23,6 +23,7 @@ import communityRoutes from './routes/communityRoutes.js';
 import weatherRoutes from './routes/weatherRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import documentRoutes from './routes/documentRoutes.js';
 
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
@@ -71,6 +72,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/destinations', destinationRoutes);
 app.use('/api/trips', tripRoutes);
+app.use('/api/documents', documentRoutes);
 app.use('/api', itineraryRoutes);
 app.use('/api', expenseRoutes);
 app.use('/api', collaborationRoutes);

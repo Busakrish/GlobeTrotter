@@ -61,6 +61,95 @@ export function TripProvider({ children }) {
     return saved ? JSON.parse(saved) : {};
   });
 
+  // Travel Documents Vault State
+  const [documents, setDocuments] = useState(() => {
+    const saved = localStorage.getItem('globetrotter_documents');
+    return saved
+      ? JSON.parse(saved)
+      : [
+          {
+            id: 'doc-1',
+            title: 'Republic of India Passport (Copy)',
+            category: 'Passport & ID',
+            tripId: null,
+            tripTitle: 'Global / Personal',
+            fileUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
+            fileType: 'image/jpeg',
+            fileName: 'passport_scan_2026.jpg',
+            fileSize: '1.4 MB',
+            issueDate: '2020-04-12',
+            documentNumber: 'P7492019',
+            notes: 'Primary biometric passport copy for international travel.',
+            isPrivate: true,
+            createdAt: new Date().toISOString(),
+          },
+          {
+            id: 'doc-2',
+            title: 'Indigo Flight E-Ticket (DEL → GOI)',
+            category: 'Flight & Train',
+            tripId: 'trip-1',
+            tripTitle: 'Goa Beach Escape',
+            fileUrl: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80',
+            fileType: 'application/pdf',
+            fileName: 'goa_flight_eticket.pdf',
+            fileSize: '840 KB',
+            issueDate: '2026-08-01',
+            documentNumber: 'PNR: 6E-4819',
+            notes: 'Terminal 3 departure at 07:45 AM. 20kg checked baggage included.',
+            isPrivate: false,
+            createdAt: new Date().toISOString(),
+          },
+          {
+            id: 'doc-3',
+            title: 'Taj Exotica Resort Booking Voucher',
+            category: 'Hotel Voucher',
+            tripId: 'trip-1',
+            tripTitle: 'Goa Beach Escape',
+            fileUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+            fileType: 'image/jpeg',
+            fileName: 'taj_resort_booking.jpg',
+            fileSize: '2.1 MB',
+            issueDate: '2026-08-05',
+            documentNumber: 'CONF-882194',
+            notes: 'Sea View Suite with complimentary breakfast & airport transfers.',
+            isPrivate: false,
+            createdAt: new Date().toISOString(),
+          },
+          {
+            id: 'doc-4',
+            title: 'HDFC Ergo Overseas Travel Insurance',
+            category: 'Travel Insurance',
+            tripId: null,
+            tripTitle: 'Global / Personal',
+            fileUrl: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
+            fileType: 'application/pdf',
+            fileName: 'travel_insurance_policy.pdf',
+            fileSize: '1.8 MB',
+            issueDate: '2026-01-01',
+            documentNumber: 'POL-99214-X',
+            notes: 'Global emergency medical cover up to $250,000 + flight delay coverage.',
+            isPrivate: true,
+            createdAt: new Date().toISOString(),
+          },
+          {
+            id: 'doc-5',
+            title: 'Japan Tourist E-Visa Approval',
+            category: 'Visa & Permits',
+            tripId: 'trip-3',
+            tripTitle: 'Tokyo & Kyoto Cherry Blossom',
+            fileUrl: 'https://images.unsplash.com/photo-1528164344705-47542687990d?auto=format&fit=crop&w=800&q=80',
+            fileType: 'application/pdf',
+            fileName: 'japan_evisa_grant.pdf',
+            fileSize: '520 KB',
+            issueDate: '2026-02-10',
+            documentNumber: 'VISA-JP-9411',
+            notes: 'Single entry 90-day tourist visa granted by Embassy of Japan.',
+            isPrivate: false,
+            createdAt: new Date().toISOString(),
+          },
+        ];
+  });
+
   // Fetch initial data from backend REST API
   const refreshTripsFromBackend = useCallback(async () => {
     try {
@@ -837,6 +926,38 @@ export function TripProvider({ children }) {
     };
   };
 
+  useEffect(() => {
+    localStorage.setItem('globetrotter_documents', JSON.stringify(documents));
+  }, [documents]);
+
+  const addDocument = (docData) => {
+    const newDoc = {
+      id: 'doc-' + Date.now(),
+      createdAt: new Date().toISOString(),
+      ...docData,
+    };
+    setDocuments((prev) => [newDoc, ...prev]);
+    return newDoc;
+  };
+
+  const updateDocument = (id, updatedData) => {
+    setDocuments((prev) =>
+      prev.map((d) => (d.id === id || d._id === id ? { ...d, ...updatedData } : d))
+    );
+  };
+
+  const deleteDocument = (id) => {
+    setDocuments((prev) => prev.filter((d) => d.id !== id && d._id !== id));
+  };
+
+  const getDocumentsForTrip = useCallback(
+    (tripId) => {
+      if (!tripId) return documents;
+      return documents.filter((d) => d.tripId === tripId);
+    },
+    [documents]
+  );
+
   return (
     <TripContext.Provider
       value={{
@@ -874,6 +995,11 @@ export function TripProvider({ children }) {
         resolveConflict,
         calculateTripBudgetSummary,
         refreshTripsFromBackend,
+        documents,
+        addDocument,
+        updateDocument,
+        deleteDocument,
+        getDocumentsForTrip,
       }}
     >
       {children}
