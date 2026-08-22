@@ -21,6 +21,7 @@ import {
   TrendingUp,
   FileText,
   BookOpen,
+  Map,
 } from 'lucide-react';
 import Badge from '../common/Badge';
 
@@ -34,15 +35,15 @@ export function Sidebar() {
       title: 'Command Center',
       items: [
         { label: 'Dashboard', path: '/dashboard', icon: Layers },
-        { label: 'My Trips', path: '/trips', icon: Compass, badge: (trips || []).length },
+        { label: 'My Trips', path: '/trips', icon: Compass, badge: trips.length },
       ],
     },
     {
       title: 'Planning & Tools',
       items: [
         { label: 'Plan New Trip', path: '/trips/create', icon: Plus, highlight: true },
-        { label: 'Document Vault', path: '/documents', icon: FileText, badge: (documents || []).length || 0, badgeColor: 'indigo' },
-        { label: 'Itinerary Builder', path: activeTrip ? `/trips/${activeTrip.id || activeTrip._id}/itinerary` : '/trips', icon: Compass },
+        { label: 'Document Vault', path: '/documents', icon: FileText, badge: documents?.length || 0, badgeColor: 'indigo' },
+        { label: 'Build Itinerary', path: activeTrip ? `/trips/${activeTrip.id || activeTrip._id}/itinerary` : '/trips', icon: Map },
         { label: 'AI Trip Matcher', path: '/recommendations', icon: Sparkles },
         { label: 'Travel Checklist', path: activeTrip ? `/trips/${activeTrip.id || activeTrip._id}/checklist` : '/trips', icon: CheckSquare },
         { label: 'Packing Assistant', path: '/packing-list', icon: Package },
@@ -52,7 +53,7 @@ export function Sidebar() {
       title: 'Discovery & Community',
       items: [
         { label: 'Explore Destinations', path: '/explore', icon: MapPin },
-        { label: 'Saved Places', path: '/saved', icon: Heart, badge: (savedPlaces || []).length || null },
+        { label: 'Saved Places', path: '/saved', icon: Heart, badge: savedPlaces.length || null },
         { label: 'Community Trips', path: '/community', icon: Users },
         { label: 'Group Journals', path: '/groups', icon: BookOpen },
       ],
@@ -117,7 +118,9 @@ export function Sidebar() {
               <div className="space-y-0.5">
                 {section.items.map((item) => {
                   const Icon = item.icon;
-                  const isActive = location.pathname === item.path;
+                  const isActive = item.path === '/'
+                    ? location.pathname === '/'
+                    : location.pathname === item.path || location.pathname.startsWith(item.path + '/');
 
                   return (
                     <Link
