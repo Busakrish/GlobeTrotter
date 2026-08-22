@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { initialTrips } from '../data/mockTrips';
 import { defaultChecklistCategories } from '../data/mockChecklists';
+import { mockCities } from '../data/mockCities';
 import { tripsApi, destinationsApi, itineraryApi, expensesApi, checklistsApi, communityApi } from '../services/api';
 import confetti from 'canvas-confetti';
 
@@ -346,36 +347,50 @@ export function TripProvider({ children }) {
   };
 
   const addCityToTrip = async (tripId, cityData) => {
+    const matchedCity = mockCities.find(
+      (c) => c.name.toLowerCase() === (cityData.name || '').toLowerCase()
+    );
+    const nights = Math.max(1, Number(cityData.nights) || 2);
     const newStop = {
       id: 'stop-' + Date.now(),
-      cityId: cityData.id || ('city-' + cityData.name.toLowerCase()),
+      cityId: cityData.id || matchedCity?.id || ('city-' + (cityData.name || 'city').toLowerCase().replace(/\s+/g, '-')),
       name: cityData.name,
-      country: cityData.country || 'India',
-      coordinates: cityData.coordinates || [15.2993, 74.1240],
-      nights: cityData.nights || 2,
+      country: cityData.country || matchedCity?.country || 'India',
+      coordinates: cityData.coordinates || matchedCity?.coordinates || [15.2993, 74.1240],
+      nights,
     };
 
     setTrips((prev) =>
       prev.map((trip) => {
         if (trip.id !== tripId && trip._id !== tripId) return trip;
         const updatedCities = [...(trip.cities || []), newStop];
-        const nextDayNum = (trip.days?.length || 0) + 1;
-        const lastDayDate = new Date(trip.days?.[trip.days?.length - 1]?.date || trip.startDate || Date.now());
-        lastDayDate.setDate(lastDayDate.getDate() + 1);
+        const existingDays = trip.days || [];
+        const newDays = [];
+        
+        const lastDayDateStr = existingDays[existingDays.length - 1]?.date || trip.startDate || new Date().toISOString().split('T')[0];
+        const lastDate = new Date(lastDayDateStr);
 
-        const newDay = {
-          dayNumber: nextDayNum,
-          date: lastDayDate.toISOString().split('T')[0],
-          city: newStop.name,
-          cityName: newStop.name,
-          activities: [],
-        };
+        for (let i = 0; i < nights; i++) {
+          const nextDayNum = existingDays.length + i + 1;
+          const nextDate = new Date(lastDate);
+          nextDate.setDate(lastDate.getDate() + (i + 1));
+
+          newDays.push({
+            dayNumber: nextDayNum,
+            date: nextDate.toISOString().split('T')[0],
+            city: newStop.name,
+            cityName: newStop.name,
+            activities: [],
+          });
+        }
+
+        const allDays = [...existingDays, ...newDays];
 
         return {
           ...trip,
           cities: updatedCities,
-          days: [...(trip.days || []), newDay],
-          durationDays: (trip.days?.length || 0) + 1,
+          days: allDays,
+          durationDays: allDays.length,
         };
       })
     );
