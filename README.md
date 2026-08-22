@@ -4,7 +4,7 @@
 
 GlobeTrotter is a full-stack travel planning web application that helps users create personalized multi-city itineraries, organize activities, manage travel budgets, and share travel plans with others.
 
-This repository is currently under active development for a DBMS Hackathon.
+This repository is currently under active development for a odoo Hackathon.
 
 ---
 

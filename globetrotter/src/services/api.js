@@ -122,4 +122,13 @@ export const aiApi = {
   getRecommendations: (params) => apiClient.get('/ai/recommendations', { params }),
 };
 
+// Travel Document Storage & Vault
+export const documentsApi = {
+  getAllDocuments: () => apiClient.get('/documents'),
+  getDocumentById: (id) => apiClient.get(`/documents/${id}`),
+  createDocument: (docData) => apiClient.post('/documents', docData),
+  updateDocument: (id, docData) => apiClient.put(`/documents/${id}`, docData),
+  deleteDocument: (id) => apiClient.delete(`/documents/${id}`),
+};
+
 export default apiClient;
