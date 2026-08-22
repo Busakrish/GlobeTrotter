@@ -119,16 +119,17 @@ export const weatherApi = {
 // AI Engine
 export const aiApi = {
   generateTrip: (params) => apiClient.post('/ai/generate-trip', params),
+  generateItinerary: (params) => apiClient.post('/ai/generate-itinerary', params),
   getRecommendations: (params) => apiClient.get('/ai/recommendations', { params }),
+  getPersonalizedRecommendations: (data) => apiClient.post('/ai/personalized-recommendations', data),
+  optimizeBudget: (data) => apiClient.post('/ai/optimize-budget', data),
+  swapActivity: (data) => apiClient.post('/ai/swap-activity', data),
+  generatePacking: (data) => apiClient.post('/ai/generate-packing', data),
 };
 
-// Travel Document Storage & Vault
-export const documentsApi = {
-  getAllDocuments: () => apiClient.get('/documents'),
-  getDocumentById: (id) => apiClient.get(`/documents/${id}`),
-  createDocument: (docData) => apiClient.post('/documents', docData),
-  updateDocument: (id, docData) => apiClient.put(`/documents/${id}`, docData),
-  deleteDocument: (id) => apiClient.delete(`/documents/${id}`),
+// Admin Telemetry & Analytics
+export const adminApi = {
+  getStats: () => apiClient.get('/admin/stats'),
 };
 
 export default apiClient;
