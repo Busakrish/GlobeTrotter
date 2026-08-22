@@ -2,7 +2,15 @@ import { createContext, useContext, useState, useEffect, useMemo, useCallback } 
 import { initialTrips } from '../data/mockTrips';
 import { defaultChecklistCategories } from '../data/mockChecklists';
 import { mockCities } from '../data/mockCities';
-import { tripsApi, destinationsApi, itineraryApi, expensesApi, checklistsApi, communityApi } from '../services/api';
+import {
+  tripsApi,
+  destinationsApi,
+  itineraryApi,
+  expensesApi,
+  checklistsApi,
+  communityApi,
+  documentsApi,
+} from '../services/api';
 import confetti from 'canvas-confetti';
 
 const TripContext = createContext(null);
@@ -151,12 +159,36 @@ export function TripProvider({ children }) {
         ];
   });
 
-  // Fetch initial data from backend REST API
+  // Fetch initial data from backend REST API without erasing user modifications
   const refreshTripsFromBackend = useCallback(async () => {
     try {
       const res = await tripsApi.getAllTrips();
-      if (res?.success && res.trips && res.trips.length > 0) {
-        setTrips(res.trips);
+      if (res?.success && Array.isArray(res.trips) && res.trips.length > 0) {
+        setTrips((prevTrips) => {
+          const currentTrips = [...prevTrips];
+          res.trips.forEach((backendTrip) => {
+            const index = currentTrips.findIndex(
+              (t) =>
+                (t.id && (t.id === backendTrip.id || t.id === backendTrip._id)) ||
+                (t._id && (t._id === backendTrip._id || t._id === backendTrip.id))
+            );
+
+            if (index === -1) {
+              currentTrips.push(backendTrip);
+            } else {
+              const local = currentTrips[index];
+              currentTrips[index] = {
+                ...backendTrip,
+                ...local,
+                cities: (local.cities && local.cities.length > 0) ? local.cities : (backendTrip.cities || []),
+                days: (local.days && local.days.length > 0) ? local.days : (backendTrip.days || []),
+                expenses: (local.expenses && local.expenses.length > 0) ? local.expenses : (backendTrip.expenses || []),
+                packingList: (local.packingList && local.packingList.length > 0) ? local.packingList : (backendTrip.packingList || []),
+              };
+            }
+          });
+          return currentTrips;
+        });
       }
     } catch (e) {
       console.warn('[TripContext] Using cached trip state:', e.message);
@@ -166,18 +198,52 @@ export function TripProvider({ children }) {
   const refreshSavedPlacesFromBackend = useCallback(async () => {
     try {
       const res = await destinationsApi.getSavedDestinations();
-      if (res?.success && res.savedPlaces && res.savedPlaces.length > 0) {
-        setSavedPlaces(res.savedPlaces);
+      if (res?.success && Array.isArray(res.savedPlaces) && res.savedPlaces.length > 0) {
+        setSavedPlaces((prev) => {
+          const existingIds = new Set(prev.map((p) => p.id || p._id || p.destinationId || p.name));
+          const newFromBackend = res.savedPlaces.filter(
+            (p) =>
+              !existingIds.has(p.id) &&
+              !existingIds.has(p._id) &&
+              !existingIds.has(p.destinationId) &&
+              !existingIds.has(p.name)
+          );
+          return [...prev, ...newFromBackend];
+        });
       }
     } catch (e) {
       console.warn('[TripContext] Using cached saved places:', e.message);
     }
   }, []);
 
+  const refreshDocumentsFromBackend = useCallback(async () => {
+    try {
+      const res = await documentsApi.getAllDocuments();
+      if (res?.success && Array.isArray(res.documents) && res.documents.length > 0) {
+        setDocuments((prev) => {
+          const existingIds = new Set(prev.map((d) => d.id || d._id || d.title));
+          const newFromBackend = res.documents.filter(
+            (d) => !existingIds.has(d.id) && !existingIds.has(d._id) && !existingIds.has(d.title)
+          );
+          return [...prev, ...newFromBackend];
+        });
+      }
+    } catch (e) {
+      console.warn('[TripContext] Using cached documents:', e.message);
+    }
+  }, []);
+
+  const fetchAllData = useCallback(async () => {
+    await Promise.allSettled([
+      refreshTripsFromBackend(),
+      refreshSavedPlacesFromBackend(),
+      refreshDocumentsFromBackend(),
+    ]);
+  }, [refreshTripsFromBackend, refreshSavedPlacesFromBackend, refreshDocumentsFromBackend]);
+
   useEffect(() => {
-    refreshTripsFromBackend();
-    refreshSavedPlacesFromBackend();
-  }, [refreshTripsFromBackend, refreshSavedPlacesFromBackend]);
+    fetchAllData();
+  }, [fetchAllData]);
 
   // Persist to localStorage
   useEffect(() => {
@@ -1079,6 +1145,9 @@ export function TripProvider({ children }) {
         updateItineraryDayCity,
         calculateTripBudgetSummary,
         refreshTripsFromBackend,
+        refreshSavedPlacesFromBackend,
+        refreshDocumentsFromBackend,
+        fetchAllData,
         documents,
         addDocument,
         updateDocument,
