@@ -1,122 +1,124 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { NotificationProvider } from './context/NotificationContext';
+import { TripProvider } from './context/TripContext';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Layouts
+import DashboardLayout from './components/layout/DashboardLayout';
+import Toast from './components/common/Toast';
 
+// Public Pages
+import Home from './pages/Home';
+import Explore from './pages/Explore';
+import DestinationDetails from './pages/DestinationDetails';
+import About from './pages/About';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import PublicTrip from './pages/PublicTrip';
+
+// Authenticated Pages
+import Dashboard from './pages/Dashboard';
+import MyTrips from './pages/MyTrips';
+import CreateTrip from './pages/CreateTrip';
+import TripDetails from './pages/TripDetails';
+import EditTrip from './pages/EditTrip';
+import ItineraryBuilder from './pages/ItineraryBuilder';
+import DayDetails from './pages/DayDetails';
+import CalendarPage from './pages/CalendarPage';
+import Budget from './pages/Budget';
+import TravelChecklist from './pages/TravelChecklist';
+import PackingList from './pages/PackingList';
+import SavedPlaces from './pages/SavedPlaces';
+import CitySearch from './pages/CitySearch';
+import ActivitySearch from './pages/ActivitySearch';
+import Recommendations from './pages/Recommendations';
+import Community from './pages/Community';
+import Profile from './pages/Profile';
+import Settings from './pages/Settings';
+import NotificationsPage from './pages/NotificationsPage';
+import AdminDashboard from './pages/AdminDashboard';
+
+export function App() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <NotificationProvider>
+      <AuthProvider>
+        <TripProvider>
+          <BrowserRouter>
+            <Toast />
+            <Routes>
+              {/* 1. Public Standalone Pages */}
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/signup" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
 
-      <div className="ticks"></div>
+              {/* Public Shareable Read-Only Itinerary */}
+              <Route
+                path="/trip/:shareId"
+                element={
+                  <div className="min-h-screen bg-slate-50 p-4 sm:p-8 max-w-6xl mx-auto">
+                    <PublicTrip />
+                  </div>
+                }
+              />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+              {/* 2. Main Application Workspace (Under DashboardLayout) */}
+              <Route element={<DashboardLayout />}>
+                {/* Core Navigation */}
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/explore" element={<Explore />} />
+                <Route path="/explore/:destinationId" element={<DestinationDetails />} />
+                <Route path="/saved" element={<SavedPlaces />} />
+                <Route path="/notifications" element={<NotificationsPage />} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+                {/* Trip Library & Creation */}
+                <Route path="/trips" element={<MyTrips />} />
+                <Route path="/trips/create" element={<CreateTrip />} />
+
+                {/* Trip Details & Sub-Workspaces */}
+                <Route path="/trips/:tripId" element={<TripDetails />} />
+                <Route path="/trips/:tripId/edit" element={<EditTrip />} />
+                <Route path="/trips/:tripId/itinerary" element={<ItineraryBuilder />} />
+                <Route path="/trips/:tripId/day/:dayId" element={<DayDetails />} />
+                <Route path="/trips/:tripId/calendar" element={<CalendarPage />} />
+                <Route path="/trips/:tripId/budget" element={<Budget />} />
+                <Route path="/trips/:tripId/checklist" element={<TravelChecklist />} />
+                <Route path="/trips/:tripId/packing" element={<PackingList />} />
+
+                {/* Alias routes supporting :id parameter */}
+                <Route path="/trips/:id" element={<TripDetails />} />
+                <Route path="/trips/:id/edit" element={<EditTrip />} />
+                <Route path="/trips/:id/itinerary" element={<ItineraryBuilder />} />
+                <Route path="/trips/:id/day/:dayId" element={<DayDetails />} />
+                <Route path="/trips/:id/calendar" element={<CalendarPage />} />
+                <Route path="/trips/:id/budget" element={<Budget />} />
+                <Route path="/trips/:id/checklist" element={<TravelChecklist />} />
+                <Route path="/trips/:id/packing" element={<PackingList />} />
+
+                {/* Global Search & Assistant Tools */}
+                <Route path="/search/cities" element={<CitySearch />} />
+                <Route path="/search/activities" element={<ActivitySearch />} />
+                <Route path="/recommendations" element={<Recommendations />} />
+                <Route path="/packing-list" element={<PackingList />} />
+                <Route path="/community" element={<Community />} />
+
+                {/* Profile, Settings & Admin */}
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+              </Route>
+
+              {/* Fallback */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </TripProvider>
+      </AuthProvider>
+    </NotificationProvider>
+  );
 }
 
-export default App
+export default App;
