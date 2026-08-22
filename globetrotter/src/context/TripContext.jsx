@@ -1,7 +1,16 @@
 import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { initialTrips } from '../data/mockTrips';
 import { defaultChecklistCategories } from '../data/mockChecklists';
-import { tripsApi, destinationsApi, itineraryApi, expensesApi, checklistsApi, communityApi } from '../services/api';
+import { mockCities } from '../data/mockCities';
+import {
+  tripsApi,
+  destinationsApi,
+  itineraryApi,
+  expensesApi,
+  checklistsApi,
+  communityApi,
+  documentsApi,
+} from '../services/api';
 import confetti from 'canvas-confetti';
 
 const TripContext = createContext(null);
@@ -150,12 +159,36 @@ export function TripProvider({ children }) {
         ];
   });
 
-  // Fetch initial data from backend REST API
+  // Fetch initial data from backend REST API without erasing user modifications
   const refreshTripsFromBackend = useCallback(async () => {
     try {
       const res = await tripsApi.getAllTrips();
-      if (res?.success && res.trips && res.trips.length > 0) {
-        setTrips(res.trips);
+      if (res?.success && Array.isArray(res.trips) && res.trips.length > 0) {
+        setTrips((prevTrips) => {
+          const currentTrips = [...prevTrips];
+          res.trips.forEach((backendTrip) => {
+            const index = currentTrips.findIndex(
+              (t) =>
+                (t.id && (t.id === backendTrip.id || t.id === backendTrip._id)) ||
+                (t._id && (t._id === backendTrip._id || t._id === backendTrip.id))
+            );
+
+            if (index === -1) {
+              currentTrips.push(backendTrip);
+            } else {
+              const local = currentTrips[index];
+              currentTrips[index] = {
+                ...backendTrip,
+                ...local,
+                cities: (local.cities && local.cities.length > 0) ? local.cities : (backendTrip.cities || []),
+                days: (local.days && local.days.length > 0) ? local.days : (backendTrip.days || []),
+                expenses: (local.expenses && local.expenses.length > 0) ? local.expenses : (backendTrip.expenses || []),
+                packingList: (local.packingList && local.packingList.length > 0) ? local.packingList : (backendTrip.packingList || []),
+              };
+            }
+          });
+          return currentTrips;
+        });
       }
     } catch (e) {
       console.warn('[TripContext] Using cached trip state:', e.message);
@@ -165,18 +198,52 @@ export function TripProvider({ children }) {
   const refreshSavedPlacesFromBackend = useCallback(async () => {
     try {
       const res = await destinationsApi.getSavedDestinations();
-      if (res?.success && res.savedPlaces && res.savedPlaces.length > 0) {
-        setSavedPlaces(res.savedPlaces);
+      if (res?.success && Array.isArray(res.savedPlaces) && res.savedPlaces.length > 0) {
+        setSavedPlaces((prev) => {
+          const existingIds = new Set(prev.map((p) => p.id || p._id || p.destinationId || p.name));
+          const newFromBackend = res.savedPlaces.filter(
+            (p) =>
+              !existingIds.has(p.id) &&
+              !existingIds.has(p._id) &&
+              !existingIds.has(p.destinationId) &&
+              !existingIds.has(p.name)
+          );
+          return [...prev, ...newFromBackend];
+        });
       }
     } catch (e) {
       console.warn('[TripContext] Using cached saved places:', e.message);
     }
   }, []);
 
+  const refreshDocumentsFromBackend = useCallback(async () => {
+    try {
+      const res = await documentsApi.getAllDocuments();
+      if (res?.success && Array.isArray(res.documents) && res.documents.length > 0) {
+        setDocuments((prev) => {
+          const existingIds = new Set(prev.map((d) => d.id || d._id || d.title));
+          const newFromBackend = res.documents.filter(
+            (d) => !existingIds.has(d.id) && !existingIds.has(d._id) && !existingIds.has(d.title)
+          );
+          return [...prev, ...newFromBackend];
+        });
+      }
+    } catch (e) {
+      console.warn('[TripContext] Using cached documents:', e.message);
+    }
+  }, []);
+
+  const fetchAllData = useCallback(async () => {
+    await Promise.allSettled([
+      refreshTripsFromBackend(),
+      refreshSavedPlacesFromBackend(),
+      refreshDocumentsFromBackend(),
+    ]);
+  }, [refreshTripsFromBackend, refreshSavedPlacesFromBackend, refreshDocumentsFromBackend]);
+
   useEffect(() => {
-    refreshTripsFromBackend();
-    refreshSavedPlacesFromBackend();
-  }, [refreshTripsFromBackend, refreshSavedPlacesFromBackend]);
+    fetchAllData();
+  }, [fetchAllData]);
 
   // Persist to localStorage
   useEffect(() => {
@@ -348,36 +415,50 @@ export function TripProvider({ children }) {
   };
 
   const addCityToTrip = async (tripId, cityData) => {
+    const matchedCity = mockCities.find(
+      (c) => c.name.toLowerCase() === (cityData.name || '').toLowerCase()
+    );
+    const nights = Math.max(1, Number(cityData.nights) || 2);
     const newStop = {
       id: 'stop-' + Date.now(),
-      cityId: cityData.id || ('city-' + cityData.name.toLowerCase()),
+      cityId: cityData.id || matchedCity?.id || ('city-' + (cityData.name || 'city').toLowerCase().replace(/\s+/g, '-')),
       name: cityData.name,
-      country: cityData.country || 'India',
-      coordinates: cityData.coordinates || [15.2993, 74.1240],
-      nights: cityData.nights || 2,
+      country: cityData.country || matchedCity?.country || 'India',
+      coordinates: cityData.coordinates || matchedCity?.coordinates || [15.2993, 74.1240],
+      nights,
     };
 
     setTrips((prev) =>
       prev.map((trip) => {
         if (trip.id !== tripId && trip._id !== tripId) return trip;
         const updatedCities = [...(trip.cities || []), newStop];
-        const nextDayNum = (trip.days?.length || 0) + 1;
-        const lastDayDate = new Date(trip.days?.[trip.days?.length - 1]?.date || trip.startDate || Date.now());
-        lastDayDate.setDate(lastDayDate.getDate() + 1);
+        const existingDays = trip.days || [];
+        const newDays = [];
+        
+        const lastDayDateStr = existingDays[existingDays.length - 1]?.date || trip.startDate || new Date().toISOString().split('T')[0];
+        const lastDate = new Date(lastDayDateStr);
 
-        const newDay = {
-          dayNumber: nextDayNum,
-          date: lastDayDate.toISOString().split('T')[0],
-          city: newStop.name,
-          cityName: newStop.name,
-          activities: [],
-        };
+        for (let i = 0; i < nights; i++) {
+          const nextDayNum = existingDays.length + i + 1;
+          const nextDate = new Date(lastDate);
+          nextDate.setDate(lastDate.getDate() + (i + 1));
+
+          newDays.push({
+            dayNumber: nextDayNum,
+            date: nextDate.toISOString().split('T')[0],
+            city: newStop.name,
+            cityName: newStop.name,
+            activities: [],
+          });
+        }
+
+        const allDays = [...existingDays, ...newDays];
 
         return {
           ...trip,
           cities: updatedCities,
-          days: [...(trip.days || []), newDay],
-          durationDays: (trip.days?.length || 0) + 1,
+          days: allDays,
+          durationDays: allDays.length,
         };
       })
     );
@@ -813,16 +894,21 @@ export function TripProvider({ children }) {
             const arrH = Math.floor((transitArrivalMinutes + 30) / 60);
             const arrM = (transitArrivalMinutes + 30) % 60;
             const suggestedTime = `${String(arrH).padStart(2, '0')}:${String(arrM).padStart(2, '0')}`;
+            const arrTimeStr = `${String(Math.floor(transitArrivalMinutes / 60)).padStart(2, '0')}:${String(transitArrivalMinutes % 60).padStart(2, '0')}`;
 
             conflicts.push({
+              id: `conflict-${day.dayNumber}-${act.id}`,
               dayNumber: day.dayNumber,
               cityName: day.cityName || day.city,
               date: day.date,
               transitTitle: transitActivity.title,
-              transitArrivalTime: `${String(Math.floor(transitArrivalMinutes / 60)).padStart(2, '0')}:${String(transitArrivalMinutes % 60).padStart(2, '0')}`,
+              transitArrivalTime: arrTimeStr,
+              activityId: act.id,
               conflictingActivityId: act.id,
               conflictingActivityTitle: act.title,
               conflictingActivityTime: act.time,
+              message: `"${act.title}" (${act.time}) conflicts with transit arrival (${transitActivity.title} arrives at ${arrTimeStr}).`,
+              resolution: `Reschedule "${act.title}" to ${suggestedTime} allowing sufficient buffer.`,
               suggestedTime,
             });
           }
@@ -835,6 +921,67 @@ export function TripProvider({ children }) {
 
   const resolveConflict = (tripId, dayNumber, activityId, newTime) => {
     updateActivity(tripId, dayNumber, activityId, { time: newTime });
+  };
+
+  // Day Management Functions for Itinerary Builder
+  const addItineraryDay = (tripId, customData = {}) => {
+    setTrips((prev) =>
+      prev.map((trip) => {
+        if (trip.id !== tripId && trip._id !== tripId) return trip;
+        const currentDays = trip.days || [];
+        const nextDayNum = currentDays.length + 1;
+        const lastDayDate = currentDays[currentDays.length - 1]?.date || trip.startDate || new Date().toISOString().split('T')[0];
+        const nextDate = new Date(lastDayDate);
+        nextDate.setDate(nextDate.getDate() + 1);
+        const cityName = customData.cityName || customData.city || trip.cities?.[trip.cities.length - 1]?.name || 'Destination';
+
+        const newDay = {
+          dayNumber: nextDayNum,
+          date: nextDate.toISOString().split('T')[0],
+          city: cityName,
+          cityName: cityName,
+          activities: [],
+          ...customData,
+        };
+
+        return {
+          ...trip,
+          durationDays: nextDayNum,
+          days: [...currentDays, newDay],
+        };
+      })
+    );
+  };
+
+  const deleteItineraryDay = (tripId, dayNumber) => {
+    setTrips((prev) =>
+      prev.map((trip) => {
+        if (trip.id !== tripId && trip._id !== tripId) return trip;
+        const remainingDays = (trip.days || [])
+          .filter((d) => d.dayNumber !== dayNumber)
+          .map((d, index) => ({
+            ...d,
+            dayNumber: index + 1,
+          }));
+        return {
+          ...trip,
+          durationDays: Math.max(1, remainingDays.length),
+          days: remainingDays,
+        };
+      })
+    );
+  };
+
+  const updateItineraryDayCity = (tripId, dayNumber, cityName) => {
+    setTrips((prev) =>
+      prev.map((trip) => {
+        if (trip.id !== tripId && trip._id !== tripId) return trip;
+        const updatedDays = (trip.days || []).map((d) =>
+          d.dayNumber === dayNumber ? { ...d, city: cityName, cityName } : d
+        );
+        return { ...trip, days: updatedDays };
+      })
+    );
   };
 
   // Budget Math Calculation
@@ -995,8 +1142,14 @@ export function TripProvider({ children }) {
         forkCommunityTrip,
         detectScheduleConflicts,
         resolveConflict,
+        addItineraryDay,
+        deleteItineraryDay,
+        updateItineraryDayCity,
         calculateTripBudgetSummary,
         refreshTripsFromBackend,
+        refreshSavedPlacesFromBackend,
+        refreshDocumentsFromBackend,
+        fetchAllData,
         documents,
         addDocument,
         updateDocument,

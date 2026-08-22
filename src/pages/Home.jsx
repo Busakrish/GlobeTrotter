@@ -123,16 +123,12 @@ export function Home() {
 
           {/* CTAs */}
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <Link to="/trips/create">
-              <Button size="lg" variant="primary" className="shadow-lg" icon={Plus}>
-                Start Planning
-              </Button>
-            </Link>
-            <Link to="/explore">
-              <Button size="lg" variant="secondary" className="bg-white/10 text-white hover:bg-white/20 border-white/20" iconRight={ArrowRight}>
-                Explore Destinations
-              </Button>
-            </Link>
+            <Button to="/trips/create" size="lg" variant="primary" className="shadow-lg" icon={Plus}>
+              Start Planning
+            </Button>
+            <Button to="/explore" size="lg" variant="secondary" className="bg-white/10 text-white hover:bg-white/20 border-white/20" iconRight={ArrowRight}>
+              Explore Destinations
+            </Button>
           </div>
 
           {/* Hero Search Box */}

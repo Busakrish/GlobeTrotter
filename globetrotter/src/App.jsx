@@ -104,6 +104,8 @@ export function App() {
                 <Route path="/trips/:id/packing" element={<PackingList />} />
 
                 {/* Global Search & Assistant Tools */}
+                <Route path="/itinerary" element={<ItineraryBuilder />} />
+                <Route path="/builder" element={<ItineraryBuilder />} />
                 <Route path="/search/cities" element={<CitySearch />} />
                 <Route path="/search/activities" element={<ActivitySearch />} />
                 <Route path="/recommendations" element={<Recommendations />} />
