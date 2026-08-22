@@ -84,6 +84,7 @@ app.use('/api/weather', weatherRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/group-journals', groupJournalRoutes);
+app.use('/api/journals', groupJournalRoutes);
 
 // Error Handling
 app.use(notFound);

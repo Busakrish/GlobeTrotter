@@ -86,6 +86,8 @@ export function App() {
                   {/* Group Trip Journals */}
                   <Route path="/groups" element={<GroupJournals />} />
                   <Route path="/groups/:groupId" element={<GroupJournalDetail />} />
+                  <Route path="/journals" element={<GroupJournals />} />
+                  <Route path="/journals/:groupId" element={<GroupJournalDetail />} />
 
                   {/* Trip Library & Creation */}
                   <Route path="/trips" element={<MyTrips />} />
