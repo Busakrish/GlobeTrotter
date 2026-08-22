@@ -24,6 +24,7 @@ import weatherRoutes from './routes/weatherRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import documentRoutes from './routes/documentRoutes.js';
+import groupJournalRoutes from './routes/groupJournalRoutes.js';
 
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
@@ -82,6 +83,7 @@ app.use('/api/community', communityRoutes);
 app.use('/api/weather', weatherRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/group-journals', groupJournalRoutes);
 
 // Error Handling
 app.use(notFound);

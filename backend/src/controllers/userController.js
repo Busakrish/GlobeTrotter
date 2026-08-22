@@ -128,4 +128,57 @@ export const updateTravelPersonality = async (req, res) => {
   }
 };
 
-export default { getUserProfile, updateUserProfile, updateTravelPersonality };
+export const searchUsers = async (req, res) => {
+  try {
+    const { q } = req.query;
+    const currentUserId = req.user ? (req.user._id || req.user.id || '').toString() : '';
+
+    let users = [];
+    if (getIsMongoConnected()) {
+      try {
+        const query = q
+          ? {
+              $or: [
+                { name: { $regex: q, $options: 'i' } },
+                { email: { $regex: q, $options: 'i' } },
+              ],
+            }
+          : {};
+        users = await User.find(query).select('id _id name email profileImage role travelStyle').lean();
+      } catch (e) {}
+    }
+
+    if (!users || users.length === 0) {
+      users = DataStore.getCollection('users') || [];
+      if (q && q.trim()) {
+        const search = q.toLowerCase();
+        users = users.filter(
+          (u) =>
+            u.name?.toLowerCase().includes(search) ||
+            u.email?.toLowerCase().includes(search)
+        );
+      }
+    }
+
+    const safeUsers = users.map((u) => ({
+      id: (u.id || u._id).toString(),
+      _id: (u._id || u.id).toString(),
+      name: u.name,
+      email: u.email,
+      avatar: u.profileImage || u.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
+      role: u.role || 'traveler',
+      travelStyle: u.travelStyle || 'Balanced Explorer',
+    }));
+
+    return res.json({
+      success: true,
+      count: safeUsers.length,
+      users: safeUsers,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export default { getUserProfile, updateUserProfile, updateTravelPersonality, searchUsers };
+

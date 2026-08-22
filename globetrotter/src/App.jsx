@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { TripProvider } from './context/TripContext';
+import { GroupJournalProvider } from './context/GroupJournalContext';
 
 // Layouts
 import DashboardLayout from './components/layout/DashboardLayout';
@@ -39,89 +40,95 @@ import Settings from './pages/Settings';
 import NotificationsPage from './pages/NotificationsPage';
 import AdminDashboard from './pages/AdminDashboard';
 import DocumentVault from './pages/DocumentVault';
+import GroupJournals from './pages/GroupJournals';
+import GroupJournalDetail from './pages/GroupJournalDetail';
 
 export function App() {
   return (
     <NotificationProvider>
       <AuthProvider>
         <TripProvider>
-          <BrowserRouter>
-            <Toast />
-            <Routes>
-              {/* 1. Public Standalone Pages */}
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/signup" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
+          <GroupJournalProvider>
+            <BrowserRouter>
+              <Toast />
+              <Routes>
+                {/* 1. Public Standalone Pages */}
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/signup" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
 
-              {/* Public Shareable Read-Only Itinerary */}
-              <Route
-                path="/trip/:shareId"
-                element={
-                  <div className="min-h-screen bg-slate-50 p-4 sm:p-8 max-w-6xl mx-auto">
-                    <PublicTrip />
-                  </div>
-                }
-              />
+                {/* Public Shareable Read-Only Itinerary */}
+                <Route
+                  path="/trip/:shareId"
+                  element={
+                    <div className="min-h-screen bg-slate-50 p-4 sm:p-8 max-w-6xl mx-auto">
+                      <PublicTrip />
+                    </div>
+                  }
+                />
 
-              {/* 2. Main Application Workspace (Under DashboardLayout) */}
-              <Route element={<DashboardLayout />}>
-                {/* Core Navigation */}
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/explore" element={<Explore />} />
-                <Route path="/explore/:destinationId" element={<DestinationDetails />} />
-                <Route path="/saved" element={<SavedPlaces />} />
-                <Route path="/notifications" element={<NotificationsPage />} />
+                {/* 2. Main Application Workspace (Under DashboardLayout) */}
+                <Route element={<DashboardLayout />}>
+                  {/* Core Navigation */}
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/explore" element={<Explore />} />
+                  <Route path="/explore/:destinationId" element={<DestinationDetails />} />
+                  <Route path="/saved" element={<SavedPlaces />} />
+                  <Route path="/notifications" element={<NotificationsPage />} />
 
-                {/* Document Storage Vault */}
-                <Route path="/documents" element={<DocumentVault />} />
-                <Route path="/trips/:tripId/documents" element={<DocumentVault />} />
+                  {/* Document Storage Vault */}
+                  <Route path="/documents" element={<DocumentVault />} />
+                  <Route path="/trips/:tripId/documents" element={<DocumentVault />} />
 
-                {/* Trip Library & Creation */}
-                <Route path="/trips" element={<MyTrips />} />
-                <Route path="/trips/create" element={<CreateTrip />} />
+                  {/* Group Trip Journals */}
+                  <Route path="/groups" element={<GroupJournals />} />
+                  <Route path="/groups/:groupId" element={<GroupJournalDetail />} />
 
-                {/* Trip Details & Sub-Workspaces */}
-                <Route path="/trips/:tripId" element={<TripDetails />} />
-                <Route path="/trips/:tripId/edit" element={<EditTrip />} />
-                <Route path="/trips/:tripId/itinerary" element={<ItineraryBuilder />} />
-                <Route path="/trips/:tripId/day/:dayId" element={<DayDetails />} />
-                <Route path="/trips/:tripId/calendar" element={<CalendarPage />} />
-                <Route path="/trips/:tripId/budget" element={<Budget />} />
-                <Route path="/trips/:tripId/checklist" element={<TravelChecklist />} />
-                <Route path="/trips/:tripId/packing" element={<PackingList />} />
+                  {/* Trip Library & Creation */}
+                  <Route path="/trips" element={<MyTrips />} />
+                  <Route path="/trips/create" element={<CreateTrip />} />
 
-                {/* Alias routes supporting :id parameter */}
-                <Route path="/trips/:id" element={<TripDetails />} />
-                <Route path="/trips/:id/edit" element={<EditTrip />} />
-                <Route path="/trips/:id/itinerary" element={<ItineraryBuilder />} />
-                <Route path="/trips/:id/day/:dayId" element={<DayDetails />} />
-                <Route path="/trips/:id/calendar" element={<CalendarPage />} />
-                <Route path="/trips/:id/budget" element={<Budget />} />
-                <Route path="/trips/:id/checklist" element={<TravelChecklist />} />
-                <Route path="/trips/:id/packing" element={<PackingList />} />
+                  {/* Trip Details & Sub-Workspaces */}
+                  <Route path="/trips/:tripId" element={<TripDetails />} />
+                  <Route path="/trips/:tripId/edit" element={<EditTrip />} />
+                  <Route path="/trips/:tripId/itinerary" element={<ItineraryBuilder />} />
+                  <Route path="/trips/:tripId/day/:dayId" element={<DayDetails />} />
+                  <Route path="/trips/:tripId/calendar" element={<CalendarPage />} />
+                  <Route path="/trips/:tripId/budget" element={<Budget />} />
+                  <Route path="/trips/:tripId/checklist" element={<TravelChecklist />} />
+                  <Route path="/trips/:tripId/packing" element={<PackingList />} />
 
-                {/* Global Search & Assistant Tools */}
-                <Route path="/itinerary" element={<ItineraryBuilder />} />
-                <Route path="/builder" element={<ItineraryBuilder />} />
-                <Route path="/search/cities" element={<CitySearch />} />
-                <Route path="/search/activities" element={<ActivitySearch />} />
-                <Route path="/recommendations" element={<Recommendations />} />
-                <Route path="/packing-list" element={<PackingList />} />
-                <Route path="/community" element={<Community />} />
+                  {/* Alias routes supporting :id parameter */}
+                  <Route path="/trips/:id" element={<TripDetails />} />
+                  <Route path="/trips/:id/edit" element={<EditTrip />} />
+                  <Route path="/trips/:id/itinerary" element={<ItineraryBuilder />} />
+                  <Route path="/trips/:id/day/:dayId" element={<DayDetails />} />
+                  <Route path="/trips/:id/calendar" element={<CalendarPage />} />
+                  <Route path="/trips/:id/budget" element={<Budget />} />
+                  <Route path="/trips/:id/checklist" element={<TravelChecklist />} />
+                  <Route path="/trips/:id/packing" element={<PackingList />} />
 
-                {/* Profile, Settings & Admin */}
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-              </Route>
+                  {/* Global Search & Assistant Tools */}
+                  <Route path="/search/cities" element={<CitySearch />} />
+                  <Route path="/search/activities" element={<ActivitySearch />} />
+                  <Route path="/recommendations" element={<Recommendations />} />
+                  <Route path="/packing-list" element={<PackingList />} />
+                  <Route path="/community" element={<Community />} />
 
-              {/* Fallback */}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </BrowserRouter>
+                  {/* Profile, Settings & Admin */}
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
+                </Route>
+
+                {/* Fallback */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </BrowserRouter>
+          </GroupJournalProvider>
         </TripProvider>
       </AuthProvider>
     </NotificationProvider>

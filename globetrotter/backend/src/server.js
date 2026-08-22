@@ -23,6 +23,8 @@ import communityRoutes from './routes/communityRoutes.js';
 import weatherRoutes from './routes/weatherRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import documentRoutes from './routes/documentRoutes.js';
+import groupJournalRoutes from './routes/groupJournalRoutes.js';
 
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
@@ -32,7 +34,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
 // Security & Middleware
 app.use(helmet({ crossOriginResourcePolicy: false }));
@@ -71,6 +73,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/destinations', destinationRoutes);
 app.use('/api/trips', tripRoutes);
+app.use('/api/documents', documentRoutes);
 app.use('/api', itineraryRoutes);
 app.use('/api', expenseRoutes);
 app.use('/api', collaborationRoutes);
@@ -80,6 +83,7 @@ app.use('/api/community', communityRoutes);
 app.use('/api/weather', weatherRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/group-journals', groupJournalRoutes);
 
 // Error Handling
 app.use(notFound);

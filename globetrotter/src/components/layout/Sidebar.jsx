@@ -20,6 +20,7 @@ import {
   ChevronRight,
   TrendingUp,
   FileText,
+  BookOpen,
 } from 'lucide-react';
 import Badge from '../common/Badge';
 
@@ -53,6 +54,7 @@ export function Sidebar() {
         { label: 'Explore Destinations', path: '/explore', icon: MapPin },
         { label: 'Saved Places', path: '/saved', icon: Heart, badge: savedPlaces.length || null },
         { label: 'Community Trips', path: '/community', icon: Users },
+        { label: 'Group Journals', path: '/groups', icon: BookOpen },
       ],
     },
     {

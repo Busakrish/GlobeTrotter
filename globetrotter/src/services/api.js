@@ -132,6 +132,26 @@ export const adminApi = {
   getStats: () => apiClient.get('/admin/stats'),
 };
 
+// Users API
+export const usersApi = {
+  searchUsers: (query) => apiClient.get('/users/search', { params: { q: query } }),
+  getAllUsers: () => apiClient.get('/users'),
+};
+
+// Group Trip Journal
+export const groupJournalApi = {
+  getGroupTrips: () => apiClient.get('/group-journals'),
+  getGroupTripById: (groupId) => apiClient.get(`/group-journals/${groupId}`),
+  createGroupTrip: (groupData) => apiClient.post('/group-journals', groupData),
+  updateGroupTrip: (groupId, groupData) => apiClient.put(`/group-journals/${groupId}`, groupData),
+  addGroupMember: (groupId, userId) => apiClient.post(`/group-journals/${groupId}/members`, { userId }),
+  removeGroupMember: (groupId, userId) => apiClient.delete(`/group-journals/${groupId}/members/${userId}`),
+  getGroupMemories: (groupId) => apiClient.get(`/group-journals/${groupId}/memories`),
+  createGroupMemory: (groupId, memoryData) => apiClient.post(`/group-journals/${groupId}/memories`, memoryData),
+  deleteGroupMemory: (groupId, memoryId) => apiClient.delete(`/group-journals/${groupId}/memories/${memoryId}`),
+  toggleMemoryLike: (groupId, memoryId) => apiClient.post(`/group-journals/${groupId}/memories/${memoryId}/like`),
+};
+
 // Travel Documents Vault
 export const documentsApi = {
   getAllDocuments: () => apiClient.get('/documents'),
