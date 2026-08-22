@@ -38,7 +38,7 @@ const CATEGORIES = [
 
 export function DocumentVault() {
   const { documents, addDocument, deleteDocument, trips } = useTrips();
-  const { showNotification } = useNotification();
+  const { notifySuccess, notifyError, notifyWarning, notifyInfo } = useNotification();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -107,7 +107,7 @@ export function DocumentVault() {
   const handleAddSubmit = (e) => {
     e.preventDefault();
     if (!formData.title.trim()) {
-      showNotification('Please provide a document title', 'warning');
+      notifyWarning('Please provide a document title');
       return;
     }
 
@@ -121,7 +121,7 @@ export function DocumentVault() {
       fileSize: formData.fileSize || '1.2 MB',
     });
 
-    showNotification('Document saved securely in your vault!', 'success');
+    notifySuccess('Document saved securely in your vault!');
     setIsAddModalOpen(false);
     setFormData({
       title: '',
@@ -140,14 +140,14 @@ export function DocumentVault() {
 
   const handleDelete = (docId) => {
     deleteDocument(docId);
-    showNotification('Document deleted from vault.', 'info');
+    notifyInfo('Document deleted from vault.');
     if (previewDoc?.id === docId) setPreviewDoc(null);
   };
 
   const copyToClipboard = (text, id) => {
     navigator.clipboard.writeText(text);
     setCopiedId(id);
-    showNotification('Reference code copied to clipboard!', 'success');
+    notifySuccess('Reference code copied to clipboard!');
     setTimeout(() => setCopiedId(null), 2000);
   };
 
@@ -333,28 +333,27 @@ export function DocumentVault() {
                     )}
                   </div>
 
-                  {/* Document Title & File Info */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-11 h-11 rounded-xl bg-slate-100 overflow-hidden shrink-0 border border-slate-200 flex items-center justify-center text-slate-500">
-                      {doc.fileUrl && doc.fileUrl.startsWith('http') ? (
-                        <img
-                          src={doc.fileUrl}
-                          alt={doc.title}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <FileText className="w-6 h-6 text-indigo-600" />
-                      )}
-                    </div>
+                  {/* Document Thumbnail Preview Header */}
+                  <div className="relative aspect-[16/9] w-full rounded-xl bg-slate-100 overflow-hidden shrink-0 border border-slate-200 flex items-center justify-center text-slate-500">
+                    {doc.fileUrl ? (
+                      <img
+                        src={doc.fileUrl}
+                        alt={doc.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <FileText className="w-8 h-8 text-indigo-600" />
+                    )}
+                  </div>
 
-                    <div className="min-w-0 flex-1">
-                      <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1">
-                        {doc.title}
-                      </h4>
-                      <p className="text-[11px] text-slate-500 truncate">
-                        {doc.fileName || 'document_file.pdf'} • {doc.fileSize || '1 MB'}
-                      </p>
-                    </div>
+                  {/* Document Title & File Info */}
+                  <div className="space-y-1">
+                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1">
+                      {doc.title}
+                    </h4>
+                    <p className="text-[11px] text-slate-500 truncate">
+                      {doc.fileName || 'document_file.pdf'} • {doc.fileSize || '1 MB'}
+                    </p>
                   </div>
 
                   {/* Metadata Chips */}

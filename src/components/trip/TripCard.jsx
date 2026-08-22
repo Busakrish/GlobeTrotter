@@ -80,9 +80,9 @@ export function TripCard({ trip, onDuplicate, onDelete, index = 0 }) {
   }[trip.status] || 'indigo';
 
   return (
-    <div className={`group relative flex flex-col overflow-hidden rounded-[6px] bg-white border border-slate-200 border-t-4 ${borderTopClass} shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.1)] transition-all duration-200 card-hover text-left`}>
+    <div className={`group relative flex flex-col overflow-hidden rounded-2xl bg-white border border-slate-200/90 border-t-4 ${borderTopClass} shadow-xs card-hover-lift text-left`}>
       {/* Cover Image & Header Badges */}
-      <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
         <img
           src={trip.coverImage}
           alt={trip.title}

@@ -164,11 +164,11 @@ export function GroupJournals() {
             return (
               <div
                 key={group.id || group._id}
-                className="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-sm hover:shadow-md hover:border-[#714B67]/30 transition-all flex flex-col justify-between group"
+                className="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs card-hover-lift flex flex-col justify-between group text-left"
               >
                 <div>
                   {/* Card Cover Photo */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
                     <img
                       src={group.coverImage}
                       alt={group.title || group.name}

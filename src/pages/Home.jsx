@@ -181,6 +181,28 @@ export function Home() {
         </div>
       </section>
 
+      {/* 200 Cr Enterprise Metrics Banner */}
+      <section className="bg-white border-y border-slate-200/80 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div className="p-4 rounded-2xl bg-gradient-to-br from-indigo-50/50 to-slate-50 border border-indigo-100/80">
+            <div className="text-2xl sm:text-4xl font-extrabold text-[#714B67] tracking-tight">₹200Cr+</div>
+            <div className="text-[11px] font-extrabold uppercase text-slate-500 tracking-wider mt-1">Managed Travel Budgets</div>
+          </div>
+          <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-50/50 to-slate-50 border border-emerald-100/80">
+            <div className="text-2xl sm:text-4xl font-extrabold text-emerald-600 tracking-tight">1.2M+</div>
+            <div className="text-[11px] font-extrabold uppercase text-slate-500 tracking-wider mt-1">Active Global Travelers</div>
+          </div>
+          <div className="p-4 rounded-2xl bg-gradient-to-br from-sky-50/50 to-slate-50 border border-sky-100/80">
+            <div className="text-2xl sm:text-4xl font-extrabold text-sky-600 tracking-tight">180+</div>
+            <div className="text-[11px] font-extrabold uppercase text-slate-500 tracking-wider mt-1">Countries & Destinations</div>
+          </div>
+          <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-50/50 to-slate-50 border border-amber-100/80">
+            <div className="text-2xl sm:text-4xl font-extrabold text-amber-600 tracking-tight">99.4%</div>
+            <div className="text-[11px] font-extrabold uppercase text-slate-500 tracking-wider mt-1">Traveler Satisfaction</div>
+          </div>
+        </div>
+      </section>
+
       {/* 2. Key Product Features */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
         <div className="text-center max-w-2xl mx-auto space-y-2">

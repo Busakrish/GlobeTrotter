@@ -377,7 +377,7 @@ export function GroupJournalDetail() {
                             <div
                               key={pIdx}
                               onClick={() => openLightbox(photos, pIdx, memory)}
-                              className="relative h-44 sm:h-52 overflow-hidden group/photo cursor-pointer bg-slate-100"
+                              className="relative aspect-square w-full overflow-hidden group/photo cursor-pointer bg-slate-100 rounded-xl border border-slate-200/80"
                             >
                               <img
                                 src={photoUrl}
@@ -439,7 +439,7 @@ export function GroupJournalDetail() {
                 <div
                   key={idx}
                   onClick={() => openLightbox(allPhotos.map((p) => p.url), idx, item.memory)}
-                  className="relative group rounded-2xl overflow-hidden h-44 cursor-pointer bg-slate-100 shadow-2xs border border-slate-200"
+                  className="relative aspect-square w-full group rounded-2xl overflow-hidden cursor-pointer bg-slate-100 shadow-2xs border border-slate-200/90"
                 >
                   <img
                     src={item.url}
