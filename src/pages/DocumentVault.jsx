@@ -38,7 +38,7 @@ const CATEGORIES = [
 
 export function DocumentVault() {
   const { documents, addDocument, deleteDocument, trips } = useTrips();
-  const { showNotification } = useNotification();
+  const { notifySuccess, notifyError, notifyWarning, notifyInfo } = useNotification();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -107,7 +107,7 @@ export function DocumentVault() {
   const handleAddSubmit = (e) => {
     e.preventDefault();
     if (!formData.title.trim()) {
-      showNotification('Please provide a document title', 'warning');
+      notifyWarning('Please provide a document title');
       return;
     }
 
@@ -121,7 +121,7 @@ export function DocumentVault() {
       fileSize: formData.fileSize || '1.2 MB',
     });
 
-    showNotification('Document saved securely in your vault!', 'success');
+    notifySuccess('Document saved securely in your vault!');
     setIsAddModalOpen(false);
     setFormData({
       title: '',
@@ -140,14 +140,14 @@ export function DocumentVault() {
 
   const handleDelete = (docId) => {
     deleteDocument(docId);
-    showNotification('Document deleted from vault.', 'info');
+    notifyInfo('Document deleted from vault.');
     if (previewDoc?.id === docId) setPreviewDoc(null);
   };
 
   const copyToClipboard = (text, id) => {
     navigator.clipboard.writeText(text);
     setCopiedId(id);
-    showNotification('Reference code copied to clipboard!', 'success');
+    notifySuccess('Reference code copied to clipboard!');
     setTimeout(() => setCopiedId(null), 2000);
   };
 
