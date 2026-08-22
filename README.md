@@ -1,16 +1,77 @@
-# React + Vite
+# 🌍 GlobeTrotter
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> **DBMS Hackathon Project | Work in Progress 🚧**
 
-Currently, two official plugins are available:
+GlobeTrotter is a full-stack travel planning web application that helps users create personalized multi-city itineraries, organize activities, manage travel budgets, and share travel plans with others.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This repository is currently under active development for the Hackathon.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚧 Project Status
 
-## Expanding the Oxlint configuration
+**Current Stage:** Planning & Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+We are currently designing the application architecture, UI, database schema, backend APIs, and frontend components.
+
+---
+
+## ✨ Planned Features
+
+* 🔐 User Authentication (Login & Signup)
+* 🧳 Create and Manage Trips
+* 🗺️ Multi-City Itinerary Builder
+* 📍 City Search & Destination Discovery
+* 🎯 Activity Planner
+* 💰 Budget & Expense Breakdown
+* 📅 Calendar / Timeline View
+* 🌐 Shareable Public Itineraries
+* 👤 User Profile & Settings
+* 📁 Document Vault for Secure Travel Docs
+
+---
+
+## 🛠️ Planned Tech Stack
+
+| Layer          | Technology                  |
+| -------------- | --------------------------- |
+| Frontend       | React + Vite + Vanilla CSS  |
+| Backend        | Node.js + Express.js        |
+| Database       | MongoDB / Persistent JSON   |
+| Authentication | JWT + bcrypt                |
+| Charts         | Recharts                    |
+
+---
+
+## 📁 Project Structure
+
+```text
+GlobeTrotter/
+├── frontend/ (src/)
+├── backend/
+│   ├── src/
+│   └── data/
+└── README.md
+```
+
+---
+
+## 👥 Team
+
+| Member           | Responsibility       |
+| ---------------- | -------------------- |
+| **Jeny Thesiya** | Frontend Development |
+| **Archi Tala**   | Backend Development  |
+| **Busa Krish**   | Frontend Development |
+| **Yuvraj Zala**  | Backend Development  |
+
+---
+
+## 📌 Note
+
+* Project setup instructions
+* Database schema
+* API documentation
+* Folder structure
+* Screenshots and UI preview
+* Deployment guide
