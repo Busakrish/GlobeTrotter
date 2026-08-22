@@ -127,4 +127,13 @@ export const adminApi = {
   getStats: () => apiClient.get('/admin/stats'),
 };
 
+// Travel Documents Vault
+export const documentsApi = {
+  getAllDocuments: () => apiClient.get('/documents'),
+  getDocumentById: (id) => apiClient.get(`/documents/${id}`),
+  createDocument: (docData) => apiClient.post('/documents', docData),
+  updateDocument: (id, docData) => apiClient.put(`/documents/${id}`, docData),
+  deleteDocument: (id) => apiClient.delete(`/documents/${id}`),
+};
+
 export default apiClient;
