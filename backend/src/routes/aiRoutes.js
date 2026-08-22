@@ -16,6 +16,7 @@ router.post('/generate-itinerary', handleGenerateTripWithAI);
 
 // Personalized Recommendations
 router.get('/recommendations', getRecommendations);
+router.get('/personalized-recommendations', handleGetPersonalizedRecommendations);
 router.post('/personalized-recommendations', handleGetPersonalizedRecommendations);
 
 // Smart Optimizers & Adaptation
