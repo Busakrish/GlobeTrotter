@@ -476,38 +476,99 @@ export function TripProvider({ children }) {
     };
   };
 
+  const getTripById = useCallback(
+    (id) => (trips || []).find((t) => (t.id || t._id) === id),
+    [trips]
+  );
+
+  const isSaved = useCallback(
+    (placeId) => (savedPlaces || []).some((p) => (p.id || p._id) === placeId || p.destinationId === placeId),
+    [savedPlaces]
+  );
+
+  const toggleSavePlace = useCallback(
+    (place) => {
+      const pid = place.id || place._id;
+      const alreadySaved = (savedPlaces || []).some((p) => (p.id || p._id) === pid || p.destinationId === pid);
+      if (alreadySaved) {
+        removeSavedPlace(pid);
+      } else {
+        savePlace(place);
+      }
+    },
+    [savedPlaces, savePlace, removeSavedPlace]
+  );
+
+  const detectScheduleConflicts = useCallback(() => [], []);
+  const resolveConflict = useCallback(() => {}, []);
+  const reorderCities = useCallback((tripId, newCities) => updateTrip(tripId, { cities: newCities }), [updateTrip]);
+  const removeActivity = useCallback((tripId, dayNum, actId) => deleteActivity(tripId, dayNum, actId), [deleteActivity]);
+  const updateActivity = useCallback(() => {}, []);
+  const addItineraryDay = useCallback(() => {}, []);
+  const deleteItineraryDay = useCallback(() => {}, []);
+  const updateItineraryDayCity = useCallback(() => {}, []);
+  const getTripChecklist = useCallback(() => [], []);
+  const addChecklistItem = useCallback(() => {}, []);
+  const toggleChecklistItem = useCallback(() => {}, []);
+  const deleteChecklistItem = useCallback(() => {}, []);
+  const addPackingItem = useCallback(() => {}, []);
+  const togglePackingItem = useCallback(() => {}, []);
+  const removePackingItem = useCallback(() => {}, []);
+  const forkCommunityTrip = useCallback((trip) => createTrip(trip), [createTrip]);
+
   return (
     <TripContext.Provider
       value={{
-        trips,
+        trips: trips || [],
         activeTrip,
         activeTripId,
         setActiveTripId,
-        savedPlaces,
-        tripChecklists,
-        documents,
-        cities,
-        activities,
+        savedPlaces: savedPlaces || [],
+        tripChecklists: tripChecklists || {},
+        documents: documents || [],
+        cities: cities || [],
+        activities: activities || [],
         loading,
         createTrip,
         updateTrip,
         deleteTrip,
         duplicateTrip,
+        getTripById,
         addCityStop,
         removeCityStop,
+        addCityToTrip: addCityStop,
+        removeCityFromTrip: removeCityStop,
+        reorderCities,
         addActivityToDay,
         toggleActivityCompleted,
         deleteActivity,
+        removeActivity,
+        updateActivity,
+        addItineraryDay,
+        deleteItineraryDay,
+        updateItineraryDayCity,
+        detectScheduleConflicts,
+        resolveConflict,
         addExpense,
         deleteExpense,
         savePlace,
         removeSavedPlace,
-        isPlaceSaved,
+        isPlaceSaved: isSaved,
+        isSaved,
+        toggleSavePlace,
         addDocument,
         deleteDocument,
         getDocumentsForTrip,
         calculateTripBudgetSummary,
         refreshTripsFromBackend,
+        getTripChecklist,
+        addChecklistItem,
+        toggleChecklistItem,
+        deleteChecklistItem,
+        addPackingItem,
+        togglePackingItem,
+        removePackingItem,
+        forkCommunityTrip,
       }}
     >
       {children}

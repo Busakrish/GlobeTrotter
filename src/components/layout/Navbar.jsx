@@ -69,7 +69,7 @@ export function Navbar({ onMenuToggle }) {
     { label: 'Explore', path: '/explore' },
     { label: 'My Trips', path: '/trips' },
     { label: 'Groups', path: '/groups' },
-    { label: 'Saved', path: '/saved', badge: savedPlaces.length || null },
+    { label: 'Saved', path: '/saved', badge: (savedPlaces || []).length || null },
     { label: 'Dashboard', path: '/dashboard' },
   ];
 

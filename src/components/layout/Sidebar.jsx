@@ -34,14 +34,14 @@ export function Sidebar() {
       title: 'Command Center',
       items: [
         { label: 'Dashboard', path: '/dashboard', icon: Layers },
-        { label: 'My Trips', path: '/trips', icon: Compass, badge: trips.length },
+        { label: 'My Trips', path: '/trips', icon: Compass, badge: (trips || []).length },
       ],
     },
     {
       title: 'Planning & Tools',
       items: [
         { label: 'Plan New Trip', path: '/trips/create', icon: Plus, highlight: true },
-        { label: 'Document Vault', path: '/documents', icon: FileText, badge: documents?.length || 0, badgeColor: 'indigo' },
+        { label: 'Document Vault', path: '/documents', icon: FileText, badge: (documents || []).length || 0, badgeColor: 'indigo' },
         { label: 'Itinerary Builder', path: activeTrip ? `/trips/${activeTrip.id || activeTrip._id}/itinerary` : '/trips', icon: Compass },
         { label: 'AI Trip Matcher', path: '/recommendations', icon: Sparkles },
         { label: 'Travel Checklist', path: activeTrip ? `/trips/${activeTrip.id || activeTrip._id}/checklist` : '/trips', icon: CheckSquare },
@@ -52,7 +52,7 @@ export function Sidebar() {
       title: 'Discovery & Community',
       items: [
         { label: 'Explore Destinations', path: '/explore', icon: MapPin },
-        { label: 'Saved Places', path: '/saved', icon: Heart, badge: savedPlaces.length || null },
+        { label: 'Saved Places', path: '/saved', icon: Heart, badge: (savedPlaces || []).length || null },
         { label: 'Community Trips', path: '/community', icon: Users },
         { label: 'Group Journals', path: '/groups', icon: BookOpen },
       ],
