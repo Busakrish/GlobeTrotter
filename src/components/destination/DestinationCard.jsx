@@ -32,10 +32,10 @@ export function DestinationCard({ destination, onAddToTrip, index = 0 }) {
   };
 
   return (
-    <div className={`group flex flex-col justify-between overflow-hidden rounded-[6px] bg-white border border-slate-200 border-t-4 ${borderTopClass} shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.1)] transition-all card-hover text-left`}>
+    <div className={`group flex flex-col justify-between overflow-hidden rounded-2xl bg-white border border-slate-200/90 border-t-4 ${borderTopClass} shadow-xs card-hover-lift text-left`}>
       <div>
         {/* Destination Image Banner */}
-        <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
           <img
             src={destination.image}
             alt={destination.name}

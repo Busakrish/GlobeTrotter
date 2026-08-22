@@ -74,13 +74,13 @@ export function Navbar({ onMenuToggle }) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 text-left">
+    <header className="sticky top-0 z-40 glass-nav text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Left: Brand Logo & Desktop Nav Links */}
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 rounded-[6px] bg-[#714B67] flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#714B67] to-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-950/10 group-hover:scale-105 transition-transform">
                 <Compass className="w-5 h-5 text-white" />
               </div>
               <span className="font-extrabold text-xl tracking-tight text-[#1B1B26] font-display">
