@@ -34,6 +34,60 @@ const VIBE_OPTIONS = [
   { id: 'Photography', label: '📸 Scenic Photography', color: '#714B67' },
 ];
 
+const DEFAULT_DESTINATIONS_DATA = {
+  personaSummary: 'Curated for a Moderate traveler who loves Heritage, Street Food & Scenic Photography at a Relaxed pace.',
+  recommendations: [
+    {
+      destinationId: 'dest-udaipur',
+      name: 'Udaipur, Rajasthan',
+      stateOrCountry: 'India',
+      matchScore: 96,
+      highlight: 'Romantic lake palaces, heritage boat rides, and rooftop Mewari dining.',
+      idealDuration: '3 - 4 Days',
+      estimatedBudgetPerPerson: 18000,
+      accentColor: '#F16E62',
+      topExperiences: ['City Palace Tour', 'Lake Pichola Sunset Cruise', 'Bagore Ki Haveli Dance Show'],
+      tags: ['Heritage', 'Romantic', 'Architecture', 'Culture'],
+    },
+    {
+      destinationId: 'dest-munnar',
+      name: 'Munnar, Kerala',
+      stateOrCountry: 'India',
+      matchScore: 92,
+      highlight: 'Emerald tea plantations, misty mountain vistas, and Ayurvedic wellness.',
+      idealDuration: '3 - 5 Days',
+      estimatedBudgetPerPerson: 15000,
+      accentColor: '#2AB79B',
+      topExperiences: ['Kolukkumalai Sunrise Jeep Safari', 'Tea Museum & Tasting', 'Eravikulam National Park'],
+      tags: ['Nature', 'Relaxation', 'Scenic', 'Trekking'],
+    },
+    {
+      destinationId: 'dest-varanasi',
+      name: 'Varanasi, Uttar Pradesh',
+      stateOrCountry: 'India',
+      matchScore: 89,
+      highlight: 'Ancient spiritual ghats, evening Ganga Aarti, and legendary silk weaving.',
+      idealDuration: '2 - 3 Days',
+      estimatedBudgetPerPerson: 11000,
+      accentColor: '#F0A63F',
+      topExperiences: ['Dawn Boat Ride on Ganga', 'Dashashwamedh Aarti', 'Kashi Street Food Trail'],
+      tags: ['Spiritual', 'Street Food', 'Historic', 'Photography'],
+    },
+    {
+      destinationId: 'dest-hampi',
+      name: 'Hampi, Karnataka',
+      stateOrCountry: 'India',
+      matchScore: 87,
+      highlight: 'UNESCO boulder landscape, Vijayanagara ruins, and riverside cafe culture.',
+      idealDuration: '3 Days',
+      estimatedBudgetPerPerson: 12500,
+      accentColor: '#3E8EDE',
+      topExperiences: ['Virupaksha Temple', 'Coracle Ride across Tungabhadra', 'Matanga Hill Sunset'],
+      tags: ['Ruins', 'Adventure', 'UNESCO', 'Bohemian'],
+    },
+  ],
+};
+
 export function Recommendations() {
   const { createTrip } = useTrips();
   const { formatMoney } = useAuth();
@@ -58,7 +112,7 @@ export function Recommendations() {
 
   // Loading & Data States
   const [loading, setLoading] = useState(false);
-  const [destinationsData, setDestinationsData] = useState(null);
+  const [destinationsData, setDestinationsData] = useState(DEFAULT_DESTINATIONS_DATA);
   const [generatedItinerary, setGeneratedItinerary] = useState(null);
   const [budgetOptimizerData, setBudgetOptimizerData] = useState(null);
 
@@ -146,25 +200,41 @@ export function Recommendations() {
   }, []);
 
   // Adopt Plan into user's trips
-  const handleAdoptPlan = (plan) => {
-    const newTrip = createTrip({
-      title: plan.title || `${plan.name} Trip`,
-      description: plan.highlight || plan.summary || 'AI-recommended trip',
-      coverImage: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80',
-      startDate: new Date(Date.now() + 86400000 * 5).toISOString().split('T')[0],
-      endDate: new Date(Date.now() + 86400000 * (5 + (plan.durationDays || 4))).toISOString().split('T')[0],
-      budget: plan.estimatedBudgetPerPerson || plan.totalEstimatedCost || plan.budget || 35000,
-      travelStyle: travelStyle,
-      interests: selectedVibes,
-      startingCity: startingCity,
-    });
-
+  const handleAdoptPlan = async (plan) => {
     try {
-      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-    } catch {}
+      const cityName = plan.name?.split(',')?.[0] || plan.destination || startingCity;
+      const daysCount = plan.durationDays || Number(plan.idealDuration?.match(/\d+/)?.[0]) || 4;
 
-    notifySuccess(`Created "${newTrip.title}"! Opening builder.`);
-    navigate(`/trips/${newTrip.id}/itinerary`);
+      const newTrip = await createTrip({
+        title: plan.title || `${plan.name} Exploration`,
+        description: plan.highlight || plan.summary || 'AI-recommended personalized trip',
+        coverImage: plan.coverImage || 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80',
+        startDate: new Date(Date.now() + 86400000 * 5).toISOString().split('T')[0],
+        endDate: new Date(Date.now() + 86400000 * (5 + daysCount)).toISOString().split('T')[0],
+        budget: plan.estimatedBudgetPerPerson || plan.totalEstimatedCost || plan.budget || 35000,
+        budgetBreakdown: plan.budgetBreakdown,
+        travelStyle: travelStyle,
+        interests: selectedVibes,
+        startingCity: cityName,
+        days: plan.days && plan.days.length > 0 ? plan.days : undefined,
+        packingList: plan.packingList && plan.packingList.length > 0 ? plan.packingList : undefined,
+      });
+
+      try {
+        confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+      } catch {}
+
+      const tripId = newTrip?.id || newTrip?._id;
+      notifySuccess(`Created "${newTrip?.title || 'Trip'}"! Opening builder.`);
+      if (tripId) {
+        navigate(`/trips/${tripId}/itinerary`);
+      } else {
+        navigate('/trips');
+      }
+    } catch (err) {
+      console.error('Error creating trip:', err);
+      notifyError('Failed to adopt trip plan.');
+    }
   };
 
   return (
