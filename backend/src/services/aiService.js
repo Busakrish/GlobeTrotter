@@ -1,9 +1,155 @@
-import axios from 'axios';
-
 /**
- * AI Service for GlobeTrotter
- * Supports Google Gemini, OpenAI, or high-fidelity deterministic fallback
+ * Helper to call Gemini API with Structured Output Schema
  */
+const callGemini = async (prompt, responseSchema, timeout = 12000) => {
+  const apiKey = process.env.AI_API_KEY || process.env.GEMINI_API_KEY;
+  if (!apiKey) return null;
+
+  try {
+    const payload = {
+      systemInstruction: {
+        parts: [{ text: SYSTEM_INSTRUCTION }],
+      },
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: prompt }],
+        },
+      ],
+      generationConfig: {
+        temperature: 0.3,
+        topP: 0.85,
+        responseMimeType: 'application/json',
+        ...(responseSchema ? { responseSchema } : {}),
+      },
+    };
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+    const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errBody = await response.text();
+      console.warn('[AI Service] Gemini API returned error status:', response.status, errBody);
+      return null;
+    }
+
+    const data = await response.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (text) {
+      return JSON.parse(text);
+    }
+  } catch (error) {
+    console.warn('[AI Service] Gemini API request failed, utilizing high-fidelity fallback:', error.message);
+  }
+  return null;
+};
+
+// ==========================================
+// 1. GENERATE SMART ITINERARY
+// ==========================================
+
+const ITINERARY_SCHEMA = {
+  type: 'OBJECT',
+  properties: {
+    title: { type: 'STRING' },
+    summary: { type: 'STRING' },
+    destination: { type: 'STRING' },
+    durationDays: { type: 'INTEGER' },
+    travelers: { type: 'INTEGER' },
+    totalEstimatedCost: { type: 'NUMBER' },
+    budgetBreakdown: {
+      type: 'OBJECT',
+      properties: {
+        flights: { type: 'NUMBER' },
+        accommodation: { type: 'NUMBER' },
+        food: { type: 'NUMBER' },
+        transportation: { type: 'NUMBER' },
+        activities: { type: 'NUMBER' },
+        shopping: { type: 'NUMBER' },
+      },
+      required: ['flights', 'accommodation', 'food', 'transportation', 'activities', 'shopping'],
+    },
+    days: {
+      type: 'ARRAY',
+      items: {
+        type: 'OBJECT',
+        properties: {
+          dayNumber: { type: 'INTEGER' },
+          title: { type: 'STRING' },
+          cityName: { type: 'STRING' },
+          date: { type: 'STRING' },
+          weather: {
+            type: 'OBJECT',
+            properties: {
+              condition: { type: 'STRING' },
+              temp: { type: 'NUMBER' },
+              icon: { type: 'STRING' },
+            },
+            required: ['condition', 'temp', 'icon'],
+          },
+          activities: {
+            type: 'ARRAY',
+            items: {
+              type: 'OBJECT',
+              properties: {
+                activityId: { type: 'STRING' },
+                name: { type: 'STRING' },
+                title: { type: 'STRING' },
+                category: { type: 'STRING' },
+                time: { type: 'STRING' },
+                startTime: { type: 'STRING' },
+                durationMinutes: { type: 'INTEGER' },
+                cost: { type: 'NUMBER' },
+                estimatedCost: { type: 'NUMBER' },
+                location: { type: 'STRING' },
+                description: { type: 'STRING' },
+                completed: { type: 'BOOLEAN' },
+              },
+              required: ['activityId', 'name', 'title', 'category', 'time', 'durationMinutes', 'cost', 'location', 'description'],
+            },
+          },
+        },
+        required: ['dayNumber', 'title', 'cityName', 'activities'],
+      },
+    },
+    packingList: {
+      type: 'ARRAY',
+      items: {
+        type: 'OBJECT',
+        properties: {
+          name: { type: 'STRING' },
+          category: { type: 'STRING' },
+          quantity: { type: 'INTEGER' },
+          packed: { type: 'BOOLEAN' },
+          essential: { type: 'BOOLEAN' },
+        },
+        required: ['name', 'category', 'quantity'],
+      },
+    },
+    checklist: {
+      type: 'ARRAY',
+      items: {
+        type: 'OBJECT',
+        properties: {
+          title: { type: 'STRING' },
+          category: { type: 'STRING' },
+          completed: { type: 'BOOLEAN' },
+          essential: { type: 'BOOLEAN' },
+        },
+        required: ['title', 'category', 'completed'],
+      },
+    },
+  },
+  required: ['title', 'summary', 'destination', 'durationDays', 'budgetBreakdown', 'days', 'packingList', 'checklist'],
+};
 
 const generateFallbackTrip = ({ destination = 'Goa', days = 5, budget = 45000, travelers = 2, travelStyle = 'Balanced Explorer', interests = ['Culture', 'Food', 'Relaxation'] }) => {
   const numDays = Math.max(1, Math.min(14, Number(days) || 5));
@@ -111,36 +257,131 @@ const generateFallbackTrip = ({ destination = 'Goa', days = 5, budget = 45000, t
 };
 
 export const generateTripWithAI = async (params) => {
-  const apiKey = process.env.AI_API_KEY;
+  const prompt = `Generate a ${params.days || 5}-day comprehensive travel plan for ${params.destination || 'Goa'}.
+- Total Budget: ₹${params.budget || 45000} INR
+- Travelers: ${params.travelers || 2}
+- Travel Style: ${params.travelStyle || 'Balanced Explorer'}
+- Interests: ${Array.isArray(params.interests) ? params.interests.join(', ') : 'Culture, Food'}
+- Pace: ${params.pace || 'Moderate'}`;
 
-  if (apiKey) {
-    try {
-      // Call Gemini or OpenAI
-      const prompt = `Generate a travel plan for ${params.days} days in ${params.destination} with a budget of ${params.budget} INR for ${params.travelers} travelers. Return valid JSON with title, summary, budgetBreakdown, days array with activities, and packingList.`;
-      
-      const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-        {
-          contents: [{ parts: [{ text: prompt }] }],
-        },
-        { timeout: 10000 }
-      );
-
-      const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (text) {
-        const jsonMatch = text.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          return JSON.parse(jsonMatch[0]);
-        }
-      }
-    } catch (err) {
-      console.warn('[AI Service] API request failed or timed out, using fallback generator:', err.message);
-    }
+  const aiResult = await callGemini(prompt, ITINERARY_SCHEMA);
+  if (aiResult && aiResult.days && Array.isArray(aiResult.days)) {
+    return aiResult;
   }
 
-  // Deterministic High-Fidelity Fallback
   return generateFallbackTrip(params);
 };
+
+// ==========================================
+// 2. PERSONALIZED DESTINATION RECOMMENDATIONS
+// ==========================================
+
+const RECOMMENDATION_SCHEMA = {
+  type: 'OBJECT',
+  properties: {
+    personaSummary: { type: 'STRING' },
+    recommendations: {
+      type: 'ARRAY',
+      items: {
+        type: 'OBJECT',
+        properties: {
+          destinationId: { type: 'STRING' },
+          name: { type: 'STRING' },
+          stateOrCountry: { type: 'STRING' },
+          matchScore: { type: 'INTEGER' },
+          highlight: { type: 'STRING' },
+          idealDuration: { type: 'STRING' },
+          estimatedBudgetPerPerson: { type: 'NUMBER' },
+          accentColor: { type: 'STRING' },
+          topExperiences: {
+            type: 'ARRAY',
+            items: { type: 'STRING' },
+          },
+          tags: {
+            type: 'ARRAY',
+            items: { type: 'STRING' },
+          },
+        },
+        required: ['destinationId', 'name', 'matchScore', 'highlight', 'idealDuration', 'estimatedBudgetPerPerson', 'topExperiences', 'tags'],
+      },
+    },
+  },
+  required: ['personaSummary', 'recommendations'],
+};
+
+export const getPersonalizedRecommendationsWithAI = async ({ userPersona = {}, limit = 4 }) => {
+  const { vibes = ['Culture', 'Scenic', 'Food'], budgetTier = 'Moderate', preferredPace = 'Relaxed', startingCity = 'Mumbai' } = userPersona;
+
+  const prompt = `Suggest ${limit} top personalized travel destinations for a traveler based in ${startingCity}.
+- Travel Vibes: ${vibes.join(', ')}
+- Budget Tier: ${budgetTier}
+- Pace: ${preferredPace}
+Assign each destination a matchScore (75-99) and distinct accentColor (#F16E62, #2AB79B, #F0A63F, #3E8EDE).`;
+
+  const aiResult = await callGemini(prompt, RECOMMENDATION_SCHEMA);
+  if (aiResult && aiResult.recommendations) {
+    return aiResult;
+  }
+
+  // High-fidelity fallback
+  return {
+    personaSummary: `Curated for a ${budgetTier} traveler who loves ${vibes.join(' & ')} at a ${preferredPace} pace.`,
+    recommendations: [
+      {
+        destinationId: 'dest-udaipur',
+        name: 'Udaipur, Rajasthan',
+        stateOrCountry: 'India',
+        matchScore: 96,
+        highlight: 'Romantic lake palaces, heritage boat rides, and rooftop Mewari dining.',
+        idealDuration: '3 - 4 Days',
+        estimatedBudgetPerPerson: 18000,
+        accentColor: '#F16E62',
+        topExperiences: ['City Palace Tour', 'Lake Pichola Sunset Cruise', 'Bagore Ki Haveli Dance Show'],
+        tags: ['Heritage', 'Romantic', 'Architecture', 'Culture'],
+      },
+      {
+        destinationId: 'dest-munnar',
+        name: 'Munnar, Kerala',
+        stateOrCountry: 'India',
+        matchScore: 92,
+        highlight: 'Emerald tea plantations, misty mountain vistas, and Ayurvedic wellness.',
+        idealDuration: '3 - 5 Days',
+        estimatedBudgetPerPerson: 15000,
+        accentColor: '#2AB79B',
+        topExperiences: ['Kolukkumalai Sunrise Jeep Safari', 'Tea Museum & Tasting', 'Eravikulam National Park'],
+        tags: ['Nature', 'Relaxation', 'Scenic', 'Trekking'],
+      },
+      {
+        destinationId: 'dest-varanasi',
+        name: 'Varanasi, Uttar Pradesh',
+        stateOrCountry: 'India',
+        matchScore: 89,
+        highlight: 'Ancient spiritual ghats, evening Ganga Aarti, and legendary silk weaving.',
+        idealDuration: '2 - 3 Days',
+        estimatedBudgetPerPerson: 11000,
+        accentColor: '#F0A63F',
+        topExperiences: ['Dawn Boat Ride on Ganga', 'Dashashwamedh Aarti', 'Kashi Street Food Trail'],
+        tags: ['Spiritual', 'Street Food', 'Historic', 'Photography'],
+      },
+      {
+        destinationId: 'dest-hampi',
+        name: 'Hampi, Karnataka',
+        stateOrCountry: 'India',
+        matchScore: 87,
+        highlight: 'UNESCO boulder landscape, Vijayanagara ruins, and riverside cafe culture.',
+        idealDuration: '3 Days',
+        estimatedBudgetPerPerson: 12500,
+        accentColor: '#3E8EDE',
+        topExperiences: ['Virupaksha Temple', 'Coracle Ride across Tungabhadra', 'Matanga Hill Sunset'],
+        tags: ['Ruins', 'Adventure', 'UNESCO', 'Bohemian'],
+      },
+    ],
+  };
+};
+
+// ==========================================
+// 3. BUDGET OPTIMIZER
+// ==========================================
 
 export const optimizeBudgetWithAI = async ({ currentBudget = 40000, estimatedCost = 52000, destination = 'Goa' }) => {
   const overBudget = Math.max(0, estimatedCost - currentBudget);
@@ -184,6 +425,10 @@ export const optimizeBudgetWithAI = async ({ currentBudget = 40000, estimatedCos
   };
 };
 
+// ==========================================
+// 4. WEATHER ADAPTATION & ACTIVITY SWAP
+// ==========================================
+
 export const adaptItineraryWithAI = async ({ reason = 'Rain expected', dayNumber = 1, cityName = 'Mumbai' }) => {
   return {
     reason,
@@ -223,6 +468,10 @@ export const adaptItineraryWithAI = async ({ reason = 'Rain expected', dayNumber
   };
 };
 
+// ==========================================
+// 5. PACKING LIST GENERATOR
+// ==========================================
+
 export const generatePackingWithAI = async ({ destination = 'Goa', duration = 5, weather = 'Warm & Sunny', travelStyle = 'Beach' }) => {
   return {
     destination,
@@ -244,6 +493,7 @@ export const generatePackingWithAI = async ({ destination = 'Goa', duration = 5,
 
 export default {
   generateTripWithAI,
+  getPersonalizedRecommendationsWithAI,
   optimizeBudgetWithAI,
   adaptItineraryWithAI,
   generatePackingWithAI,
