@@ -14,6 +14,7 @@ import {
   Package,
   Layers,
   PieChart,
+  FileText,
 } from 'lucide-react';
 import Button from '../common/Button';
 import Badge from '../common/Badge';
@@ -33,6 +34,7 @@ export function TripHeader({ trip, activeTab = 'overview' }) {
     { key: 'budget', label: 'Budget & Charts', path: `/trips/${trip.id}/budget`, icon: PieChart },
     { key: 'checklist', label: 'Checklist', path: `/trips/${trip.id}/checklist`, icon: CheckSquare },
     { key: 'packing', label: 'Packing List', path: `/trips/${trip.id}/packing`, icon: Package },
+    { key: 'documents', label: 'Document Vault', path: `/trips/${trip.id}/documents`, icon: FileText },
   ];
 
   return (

@@ -18,6 +18,7 @@ import {
   Menu,
   X,
   Layers,
+  FileText,
 } from 'lucide-react';
 import Button from '../common/Button';
 
@@ -296,6 +297,15 @@ export function Navbar({ onMenuToggle }) {
                     >
                       <Layers className="w-4 h-4 text-slate-400" />
                       Dashboard
+                    </Link>
+
+                    <Link
+                      to="/documents"
+                      onClick={() => setProfileDropdownOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-[4px] text-slate-700 hover:bg-slate-50 hover:text-[#714B67] transition-colors"
+                    >
+                      <FileText className="w-4 h-4 text-slate-400" />
+                      Document Vault
                     </Link>
 
                     <Link
