@@ -19,11 +19,11 @@ import {
 } from 'lucide-react';
 
 export function CalendarPage() {
-  const { id } = useParams();
-  const { trips, getTripById, toggleActivityCompleted } = useTrips();
+  const { tripId, id } = useParams();
+  const { trips, activeTrip, getTripById, toggleActivityCompleted } = useTrips();
   const { formatMoney } = useAuth();
 
-  const trip = getTripById(id) || trips[0];
+  const trip = getTripById(tripId || id) || activeTrip || trips[0];
   const [selectedDayModal, setSelectedDayModal] = useState(null);
 
   if (!trip) {
@@ -54,11 +54,14 @@ export function CalendarPage() {
           </p>
         </div>
 
-        <Link to={`/trips/${trip.id}/itinerary`}>
-          <Button size="sm" variant="primary" icon={Plus}>
-            Edit in Builder
-          </Button>
-        </Link>
+        <Button
+          size="sm"
+          variant="primary"
+          icon={Plus}
+          to={`/trips/${trip.id}/itinerary`}
+        >
+          Edit in Builder
+        </Button>
       </div>
 
       {/* Multi-City Journey Timeline Grid */}
@@ -176,11 +179,14 @@ export function CalendarPage() {
             )}
 
             <div className="flex justify-between items-center pt-4 border-t border-slate-100">
-              <Link to={`/trips/${trip.id}/itinerary`}>
-                <Button size="sm" variant="outline" icon={Plus}>
-                  Add Activities in Builder
-                </Button>
-              </Link>
+              <Button
+                size="sm"
+                variant="outline"
+                icon={Plus}
+                to={`/trips/${trip.id}/itinerary`}
+              >
+                Add Activities in Builder
+              </Button>
               <Button size="sm" variant="primary" onClick={() => setSelectedDayModal(null)}>
                 Close View
               </Button>

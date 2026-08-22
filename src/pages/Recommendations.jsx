@@ -124,15 +124,20 @@ export function Recommendations() {
   };
 
   // Fetch Personalized Recommendations
-  const fetchPersonalizedRecommendations = async () => {
+  const fetchPersonalizedRecommendations = async (
+    vibes = selectedVibes,
+    tier = budgetTier,
+    pace = preferredPace,
+    city = startingCity
+  ) => {
     setLoading(true);
     try {
       const response = await aiApi.getPersonalizedRecommendations({
         userPersona: {
-          vibes: selectedVibes,
-          budgetTier,
-          preferredPace,
-          startingCity,
+          vibes: vibes && vibes.length > 0 ? vibes : ['Culture', 'Scenic'],
+          budgetTier: tier,
+          preferredPace: pace,
+          startingCity: city || 'Mumbai',
         },
         limit: 4,
       });
@@ -141,13 +146,19 @@ export function Recommendations() {
         setDestinationsData(response.data);
       }
     } catch (err) {
-      console.warn('API error, using client fallback:', err);
+      console.warn('API error, using fallback:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  // Generate Itinerary
+  // Automatically update recommendations whenever vibes, budget tier, pace, or starting city change
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchPersonalizedRecommendations(selectedVibes, budgetTier, preferredPace, startingCity);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [selectedVibes, budgetTier, preferredPace, startingCity]);
   const handleGenerateItinerary = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -194,10 +205,6 @@ export function Recommendations() {
     }
   };
 
-  // Initial fetch on mount
-  useEffect(() => {
-    fetchPersonalizedRecommendations();
-  }, []);
 
   // Adopt Plan into user's trips
   const handleAdoptPlan = async (plan) => {

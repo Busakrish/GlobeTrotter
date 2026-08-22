@@ -56,13 +56,13 @@ const AVAILABLE_INTERESTS = [
 ];
 
 export function EditTrip() {
-  const { tripId } = useParams();
-  const { trips, getTripById, updateTrip } = useTrips();
+  const { tripId, id } = useParams();
+  const { trips, activeTrip, getTripById, updateTrip } = useTrips();
   const { formatMoney } = useAuth();
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
 
-  const trip = getTripById(tripId) || trips[0];
+  const trip = getTripById(tripId || id) || activeTrip || trips[0];
 
   const [formData, setFormData] = useState({
     title: '',

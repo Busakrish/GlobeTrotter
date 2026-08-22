@@ -25,9 +25,10 @@ import {
 } from 'lucide-react';
 
 export function DayDetails() {
-  const { tripId, dayId } = useParams();
+  const { tripId, id, dayId } = useParams();
   const {
     trips,
+    activeTrip,
     getTripById,
     addActivityToDay,
     removeActivity,
@@ -38,7 +39,7 @@ export function DayDetails() {
   const { notifySuccess, notifyWarning } = useNotification();
   const navigate = useNavigate();
 
-  const trip = getTripById(tripId) || trips[0];
+  const trip = getTripById(tripId || id) || activeTrip || trips[0];
   const dayNumber = Number(dayId) || 1;
   const day = trip?.days?.find((d) => d.dayNumber === dayNumber) || trip?.days?.[0];
 

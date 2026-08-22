@@ -1,3 +1,13 @@
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+
+const SYSTEM_INSTRUCTION = `You are GlobeTrotter's Senior AI Travel Curator and Itinerary Architect.
+Your role is to craft realistic, highly personalized, culturally rich, and budget-conscious travel recommendations.
+Guidelines:
+1. Respect the user's budget, pace, group dynamics, and travel vibes.
+2. Group activities logically by geographical vicinity to minimize travel time.
+3. Include realistic cost estimates in INR (₹) and 24-hour HH:MM time slots.
+4. Output strict JSON adhering directly to the provided schema with no surrounding Markdown or backticks.`;
+
 /**
  * Helper to call Gemini API with Structured Output Schema
  */
@@ -309,6 +319,141 @@ const RECOMMENDATION_SCHEMA = {
   required: ['personaSummary', 'recommendations'],
 };
 
+const DESTINATIONS_MASTER_POOL = [
+  {
+    destinationId: 'dest-goa',
+    name: 'Goa (North & South)',
+    stateOrCountry: 'India',
+    highlight: 'Sun-drenched beaches, Portuguese colonial quarters, water sports & beachside seafood shacks.',
+    idealDuration: '4 - 5 Days',
+    baseBudget: 22000,
+    accentColor: '#3E8EDE',
+    topExperiences: ['Scuba Diving at Grand Island', 'Fontainhas Heritage Walk in Panaji', 'Sunset Shack Dinner at Anjuna'],
+    tags: ['Beach', 'Nightlife', 'Seafood', 'Relaxation', 'Coastal & Beach', 'Street Food & Dining'],
+  },
+  {
+    destinationId: 'dest-udaipur',
+    name: 'Udaipur, Rajasthan',
+    stateOrCountry: 'India',
+    highlight: 'Romantic lake palaces, heritage boat rides, and rooftop Mewari royal dining.',
+    idealDuration: '3 - 4 Days',
+    baseBudget: 24000,
+    accentColor: '#714B67',
+    topExperiences: ['City Palace Tour', 'Lake Pichola Sunset Cruise', 'Bagore Ki Haveli Folk Dance'],
+    tags: ['Heritage', 'Romantic', 'Architecture', 'Culture', 'Heritage & History', 'Scenic Photography'],
+  },
+  {
+    destinationId: 'dest-munnar',
+    name: 'Munnar, Kerala',
+    stateOrCountry: 'India',
+    highlight: 'Emerald tea plantations, misty mountain vistas, waterfalls, and Ayurvedic wellness.',
+    idealDuration: '3 - 5 Days',
+    baseBudget: 18000,
+    accentColor: '#2AB79B',
+    topExperiences: ['Kolukkumalai Sunrise Jeep Safari', 'Tea Museum & Tasting', 'Eravikulam National Park'],
+    tags: ['Nature', 'Relaxation', 'Scenic', 'Trekking', 'Nature & Mountain', 'Wellness & Chill'],
+  },
+  {
+    destinationId: 'dest-rishikesh',
+    name: 'Rishikesh, Uttarakhand',
+    stateOrCountry: 'India',
+    highlight: 'White-water Ganges rafting, Himalayan bungee jumping, yoga ashrams & Ganga Aarti.',
+    idealDuration: '3 - 4 Days',
+    baseBudget: 14000,
+    accentColor: '#F0A63F',
+    topExperiences: ['Ganges Grade-IV River Rafting', 'Triveni Ghat Evening Aarti', 'Cliff Jumping & Bungee at Mohan Chatti'],
+    tags: ['Adventure', 'Spiritual', 'Trekking', 'Yoga', 'Adventure & Trekking', 'Spiritual & Ghats'],
+  },
+  {
+    destinationId: 'dest-amritsar',
+    name: 'Amritsar, Punjab',
+    stateOrCountry: 'India',
+    highlight: 'Sacred Golden Temple serenity, historic Wagah Border parade & legendary culinary food trails.',
+    idealDuration: '2 - 3 Days',
+    baseBudget: 12000,
+    accentColor: '#F16E62',
+    topExperiences: ['Night Palki Sahib Ceremony at Golden Temple', 'Wagah Border Sunset Ceremony', 'Kulcha Land & Kesar Da Dhaba Food Trail'],
+    tags: ['Street Food', 'Culture', 'Spiritual', 'Historic', 'Street Food & Dining', 'Spiritual & Ghats'],
+  },
+  {
+    destinationId: 'dest-manali',
+    name: 'Manali & Solang Valley',
+    stateOrCountry: 'India',
+    highlight: 'Snow-capped Himalayan peaks, apple orchards, paragliding & Atal Tunnel high-altitude drives.',
+    idealDuration: '4 - 6 Days',
+    baseBudget: 22000,
+    accentColor: '#3E8EDE',
+    topExperiences: ['Solang Valley Paragliding & Skiing', 'Rohtang Pass Snow Excursion', 'Old Manali Cafe & Live Music Crawl'],
+    tags: ['Nature', 'Adventure', 'Mountains', 'Scenic', 'Nature & Mountain', 'Adventure & Trekking'],
+  },
+  {
+    destinationId: 'dest-varanasi',
+    name: 'Varanasi, Uttar Pradesh',
+    stateOrCountry: 'India',
+    highlight: 'Ancient spiritual ghats, evening Ganga Aarti, silk weavers & midnight street food bazaars.',
+    idealDuration: '2 - 3 Days',
+    baseBudget: 11000,
+    accentColor: '#F0A63F',
+    topExperiences: ['Dawn Boat Ride on Ganga', 'Dashashwamedh Maha Aarti', 'Kashi Chaat Bhandar Street Food Trail'],
+    tags: ['Spiritual', 'Street Food', 'Historic', 'Photography', 'Spiritual & Ghats', 'Heritage & History'],
+  },
+  {
+    destinationId: 'dest-andaman',
+    name: 'Havelock Island, Andamans',
+    stateOrCountry: 'India',
+    highlight: 'Crystal turquoise waters, Radhanagar Beach sunsets, scuba diving & bioluminescent night kayaking.',
+    idealDuration: '5 - 7 Days',
+    baseBudget: 45000,
+    accentColor: '#2AB79B',
+    topExperiences: ['Scuba Diving at Elephant Beach', 'Radhanagar Sunset (Asia’s Best Beach)', 'Night Bioluminescence Kayaking'],
+    tags: ['Beach', 'Adventure', 'Nature', 'Romantic', 'Coastal & Beach', 'Wellness & Chill'],
+  },
+  {
+    destinationId: 'dest-hampi',
+    name: 'Hampi, Karnataka',
+    stateOrCountry: 'India',
+    highlight: 'UNESCO boulder landscape, 14th-century Vijayanagara ruins, and riverside bohemian cafe culture.',
+    idealDuration: '3 Days',
+    baseBudget: 13000,
+    accentColor: '#714B67',
+    topExperiences: ['Virupaksha Temple Exploration', 'Coracle Ride across Tungabhadra', 'Matanga Hill Sunset Panorama'],
+    tags: ['Heritage', 'Ruins', 'Adventure', 'UNESCO', 'Heritage & History', 'Scenic Photography'],
+  },
+  {
+    destinationId: 'dest-varkala',
+    name: 'Varkala, Kerala',
+    stateOrCountry: 'India',
+    highlight: 'Dramatic red cliff beaches overlooking the Arabian Sea, surf schools & coastal yoga cafes.',
+    idealDuration: '3 - 4 Days',
+    baseBudget: 16000,
+    accentColor: '#F16E62',
+    topExperiences: ['Cliff-edge Sunset Dining', 'Surf Lessons at Black Sand Beach', 'Ayurvedic Body Massage & Yoga'],
+    tags: ['Beach', 'Relaxation', 'Wellness', 'Culture', 'Coastal & Beach', 'Wellness & Chill'],
+  },
+  {
+    destinationId: 'dest-jaipur',
+    name: 'Jaipur, Rajasthan',
+    stateOrCountry: 'India',
+    highlight: 'Pink City royal palaces, hilltop Amer Fort, vibrant Johari Bazaar & authentic Rajasthani thalis.',
+    idealDuration: '3 - 4 Days',
+    baseBudget: 19000,
+    accentColor: '#F0A63F',
+    topExperiences: ['Amer Fort Jeep & Light Show', 'Hawa Mahal Photography', 'Chokhi Dhani Cultural Village Dinner'],
+    tags: ['Heritage', 'Culture', 'Street Food', 'Shopping', 'Heritage & History', 'Street Food & Dining'],
+  },
+  {
+    destinationId: 'dest-ladakh',
+    name: 'Leh Ladakh',
+    stateOrCountry: 'India',
+    highlight: 'High-altitude mountain desert, Pangong Tso blue waters, ancient monasteries & magnetic hill drives.',
+    idealDuration: '6 - 8 Days',
+    baseBudget: 42000,
+    accentColor: '#3E8EDE',
+    topExperiences: ['Pangong Lake Camping under Stars', 'Nubra Valley Double-Hump Camel Safari', 'Khardung La Pass Highest Motor Road'],
+    tags: ['Adventure', 'Nature', 'Mountains', 'Photography', 'Adventure & Trekking', 'Scenic Photography'],
+  }
+];
+
 export const getPersonalizedRecommendationsWithAI = async ({ userPersona = {}, limit = 4 }) => {
   const { vibes = ['Culture', 'Scenic', 'Food'], budgetTier = 'Moderate', preferredPace = 'Relaxed', startingCity = 'Mumbai' } = userPersona;
 
@@ -319,63 +464,50 @@ export const getPersonalizedRecommendationsWithAI = async ({ userPersona = {}, l
 Assign each destination a matchScore (75-99) and distinct accentColor (#F16E62, #2AB79B, #F0A63F, #3E8EDE).`;
 
   const aiResult = await callGemini(prompt, RECOMMENDATION_SCHEMA);
-  if (aiResult && aiResult.recommendations) {
+  if (aiResult && aiResult.recommendations && aiResult.recommendations.length > 0) {
     return aiResult;
   }
 
-  // High-fidelity fallback
+  // Dynamic Multi-Vibe Scoring Fallback Engine
+  const budgetMultiplier = budgetTier === 'Budget Backpacker' || budgetTier === 'Backpacker' ? 0.75 : budgetTier === 'Luxury & Heritage' || budgetTier === 'Luxury' ? 1.7 : 1.1;
+
+  const scoredDestinations = DESTINATIONS_MASTER_POOL.map((dest) => {
+    let score = 70; // baseline
+
+    // Vibe matching
+    const matchingTags = dest.tags.filter((t) =>
+      vibes.some((v) => v.toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(v.toLowerCase()))
+    );
+    score += Math.min(26, matchingTags.length * 9);
+
+    // Minor randomization for natural variation
+    score += Math.floor(Math.random() * 4);
+    score = Math.min(99, Math.max(78, score));
+
+    return {
+      destinationId: dest.destinationId,
+      name: dest.name,
+      stateOrCountry: dest.stateOrCountry,
+      matchScore: score,
+      highlight: dest.highlight,
+      idealDuration: dest.idealDuration,
+      estimatedBudgetPerPerson: Math.round(dest.baseBudget * budgetMultiplier),
+      accentColor: dest.accentColor,
+      topExperiences: dest.topExperiences,
+      tags: dest.tags.slice(0, 4),
+    };
+  });
+
+  // Sort by highest match score
+  scoredDestinations.sort((a, b) => b.matchScore - a.matchScore);
+
+  const selectedRecs = scoredDestinations.slice(0, Number(limit) || 4);
+
+  const personaSummary = `Curated for a ${budgetTier} traveler seeking ${vibes.join(', ') || 'Scenic & Cultural'} experiences at a ${preferredPace} pace from ${startingCity}.`;
+
   return {
-    personaSummary: `Curated for a ${budgetTier} traveler who loves ${vibes.join(' & ')} at a ${preferredPace} pace.`,
-    recommendations: [
-      {
-        destinationId: 'dest-udaipur',
-        name: 'Udaipur, Rajasthan',
-        stateOrCountry: 'India',
-        matchScore: 96,
-        highlight: 'Romantic lake palaces, heritage boat rides, and rooftop Mewari dining.',
-        idealDuration: '3 - 4 Days',
-        estimatedBudgetPerPerson: 18000,
-        accentColor: '#F16E62',
-        topExperiences: ['City Palace Tour', 'Lake Pichola Sunset Cruise', 'Bagore Ki Haveli Dance Show'],
-        tags: ['Heritage', 'Romantic', 'Architecture', 'Culture'],
-      },
-      {
-        destinationId: 'dest-munnar',
-        name: 'Munnar, Kerala',
-        stateOrCountry: 'India',
-        matchScore: 92,
-        highlight: 'Emerald tea plantations, misty mountain vistas, and Ayurvedic wellness.',
-        idealDuration: '3 - 5 Days',
-        estimatedBudgetPerPerson: 15000,
-        accentColor: '#2AB79B',
-        topExperiences: ['Kolukkumalai Sunrise Jeep Safari', 'Tea Museum & Tasting', 'Eravikulam National Park'],
-        tags: ['Nature', 'Relaxation', 'Scenic', 'Trekking'],
-      },
-      {
-        destinationId: 'dest-varanasi',
-        name: 'Varanasi, Uttar Pradesh',
-        stateOrCountry: 'India',
-        matchScore: 89,
-        highlight: 'Ancient spiritual ghats, evening Ganga Aarti, and legendary silk weaving.',
-        idealDuration: '2 - 3 Days',
-        estimatedBudgetPerPerson: 11000,
-        accentColor: '#F0A63F',
-        topExperiences: ['Dawn Boat Ride on Ganga', 'Dashashwamedh Aarti', 'Kashi Street Food Trail'],
-        tags: ['Spiritual', 'Street Food', 'Historic', 'Photography'],
-      },
-      {
-        destinationId: 'dest-hampi',
-        name: 'Hampi, Karnataka',
-        stateOrCountry: 'India',
-        matchScore: 87,
-        highlight: 'UNESCO boulder landscape, Vijayanagara ruins, and riverside cafe culture.',
-        idealDuration: '3 Days',
-        estimatedBudgetPerPerson: 12500,
-        accentColor: '#3E8EDE',
-        topExperiences: ['Virupaksha Temple', 'Coracle Ride across Tungabhadra', 'Matanga Hill Sunset'],
-        tags: ['Ruins', 'Adventure', 'UNESCO', 'Bohemian'],
-      },
-    ],
+    personaSummary,
+    recommendations: selectedRecs,
   };
 };
 
