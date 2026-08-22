@@ -264,17 +264,19 @@ export function TripProvider({ children }) {
           transitToNext: null,
         }
       ],
-      days: initialDays,
+      days: tripData.days && tripData.days.length > 0 ? tripData.days : initialDays,
       expenses: [
         { id: 'exp-init-1', category: 'Transport', description: 'Intercity travel / flight reserve', amount: Math.round((Number(tripData.budget) || 40000) * 0.25), date: tripData.startDate },
         { id: 'exp-init-2', category: 'Accommodation', description: 'Hotel stays & boutique villas', amount: Math.round((Number(tripData.budget) || 40000) * 0.35), date: tripData.startDate },
       ],
-      packingList: [
-        { id: 'p-default-1', item: 'Government photo ID & Tickets', category: 'Documents', checked: false },
-        { id: 'p-default-2', item: 'Phone charger & Power bank', category: 'Electronics', checked: false },
-        { id: 'p-default-3', item: 'Comfortable walking shoes', category: 'Clothing', checked: false },
-        { id: 'p-default-4', item: 'Sunscreen & Personal toiletries', category: 'Toiletries', checked: false },
-      ]
+      packingList: tripData.packingList && tripData.packingList.length > 0
+        ? tripData.packingList.map((p, idx) => ({ id: `p-ai-${idx}`, item: p.name || p.item, category: p.category || 'General', checked: false }))
+        : [
+            { id: 'p-default-1', item: 'Government photo ID & Tickets', category: 'Documents', checked: false },
+            { id: 'p-default-2', item: 'Phone charger & Power bank', category: 'Electronics', checked: false },
+            { id: 'p-default-3', item: 'Comfortable walking shoes', category: 'Clothing', checked: false },
+            { id: 'p-default-4', item: 'Sunscreen & Personal toiletries', category: 'Toiletries', checked: false },
+          ]
     };
 
     setTrips((prev) => [newTripLocal, ...prev]);

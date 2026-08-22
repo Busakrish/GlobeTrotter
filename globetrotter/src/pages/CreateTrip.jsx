@@ -181,29 +181,35 @@ export function CreateTrip() {
       },
     ];
 
-    setTimeout(() => {
-      const newTrip = createTrip({
-        title: formData.title,
-        description: formData.description,
-        startDate: formData.startDate,
-        endDate: formData.endDate,
-        travelersCount: Number(formData.travelersCount),
-        budget: Number(formData.budget),
-        budgetBreakdown: formData.budgetBreakdown,
-        travelStyle: formData.travelStyle,
-        interests: formData.preferences,
-        coverImage: formData.customCoverUrl.trim() || formData.coverImage,
-        startingCity: formData.startingCity,
-        cities: finalCities,
-      });
-
+    setTimeout(async () => {
       try {
-        confetti({ particleCount: 80, spread: 60 });
-      } catch {}
+        const newTrip = await createTrip({
+          title: formData.title,
+          description: formData.description,
+          startDate: formData.startDate,
+          endDate: formData.endDate,
+          travelersCount: Number(formData.travelersCount),
+          budget: Number(formData.budget),
+          budgetBreakdown: formData.budgetBreakdown,
+          travelStyle: formData.travelStyle,
+          interests: formData.preferences,
+          coverImage: formData.customCoverUrl.trim() || formData.coverImage,
+          startingCity: formData.startingCity,
+          cities: finalCities,
+        });
 
-      setLoading(false);
-      notifySuccess(`Trip "${newTrip.title}" created successfully! Opening workspace.`);
-      navigate(`/trips/${newTrip.id}`);
+        try {
+          confetti({ particleCount: 80, spread: 60 });
+        } catch {}
+
+        setLoading(false);
+        const tripId = newTrip?.id || newTrip?._id;
+        notifySuccess(`Trip "${newTrip?.title || 'Trip'}" created successfully! Opening workspace.`);
+        navigate(tripId ? `/trips/${tripId}` : '/trips');
+      } catch (err) {
+        setLoading(false);
+        setError('Failed to create trip. Please try again.');
+      }
     }, 400);
   };
 
