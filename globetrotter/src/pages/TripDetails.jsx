@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useTrips } from '../context/TripContext';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
+import { mockCities } from '../data/mockCities';
 import TripHeader from '../components/trip/TripHeader';
 import ActivityCard from '../components/trip/ActivityCard';
 import TripMap from '../components/map/TripMap';
@@ -28,6 +29,8 @@ import {
   ArrowRight,
   TrendingUp,
   Users,
+  Receipt,
+  ExternalLink,
 } from 'lucide-react';
 
 export function TripDetails() {
@@ -40,6 +43,7 @@ export function TripDetails() {
     calculateTripBudgetSummary,
     addActivityToDay,
     addExpense,
+    deleteExpense,
     addCityToTrip,
   } = useTrips();
   const { formatMoney } = useAuth();
@@ -68,9 +72,13 @@ export function TripDetails() {
     description: '',
     category: 'Transport',
     amount: 1500,
+    date: new Date().toISOString().split('T')[0],
+    notes: '',
   });
 
-  const [newStopName, setNewStopName] = useState('Udaipur');
+  const [selectedCityOption, setSelectedCityOption] = useState(mockCities[4]?.name || 'Udaipur');
+  const [customCityName, setCustomCityName] = useState('');
+  const [stopNights, setStopNights] = useState(2);
 
   if (!trip) {
     return (
@@ -92,26 +100,51 @@ export function TripDetails() {
     addActivityToDay(trip.id, Number(newActivity.dayNumber), newActivity);
     setAddActivityModalOpen(false);
     notifySuccess(`Added "${newActivity.title}" to Day ${newActivity.dayNumber}!`);
+    setNewActivity({
+      title: '',
+      time: '10:00',
+      durationMinutes: 90,
+      cost: 500,
+      category: 'Sightseeing',
+      dayNumber: 1,
+    });
   };
 
   const handleAddExpenseSubmit = (e) => {
     e.preventDefault();
-    if (!newExpense.description.trim()) return;
+    if (!newExpense.description.trim() || !newExpense.amount) return;
 
     addExpense(trip.id, newExpense);
     setAddExpenseModalOpen(false);
-    notifySuccess(`Logged expense "${newExpense.description}" (${formatMoney(newExpense.amount)})`);
+    notifySuccess(`Logged expense "${newExpense.description}" (${formatMoney(Number(newExpense.amount))})`);
+    setNewExpense({
+      description: '',
+      category: 'Transport',
+      amount: 1500,
+      date: new Date().toISOString().split('T')[0],
+      notes: '',
+    });
   };
 
   const handleAddStopSubmit = (e) => {
     e.preventDefault();
+    const finalCityName = customCityName.trim() || selectedCityOption;
+    if (!finalCityName) return;
+
+    const matched = mockCities.find(
+      (c) => c.name.toLowerCase() === finalCityName.toLowerCase()
+    );
+
     addCityToTrip(trip.id, {
-      name: newStopName,
-      country: 'India',
-      nights: 2,
+      name: finalCityName,
+      country: matched?.country || 'India',
+      coordinates: matched?.coordinates || [15.2993, 74.1240],
+      nights: Number(stopNights) || 2,
     });
+
     setAddStopModalOpen(false);
-    notifySuccess(`Added stop ${newStopName} to your trip!`);
+    setCustomCityName('');
+    notifySuccess(`Added ${finalCityName} (${stopNights} Nights) to your trip route!`);
   };
 
   // Flatten next upcoming activities
@@ -251,7 +284,7 @@ export function TripDetails() {
           </div>
         </div>
 
-        {/* Right Column: Multi-City Route Map, Weather & Packing Widget */}
+        {/* Right Column: Multi-City Route Map, Weather, Packing Widget & Recent Expenses */}
         <div className="lg:col-span-4 space-y-6">
           {/* Interactive Multi-City Route Map */}
           <div className="p-5 rounded-3xl bg-white border border-slate-200/90 shadow-xs space-y-3">
@@ -265,6 +298,60 @@ export function TripDetails() {
               </span>
             </div>
             <TripMap cities={trip.cities || []} height="h-64" />
+          </div>
+
+          {/* Recent Trip Expenses Ledger */}
+          <div className="p-5 rounded-3xl bg-white border border-slate-200/90 shadow-xs space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                <Receipt className="w-4 h-4 text-emerald-600" />
+                Recent Expenses ({trip.expenses?.length || 0})
+              </h3>
+              <Link
+                to={`/trips/${trip.id}/budget`}
+                className="text-[11px] font-bold text-indigo-600 hover:underline flex items-center gap-0.5"
+              >
+                <span>Full Ledger</span>
+                <ArrowRight className="w-3 h-3" />
+              </Link>
+            </div>
+
+            {trip.expenses && trip.expenses.length > 0 ? (
+              <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
+                {trip.expenses.slice(0, 5).map((exp) => (
+                  <div
+                    key={exp.id}
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-xs"
+                  >
+                    <div className="min-w-0 flex-1 pr-2">
+                      <p className="font-bold text-slate-900 truncate">{exp.description}</p>
+                      <div className="flex items-center gap-1.5 text-[10px] text-slate-400 mt-0.5">
+                        <span className="font-medium">{exp.category}</span>
+                        <span>•</span>
+                        <span>{exp.date}</span>
+                      </div>
+                    </div>
+                    <span className="font-extrabold text-slate-900 shrink-0">
+                      {formatMoney(exp.amount)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-xs text-slate-400 italic py-2 text-center">
+                No expenses logged yet. Click "$ Add Expense" above to record one.
+              </p>
+            )}
+
+            <Button
+              size="xs"
+              variant="outline"
+              icon={DollarSign}
+              onClick={() => setAddExpenseModalOpen(true)}
+              className="w-full text-xs font-bold"
+            >
+              + Log New Expense
+            </Button>
           </div>
 
           {/* Weather Widget */}
@@ -369,7 +456,7 @@ export function TripDetails() {
           <form onSubmit={handleAddExpenseSubmit} className="space-y-4 text-left">
             <Input
               label="Expense Description"
-              placeholder="e.g. Scuba diving, Dinner, Train booking"
+              placeholder="e.g. Scuba diving, Dinner at shack, Train booking"
               value={newExpense.description}
               onChange={(e) => setNewExpense({ ...newExpense, description: e.target.value })}
               required
@@ -381,11 +468,11 @@ export function TripDetails() {
                 value={newExpense.category}
                 onChange={(e) => setNewExpense({ ...newExpense, category: e.target.value })}
                 options={[
-                  { value: 'Transport', label: 'Transport' },
+                  { value: 'Transport', label: 'Transport & Flights' },
                   { value: 'Accommodation', label: 'Accommodation' },
                   { value: 'Food & Dining', label: 'Food & Dining' },
-                  { value: 'Activities', label: 'Activities' },
-                  { value: 'Other', label: 'Other' },
+                  { value: 'Activities', label: 'Activities & Tours' },
+                  { value: 'Other', label: 'Other / Misc' },
                 ]}
               />
               <Input
@@ -397,6 +484,22 @@ export function TripDetails() {
                 required
               />
             </div>
+
+            <Input
+              label="Date of Expense"
+              type="date"
+              value={newExpense.date}
+              onChange={(e) => setNewExpense({ ...newExpense, date: e.target.value })}
+              required
+            />
+
+            <TextArea
+              label="Notes (Optional)"
+              placeholder="Booking references, receipt details..."
+              value={newExpense.notes}
+              onChange={(e) => setNewExpense({ ...newExpense, notes: e.target.value })}
+              rows={2}
+            />
 
             <div className="flex justify-end gap-2 pt-2">
               <Button variant="outline" size="sm" onClick={() => setAddExpenseModalOpen(false)}>
@@ -416,22 +519,62 @@ export function TripDetails() {
           isOpen={addStopModalOpen}
           onClose={() => setAddStopModalOpen(false)}
           title="Add City Stop to Route"
-          subtitle="Expand your multi-city journey"
+          subtitle="Expand your multi-city journey with another destination"
         >
           <form onSubmit={handleAddStopSubmit} className="space-y-4 text-left">
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+                Popular Destinations
+              </label>
+              <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto p-2 bg-slate-50 border border-slate-200 rounded-xl">
+                {mockCities.map((city) => (
+                  <button
+                    key={city.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedCityOption(city.name);
+                      setCustomCityName('');
+                    }}
+                    className={`px-2.5 py-1 text-xs rounded-lg font-bold transition-all cursor-pointer ${
+                      selectedCityOption === city.name && !customCityName
+                        ? 'bg-indigo-600 text-white shadow-xs'
+                        : 'bg-white text-slate-700 hover:bg-slate-200/70 border border-slate-200'
+                    }`}
+                  >
+                    {city.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <Input
-              label="City Name"
-              placeholder="e.g. Udaipur, Kochi, Jaipur"
-              value={newStopName}
-              onChange={(e) => setNewStopName(e.target.value)}
+              label="Or Custom City Name"
+              placeholder="e.g. Udaipur, Manali, Pondicherry, Paris"
+              value={customCityName}
+              onChange={(e) => setCustomCityName(e.target.value)}
+            />
+
+            <Input
+              label="Nights to Stay"
+              type="number"
+              min="1"
+              max="30"
+              value={stopNights}
+              onChange={(e) => setStopNights(Number(e.target.value))}
               required
             />
+
+            <div className="p-3 bg-indigo-50/70 rounded-xl border border-indigo-100 text-xs text-indigo-900">
+              <span className="font-bold">Adding: </span>
+              {customCityName.trim() || selectedCityOption} ({stopNights} Nights)
+            </div>
+
             <div className="flex justify-end gap-2 pt-2">
               <Button variant="outline" size="sm" onClick={() => setAddStopModalOpen(false)}>
                 Cancel
               </Button>
               <Button variant="primary" size="sm" type="submit" icon={Plus}>
-                Add Stop
+                Add Stop to Trip
               </Button>
             </div>
           </form>

@@ -38,6 +38,7 @@ import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import NotificationsPage from './pages/NotificationsPage';
 import AdminDashboard from './pages/AdminDashboard';
+import DocumentVault from './pages/DocumentVault';
 
 export function App() {
   return (
@@ -73,6 +74,10 @@ export function App() {
                 <Route path="/explore/:destinationId" element={<DestinationDetails />} />
                 <Route path="/saved" element={<SavedPlaces />} />
                 <Route path="/notifications" element={<NotificationsPage />} />
+
+                {/* Document Storage Vault */}
+                <Route path="/documents" element={<DocumentVault />} />
+                <Route path="/trips/:tripId/documents" element={<DocumentVault />} />
 
                 {/* Trip Library & Creation */}
                 <Route path="/trips" element={<MyTrips />} />
