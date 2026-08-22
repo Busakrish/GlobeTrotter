@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { useTrips } from '../../context/TripContext';
 import { useNotification } from '../../context/NotificationContext';
 import {
   Compass,
@@ -11,21 +10,14 @@ import {
   User,
   LogOut,
   ChevronDown,
-  ShieldCheck,
-  MapPin,
-  Heart,
   Sliders,
   Menu,
   X,
-  Layers,
-  FileText,
-  BookOpen,
 } from 'lucide-react';
 import Button from '../common/Button';
 
 export function Navbar({ onMenuToggle }) {
   const { currentUser, logout, currency, setCurrency } = useAuth();
-  const { savedPlaces } = useTrips();
   const { notifications, unreadCount, markAsRead } = useNotification();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -67,10 +59,6 @@ export function Navbar({ onMenuToggle }) {
   const navLinks = [
     { label: 'Home', path: '/' },
     { label: 'Explore', path: '/explore' },
-    { label: 'My Trips', path: '/trips' },
-    { label: 'Groups', path: '/groups' },
-    { label: 'Saved', path: '/saved', badge: savedPlaces.length || null },
-    { label: 'Dashboard', path: '/dashboard' },
   ];
 
   return (
@@ -291,34 +279,7 @@ export function Navbar({ onMenuToggle }) {
                       </div>
                     </div>
 
-                    {/* Menu Links */}
-                    <Link
-                      to="/dashboard"
-                      onClick={() => setProfileDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-[4px] text-slate-700 hover:bg-slate-50 hover:text-[#714B67] transition-colors"
-                    >
-                      <Layers className="w-4 h-4 text-slate-400" />
-                      Dashboard
-                    </Link>
-
-                    <Link
-                      to="/documents"
-                      onClick={() => setProfileDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-[4px] text-slate-700 hover:bg-slate-50 hover:text-[#714B67] transition-colors"
-                    >
-                      <FileText className="w-4 h-4 text-slate-400" />
-                      Document Vault
-                    </Link>
-
-                    <Link
-                      to="/groups"
-                      onClick={() => setProfileDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-[4px] text-slate-700 hover:bg-slate-50 hover:text-[#714B67] transition-colors"
-                    >
-                      <BookOpen className="w-4 h-4 text-slate-400" />
-                      Group Journals
-                    </Link>
-
+                    {/* Account Menu Links */}
                     <Link
                       to="/profile"
                       onClick={() => setProfileDropdownOpen(false)}

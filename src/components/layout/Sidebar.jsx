@@ -21,6 +21,7 @@ import {
   TrendingUp,
   FileText,
   BookOpen,
+  Map,
 } from 'lucide-react';
 import Badge from '../common/Badge';
 
@@ -42,7 +43,7 @@ export function Sidebar() {
       items: [
         { label: 'Plan New Trip', path: '/trips/create', icon: Plus, highlight: true },
         { label: 'Document Vault', path: '/documents', icon: FileText, badge: documents?.length || 0, badgeColor: 'indigo' },
-        { label: 'Itinerary Builder', path: activeTrip ? `/trips/${activeTrip.id || activeTrip._id}/itinerary` : '/trips', icon: Compass },
+        { label: 'Build Itinerary', path: activeTrip ? `/trips/${activeTrip.id || activeTrip._id}/itinerary` : '/trips', icon: Map },
         { label: 'AI Trip Matcher', path: '/recommendations', icon: Sparkles },
         { label: 'Travel Checklist', path: activeTrip ? `/trips/${activeTrip.id || activeTrip._id}/checklist` : '/trips', icon: CheckSquare },
         { label: 'Packing Assistant', path: '/packing-list', icon: Package },
@@ -117,7 +118,9 @@ export function Sidebar() {
               <div className="space-y-0.5">
                 {section.items.map((item) => {
                   const Icon = item.icon;
-                  const isActive = location.pathname === item.path;
+                  const isActive = item.path === '/'
+                    ? location.pathname === '/'
+                    : location.pathname === item.path || location.pathname.startsWith(item.path + '/');
 
                   return (
                     <Link

@@ -101,16 +101,6 @@ export function App() {
                   <Route path="/trips/:tripId/checklist" element={<TravelChecklist />} />
                   <Route path="/trips/:tripId/packing" element={<PackingList />} />
 
-                  {/* Alias routes supporting :id parameter */}
-                  <Route path="/trips/:id" element={<TripDetails />} />
-                  <Route path="/trips/:id/edit" element={<EditTrip />} />
-                  <Route path="/trips/:id/itinerary" element={<ItineraryBuilder />} />
-                  <Route path="/trips/:id/day/:dayId" element={<DayDetails />} />
-                  <Route path="/trips/:id/calendar" element={<CalendarPage />} />
-                  <Route path="/trips/:id/budget" element={<Budget />} />
-                  <Route path="/trips/:id/checklist" element={<TravelChecklist />} />
-                  <Route path="/trips/:id/packing" element={<PackingList />} />
-
                   {/* Global Search & Assistant Tools */}
                   <Route path="/search/cities" element={<CitySearch />} />
                   <Route path="/search/activities" element={<ActivitySearch />} />
