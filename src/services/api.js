@@ -127,7 +127,7 @@ export const adminApi = {
   getStats: () => apiClient.get('/admin/stats'),
 };
 
-// Travel Document Storage & Vault
+// Travel Documents Vault
 export const documentsApi = {
   getAllDocuments: () => apiClient.get('/documents'),
   getDocumentById: (id) => apiClient.get(`/documents/${id}`),

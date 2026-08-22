@@ -21,12 +21,26 @@ export function ShareModal({ isOpen, onClose, trip }) {
 
   const shareUrl = `${window.location.origin}/trip/${trip.shareId || trip.id}`;
 
-  const handleCopyLink = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl);
+  const handleCopyLink = async () => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = shareUrl;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
       setCopied(true);
       notifySuccess('Public itinerary link copied to clipboard!');
       setTimeout(() => setCopied(false), 3000);
+    } catch {
+      notifySuccess('Link ready to share: ' + shareUrl);
     }
   };
 
@@ -86,6 +100,17 @@ export function ShareModal({ isOpen, onClose, trip }) {
             >
               {copied ? 'Copied' : 'Copy'}
             </Button>
+
+            <a
+              href={shareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-[6px] bg-slate-100 hover:bg-slate-200 text-slate-800 transition-colors"
+              title="Open public itinerary preview in new tab"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span>Preview</span>
+            </a>
           </div>
         </div>
 
