@@ -20,9 +20,10 @@ import {
 } from 'lucide-react';
 
 export function Budget() {
-  const { id } = useParams();
+  const { tripId, id } = useParams();
   const {
     trips,
+    activeTrip,
     getTripById,
     updateTrip,
     addExpense,
@@ -32,7 +33,7 @@ export function Budget() {
   const { formatMoney } = useAuth();
   const { notifySuccess } = useNotification();
 
-  const trip = getTripById(id) || trips[0];
+  const trip = getTripById(tripId || id) || activeTrip || trips[0];
 
   // Modals state
   const [addExpenseModalOpen, setAddExpenseModalOpen] = useState(false);

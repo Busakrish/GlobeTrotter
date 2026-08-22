@@ -74,11 +74,9 @@ export function SavedPlaces() {
           </p>
         </div>
 
-        <Link to="/explore">
-          <Button variant="outline" size="sm" icon={Compass}>
-            Discover More Places
-          </Button>
-        </Link>
+        <Button to="/explore" variant="outline" size="sm" icon={Compass}>
+          Discover More Places
+        </Button>
       </div>
 
       {/* Filter Tabs */}

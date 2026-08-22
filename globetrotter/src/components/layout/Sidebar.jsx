@@ -39,6 +39,7 @@ export function Sidebar() {
       title: 'Planning & Tools',
       items: [
         { label: 'Plan New Trip', path: '/trips/create', icon: Plus, highlight: true },
+        { label: 'Itinerary Builder', path: activeTrip ? `/trips/${activeTrip.id}/itinerary` : '/itinerary', icon: Compass },
         { label: 'AI Trip Matcher', path: '/recommendations', icon: Sparkles },
         { label: 'Travel Checklist', path: activeTrip ? `/trips/${activeTrip.id}/checklist` : '/dashboard', icon: CheckSquare },
         { label: 'Packing Assistant', path: '/packing-list', icon: Package },

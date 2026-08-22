@@ -722,16 +722,21 @@ export function TripProvider({ children }) {
             const arrH = Math.floor((transitArrivalMinutes + 30) / 60);
             const arrM = (transitArrivalMinutes + 30) % 60;
             const suggestedTime = `${String(arrH).padStart(2, '0')}:${String(arrM).padStart(2, '0')}`;
+            const arrTimeStr = `${String(Math.floor(transitArrivalMinutes / 60)).padStart(2, '0')}:${String(transitArrivalMinutes % 60).padStart(2, '0')}`;
 
             conflicts.push({
+              id: `conflict-${day.dayNumber}-${act.id}`,
               dayNumber: day.dayNumber,
               cityName: day.cityName || day.city,
               date: day.date,
               transitTitle: transitActivity.title,
-              transitArrivalTime: `${String(Math.floor(transitArrivalMinutes / 60)).padStart(2, '0')}:${String(transitArrivalMinutes % 60).padStart(2, '0')}`,
+              transitArrivalTime: arrTimeStr,
+              activityId: act.id,
               conflictingActivityId: act.id,
               conflictingActivityTitle: act.title,
               conflictingActivityTime: act.time,
+              message: `"${act.title}" (${act.time}) conflicts with transit arrival (${transitActivity.title} arrives at ${arrTimeStr}).`,
+              resolution: `Reschedule "${act.title}" to ${suggestedTime} allowing sufficient buffer.`,
               suggestedTime,
             });
           }
@@ -744,6 +749,67 @@ export function TripProvider({ children }) {
 
   const resolveConflict = (tripId, dayNumber, activityId, newTime) => {
     updateActivity(tripId, dayNumber, activityId, { time: newTime });
+  };
+
+  // Day Management Functions for Itinerary Builder
+  const addItineraryDay = (tripId, customData = {}) => {
+    setTrips((prev) =>
+      prev.map((trip) => {
+        if (trip.id !== tripId && trip._id !== tripId) return trip;
+        const currentDays = trip.days || [];
+        const nextDayNum = currentDays.length + 1;
+        const lastDayDate = currentDays[currentDays.length - 1]?.date || trip.startDate || new Date().toISOString().split('T')[0];
+        const nextDate = new Date(lastDayDate);
+        nextDate.setDate(nextDate.getDate() + 1);
+        const cityName = customData.cityName || customData.city || trip.cities?.[trip.cities.length - 1]?.name || 'Destination';
+
+        const newDay = {
+          dayNumber: nextDayNum,
+          date: nextDate.toISOString().split('T')[0],
+          city: cityName,
+          cityName: cityName,
+          activities: [],
+          ...customData,
+        };
+
+        return {
+          ...trip,
+          durationDays: nextDayNum,
+          days: [...currentDays, newDay],
+        };
+      })
+    );
+  };
+
+  const deleteItineraryDay = (tripId, dayNumber) => {
+    setTrips((prev) =>
+      prev.map((trip) => {
+        if (trip.id !== tripId && trip._id !== tripId) return trip;
+        const remainingDays = (trip.days || [])
+          .filter((d) => d.dayNumber !== dayNumber)
+          .map((d, index) => ({
+            ...d,
+            dayNumber: index + 1,
+          }));
+        return {
+          ...trip,
+          durationDays: Math.max(1, remainingDays.length),
+          days: remainingDays,
+        };
+      })
+    );
+  };
+
+  const updateItineraryDayCity = (tripId, dayNumber, cityName) => {
+    setTrips((prev) =>
+      prev.map((trip) => {
+        if (trip.id !== tripId && trip._id !== tripId) return trip;
+        const updatedDays = (trip.days || []).map((d) =>
+          d.dayNumber === dayNumber ? { ...d, city: cityName, cityName } : d
+        );
+        return { ...trip, days: updatedDays };
+      })
+    );
   };
 
   // Budget Math Calculation
@@ -872,6 +938,9 @@ export function TripProvider({ children }) {
         forkCommunityTrip,
         detectScheduleConflicts,
         resolveConflict,
+        addItineraryDay,
+        deleteItineraryDay,
+        updateItineraryDayCity,
         calculateTripBudgetSummary,
         refreshTripsFromBackend,
       }}

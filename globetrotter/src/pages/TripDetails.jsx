@@ -31,9 +31,10 @@ import {
 } from 'lucide-react';
 
 export function TripDetails() {
-  const { tripId } = useParams();
+  const { tripId, id } = useParams();
   const {
     trips,
+    activeTrip,
     getTripById,
     toggleActivityCompleted,
     calculateTripBudgetSummary,
@@ -45,7 +46,7 @@ export function TripDetails() {
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
 
-  const trip = getTripById(tripId) || trips[0];
+  const trip = getTripById(tripId || id) || activeTrip || trips[0];
 
   // Modals state
   const [shareModalOpen, setShareModalOpen] = useState(false);
@@ -163,11 +164,14 @@ export function TripDetails() {
           </Button>
         </div>
 
-        <Link to={`/trips/${trip.id}/itinerary`}>
-          <Button size="xs" variant="primary" iconRight={ArrowRight}>
-            Open Day Builder
-          </Button>
-        </Link>
+        <Button
+          size="xs"
+          variant="primary"
+          iconRight={ArrowRight}
+          to={`/trips/${trip.id}/itinerary`}
+        >
+          Open Day Builder
+        </Button>
       </div>
 
       {/* 3. Budget Status Banner */}
@@ -184,11 +188,14 @@ export function TripDetails() {
                 Summary of day stops, transit connections, and planned activities
               </p>
             </div>
-            <Link to={`/trips/${trip.id}/itinerary`}>
-              <Button size="sm" variant="outline" icon={Edit3}>
-                Edit Itinerary
-              </Button>
-            </Link>
+            <Button
+              size="sm"
+              variant="outline"
+              icon={Edit3}
+              to={`/trips/${trip.id}/itinerary`}
+            >
+              Edit Itinerary
+            </Button>
           </div>
 
           {/* Day Cards */}

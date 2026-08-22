@@ -57,11 +57,14 @@ export function TripHeader({ trip, activeTab = 'overview' }) {
             Share
           </Button>
 
-          <Link to={`/trips/${trip.id}/edit`}>
-            <Button size="sm" variant="outline" icon={Edit3}>
-              Edit Trip
-            </Button>
-          </Link>
+          <Button
+            size="sm"
+            variant="outline"
+            icon={Edit3}
+            to={`/trips/${trip.id}/edit`}
+          >
+            Edit Trip
+          </Button>
         </div>
       </div>
 

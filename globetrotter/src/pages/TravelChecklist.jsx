@@ -21,9 +21,10 @@ import {
 } from 'lucide-react';
 
 export function TravelChecklist() {
-  const { tripId } = useParams();
+  const { tripId, id } = useParams();
   const {
     trips,
+    activeTrip,
     getTripById,
     getTripChecklist,
     toggleChecklistItem,
@@ -32,7 +33,7 @@ export function TravelChecklist() {
   } = useTrips();
   const { notifySuccess, notifyWarning } = useNotification();
 
-  const trip = getTripById(tripId) || trips[0];
+  const trip = getTripById(tripId || id) || activeTrip || trips[0];
   const categories = getTripChecklist(trip?.id);
 
   // Add Item Modal
