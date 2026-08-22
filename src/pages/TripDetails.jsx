@@ -202,9 +202,9 @@ export function TripDetails() {
           size="xs"
           variant="primary"
           iconRight={ArrowRight}
-          to={`/trips/${trip.id}/itinerary`}
+          to={`/trips/${trip.id || trip._id}/itinerary`}
         >
-          Open Day Builder
+          View Full Itinerary
         </Button>
       </div>
 
@@ -226,9 +226,9 @@ export function TripDetails() {
               size="sm"
               variant="outline"
               icon={Edit3}
-              to={`/trips/${trip.id}/itinerary`}
+              to={`/trips/${trip.id || trip._id}/itinerary`}
             >
-              Edit Itinerary
+              View / Edit Itinerary
             </Button>
           </div>
 

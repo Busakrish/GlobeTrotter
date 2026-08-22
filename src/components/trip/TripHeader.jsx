@@ -29,7 +29,7 @@ export function TripHeader({ trip, activeTab = 'overview' }) {
 
   const tabs = [
     { key: 'overview', label: 'Overview', path: `/trips/${trip.id || trip._id}`, icon: Layers },
-    { key: 'itinerary', label: 'Day-by-Day Schedule', path: `/trips/${trip.id || trip._id}/itinerary`, icon: Compass },
+    { key: 'itinerary', label: 'Itinerary', path: `/trips/${trip.id || trip._id}/itinerary`, icon: Compass },
     { key: 'calendar', label: 'Timeline / Calendar', path: `/trips/${trip.id || trip._id}/calendar`, icon: Calendar },
     { key: 'budget', label: 'Budget & Charts', path: `/trips/${trip.id || trip._id}/budget`, icon: PieChart },
     { key: 'checklist', label: 'Checklist', path: `/trips/${trip.id || trip._id}/checklist`, icon: CheckSquare },
