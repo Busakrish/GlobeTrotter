@@ -70,8 +70,8 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-200/90 flex flex-col justify-between p-4 h-[calc(100vh-4rem)] sticky top-16 shrink-0 overflow-y-auto scrollbar-none text-left">
-      <div className="space-y-6">
+    <aside className="w-64 bg-white border-r border-slate-200/90 flex flex-col justify-between px-3 pt-2 pb-1 h-[calc(100vh-4rem)] sticky top-16 shrink-0 overflow-y-auto scrollbar-none text-left">
+      <div className="space-y-2">
         {/* Active Trip Quick Card */}
         {activeTrip && (
           <div className="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-50 to-sky-50 border border-indigo-100 space-y-2">
@@ -109,7 +109,7 @@ export function Sidebar() {
         )}
 
         {/* Grouped Navigation Links */}
-        <div className="space-y-5">
+        <div className="space-y-2">
           {navigationSections.map((section) => (
             <div key={section.title} className="space-y-1">
               <h5 className="px-3 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
@@ -162,7 +162,7 @@ export function Sidebar() {
       </div>
 
       {/* Sidebar Footer info */}
-      <div className="pt-4 border-t border-slate-100 text-[11px] text-slate-400 text-center">
+      <div className="pt-2 pb-1 border-t border-slate-100 text-[11px] text-slate-400 text-center">
         <span>GlobeTrotter v2.4 • Stitch Edition</span>
       </div>
     </aside>
