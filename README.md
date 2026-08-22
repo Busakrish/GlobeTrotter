@@ -62,6 +62,8 @@ GlobeTrotter/
 | ---------------- | -------------------- |
 | **Jeny Thesiya** | Frontend Development |
 | **Archi Tala**   | Backend Development  |
+| **Busa Krish** | Frontend Development |
+| **Yuvraj Zala**   | Backend Development  |
 
 ---
 
