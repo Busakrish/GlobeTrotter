@@ -3,8 +3,6 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useTrips } from '../context/TripContext';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
-import { mockCities } from '../data/mockCities';
-import { mockActivities, activityCategories } from '../data/mockActivities';
 import TripHeader from '../components/trip/TripHeader';
 import CityStopCard from '../components/trip/CityStopCard';
 import ActivityCard from '../components/trip/ActivityCard';
@@ -13,6 +11,16 @@ import Button from '../components/common/Button';
 import Modal from '../components/common/Modal';
 import Input, { TextArea, Select } from '../components/common/Input';
 import EmptyState from '../components/common/EmptyState';
+
+export const activityCategories = [
+  'All',
+  'Sightseeing',
+  'Food & Dining',
+  'Culture & Heritage',
+  'Relaxation & Beach',
+  'Adventure & Sports',
+  'Shopping & Nightlife',
+];
 import {
   Plus,
   Clock,
@@ -85,32 +93,26 @@ export function ItineraryBuilder() {
     trips,
     activeTrip,
     setActiveTripId,
-    getTripById,
-    addCityToTrip,
-    removeCityFromTrip,
-    reorderCities,
+    addCityStop,
+    removeCityStop,
     addActivityToDay,
-    removeActivity,
-    updateActivity,
+    deleteActivity,
     toggleActivityCompleted,
-    detectScheduleConflicts,
-    resolveConflict,
-    addItineraryDay,
-    deleteItineraryDay,
-    updateItineraryDayCity,
+    cities,
+    activities,
   } = useTrips();
 
   const { formatMoney } = useAuth();
   const { notifySuccess, notifyWarning } = useNotification();
 
   const targetId = tripId || id;
-  const trip = getTripById(targetId) || activeTrip || trips[0];
+  const trip = trips.find((t) => (t.id || t._id) === targetId) || activeTrip || (trips.length > 0 ? trips[0] : null);
 
   useEffect(() => {
-    if (trip?.id) {
-      setActiveTripId(trip.id);
+    if (trip?.id || trip?._id) {
+      setActiveTripId(trip.id || trip._id);
     }
-  }, [trip?.id, setActiveTripId]);
+  }, [trip, setActiveTripId]);
 
   const [selectedDayNumber, setSelectedDayNumber] = useState(1);
   const [filterTimeOfDay, setFilterTimeOfDay] = useState('all'); // 'all' | 'morning' | 'afternoon' | 'evening'
@@ -127,7 +129,7 @@ export function ItineraryBuilder() {
 
   // New city state
   const [citySearchQuery, setCitySearchQuery] = useState('');
-  const [selectedCityToAdd, setSelectedCityToAdd] = useState(mockCities[0]?.name || 'Goa');
+  const [selectedCityToAdd, setSelectedCityToAdd] = useState(cities[0]?.name || 'Goa');
   const [newCityNights, setNewCityNights] = useState(2);
 
   // Activity form state
@@ -223,14 +225,14 @@ export function ItineraryBuilder() {
   // Handler for adding a city
   const handleAddCitySubmit = (e) => {
     e.preventDefault();
-    const cityData = mockCities.find((c) => c.name === selectedCityToAdd) || {
+    const cityData = (cities || []).find((c) => c.name === selectedCityToAdd) || {
       name: selectedCityToAdd,
       country: 'India',
       coordinates: [15.2993, 74.1240],
       nights: newCityNights,
     };
 
-    addCityToTrip(trip.id, { ...cityData, nights: newCityNights });
+    addCityStop(trip.id || trip._id, { ...cityData, nights: newCityNights });
     setAddCityModalOpen(false);
     notifySuccess(`Added ${selectedCityToAdd} (${newCityNights} Nights) to your trip!`);
   };
@@ -352,26 +354,44 @@ export function ItineraryBuilder() {
     notifySuccess('Full itinerary schedule copied to clipboard!');
   };
 
-  const availableCityCatalog = mockCities.filter(
+  const availableCityCatalog = (cities || []).filter(
     (c) =>
-      c.name.toLowerCase().includes(citySearchQuery.toLowerCase()) ||
-      c.country.toLowerCase().includes(citySearchQuery.toLowerCase())
+      c.name?.toLowerCase().includes(citySearchQuery.toLowerCase()) ||
+      c.country?.toLowerCase().includes(citySearchQuery.toLowerCase())
   );
 
-  const filteredCatalogActivities = mockActivities.filter((act) => {
-    if (catalogCategoryFilter !== 'all' && act.categoryKey !== catalogCategoryFilter) {
+  const filteredCatalogActivities = (activities || []).filter((act) => {
+    if (catalogCategoryFilter !== 'all' && act.categoryKey !== catalogCategoryFilter && act.category !== catalogCategoryFilter) {
       return false;
     }
     if (catalogSearch.trim()) {
       const q = catalogSearch.toLowerCase();
       return (
-        act.title.toLowerCase().includes(q) ||
-        act.cityName.toLowerCase().includes(q) ||
-        act.description.toLowerCase().includes(q)
+        act.title?.toLowerCase().includes(q) ||
+        act.name?.toLowerCase().includes(q) ||
+        act.cityName?.toLowerCase().includes(q) ||
+        act.description?.toLowerCase().includes(q)
       );
     }
     return true;
   });
+
+  if (!trip) {
+    return (
+      <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8">
+        <Compass className="w-12 h-12 text-[#714B67] mx-auto mb-3" />
+        <h3 className="text-lg font-bold text-slate-900 mb-1">No Itinerary Available</h3>
+        <p className="text-xs sm:text-sm text-slate-500 mb-4">
+          You haven't planned any trips yet. Create your first trip to build day-by-day schedules.
+        </p>
+        <Link to="/trips/create">
+          <Button variant="primary" size="sm" icon={Plus}>
+            Plan a Trip
+          </Button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 text-left animate-fade-in pb-20">

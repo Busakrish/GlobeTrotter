@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useTrips } from '../context/TripContext';
 import { useNotification } from '../context/NotificationContext';
-import { getCityWeather } from '../data/mockWeather';
 import PackingListWidget from '../components/packing/PackingListWidget';
 import WeatherCard from '../components/weather/WeatherCard';
 import Button from '../components/common/Button';
@@ -39,8 +39,25 @@ export function PackingList() {
   const { trips, activeTrip, setActiveTripId, addPackingItem } = useTrips();
   const { notifySuccess } = useNotification();
 
-  const selectedTrip = activeTrip || trips[0];
-  const firstCity = selectedTrip?.cities?.[0]?.name || 'Goa';
+  const selectedTrip = activeTrip || (trips.length > 0 ? trips[0] : null);
+  const firstCity = selectedTrip?.cities?.[0]?.name || selectedTrip?.destination || 'Mumbai';
+
+  if (!selectedTrip) {
+    return (
+      <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8">
+        <CheckSquare className="w-12 h-12 text-[#714B67] mx-auto mb-3" />
+        <h3 className="text-lg font-bold text-slate-900 mb-1">No Active Trip</h3>
+        <p className="text-xs sm:text-sm text-slate-500 mb-4">
+          Create or select a trip to manage your destination-specific packing list.
+        </p>
+        <Link to="/trips/create">
+          <Button variant="primary" size="sm" icon={Plus}>
+            Plan a Trip
+          </Button>
+        </Link>
+      </div>
+    );
+  }
 
   const handleApplyTemplate = (templateKey, templateName) => {
     const items = PACKING_TEMPLATES[templateKey];

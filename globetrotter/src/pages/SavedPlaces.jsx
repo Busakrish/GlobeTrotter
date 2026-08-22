@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 export function SavedPlaces() {
-  const { savedPlaces, removeSavedPlace, trips, addCityToTrip } = useTrips();
+  const { savedPlaces, removeSavedPlace, trips, addCityStop } = useTrips();
   const { formatMoney } = useAuth();
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export function SavedPlaces() {
   const [selectedTripId, setSelectedTripId] = useState(trips[0]?.id || '');
   const [nights, setNights] = useState(2);
 
-  const filteredPlaces = savedPlaces.filter((place) => {
+  const filteredPlaces = (savedPlaces || []).filter((place) => {
     if (filterType === 'all') return true;
     return place.type?.toLowerCase() === filterType.toLowerCase();
   });
@@ -39,8 +39,8 @@ export function SavedPlaces() {
     e.preventDefault();
     if (!targetPlaceModal || !selectedTripId) return;
 
-    addCityToTrip(selectedTripId, {
-      id: targetPlaceModal.id,
+    addCityStop(selectedTripId, {
+      id: targetPlaceModal.id || targetPlaceModal._id,
       name: targetPlaceModal.name,
       country: targetPlaceModal.country,
       coordinates: targetPlaceModal.coordinates || [18.9220, 72.8347],

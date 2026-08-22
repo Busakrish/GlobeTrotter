@@ -3,29 +3,29 @@ import DataStore from '../config/dataStore.js';
 export const getPublicTrips = async (req, res) => {
   try {
     const { category, style, q } = req.query;
-    let trips = DataStore.getCollection('trips');
-    const users = DataStore.getCollection('users');
+    const trips = (DataStore.getCollection('trips') || []).filter((t) => t.isPublic === true);
+    const users = DataStore.getCollection('users') || [];
     const userMap = {};
     users.forEach((u) => {
-      userMap[u.id || u._id] = u;
+      userMap[(u.id || u._id).toString()] = u;
     });
 
     let enrichedTrips = trips.map((t) => {
-      const u = userMap[t.userId] || users[0];
+      const u = userMap[(t.userId || '').toString()];
       const destinationsList = t.cities?.map((c) => c.name) ||
-        (t.destination ? (typeof t.destination === 'string' ? t.destination.split(' → ') : t.destination) : ['Mumbai', 'Goa']);
+        (t.destination ? (typeof t.destination === 'string' ? t.destination.split(' → ') : t.destination) : []);
 
       return {
         ...t,
         destinations: destinationsList,
-        likesCount: t.likesCount || 18,
-        rating: t.rating || 4.9,
-        tags: t.interests || [t.travelStyle || 'Balanced'],
+        likesCount: t.likesCount || 0,
+        rating: t.rating || 5.0,
+        tags: t.interests || [t.travelStyle || 'Balanced Explorer'],
         author: {
-          name: u?.name || 'Priya Sharma',
-          email: u?.email || 'priya.sharma@globetrotter.io',
-          avatar: u?.profileImage || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
-          handle: `@${(u?.name || 'priya_sharma').toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
+          name: u?.name || 'Traveler',
+          email: u?.email || '',
+          avatar: u?.profileImage || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
+          handle: `@${(u?.name || 'traveler').toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
           badge: u?.role === 'admin' ? 'Platform Admin' : 'Verified Explorer',
         },
       };

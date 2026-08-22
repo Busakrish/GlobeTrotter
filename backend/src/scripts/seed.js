@@ -727,58 +727,33 @@ export const seedDatabase = async () => {
       },
     ];
 
-    // 5. Demo Expenses for Trip 1
-    const expenses = [
-      { id: 'exp-1', tripId: 'trip-1', userId: 'user-priya-sharma', title: 'Roundtrip Flight BOM - DEL', category: 'Flights', amount: 12500, currency: 'INR', date: '2026-10-15', notes: 'IndiGo direct flight' },
-      { id: 'exp-2', tripId: 'trip-1', userId: 'user-priya-sharma', title: 'Boutique Haveli Stay Jaipur (3 Nights)', category: 'Accommodation', amount: 16500, currency: 'INR', date: '2026-10-17', notes: 'Heritage room with breakfast included' },
-      { id: 'exp-3', tripId: 'trip-1', userId: 'user-priya-sharma', title: 'Vande Bharat Express Train Tickets', category: 'Transportation', amount: 2400, currency: 'INR', date: '2026-10-17', notes: '2 Executive Chair Car seats' },
-      { id: 'exp-4', tripId: 'trip-1', userId: 'user-priya-sharma', title: 'Old Delhi Street Food & Dinner', category: 'Food', amount: 2500, currency: 'INR', date: '2026-10-16', notes: 'Karim’s, Jalebi Wala and Kulfi' },
-      { id: 'exp-5', tripId: 'trip-1', userId: 'user-priya-sharma', title: 'Monument Entry Composite Passes', category: 'Activities', amount: 1800, currency: 'INR', date: '2026-10-16', notes: 'Amber Fort, Qutub Minar, Humayun Tomb' },
-    ];
-
-    // 6. Saved Places
-    const savedPlaces = [
-      { id: 'saved-1', userId: 'user-priya-sharma', destinationId: 'dest-goa', name: 'Goa', country: 'India', type: 'Destination', image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80', description: 'Golden beaches, Portuguese heritage churches, and coastal seafood.', rating: 4.9, avgCost: 3800, coordinates: [15.2993, 74.1240] },
-      { id: 'saved-2', userId: 'user-priya-sharma', destinationId: 'dest-jaipur', name: 'Jaipur', country: 'India', type: 'Destination', image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=600&q=80', description: 'The Pink City famous for hilltop forts, Hawa Mahal, and royal palaces.', rating: 4.9, avgCost: 3400, coordinates: [26.9124, 75.7873] },
-      { id: 'saved-3', userId: 'user-priya-sharma', destinationId: 'dest-tokyo', name: 'Tokyo', country: 'Japan', type: 'Destination', image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=600&q=80', description: 'Futuristic neon lights, historic Shinto shrines, ramen bars, and digital art.', rating: 4.9, avgCost: 14000, coordinates: [35.6762, 139.6503] },
-      { id: 'saved-4', userId: 'user-priya-sharma', destinationId: 'dest-paris', name: 'Paris', country: 'France', type: 'Destination', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80', description: 'Romantic Haussmann avenues, world-class art galleries, and riverside bistros.', rating: 4.9, avgCost: 16500, coordinates: [48.8566, 2.3522] },
-    ];
-
-    // 7. Notifications
-    const notifications = [
-      { id: 'notif-1', userId: 'user-priya-sharma', title: 'Itinerary Synchronized', message: 'Day 2 schedule for "Golden Triangle & Royal Palaces" updated.', type: 'trip', link: '/trips/trip-1/itinerary', read: false, time: '10 mins ago' },
-      { id: 'notif-2', userId: 'user-priya-sharma', title: 'Budget Health Alert', message: 'You have spent 55% of your total planned budget. On track for target.', type: 'budget', link: '/trips/trip-1/budget', read: true, time: '2 hours ago' },
-      { id: 'notif-3', userId: 'user-priya-sharma', title: 'Weather Advisory: Jaipur', message: 'Clear sunny skies forecasted for your upcoming Jaipur arrival.', type: 'weather', link: '/explore/dest-jaipur', read: true, time: 'Yesterday' },
-    ];
-
-    // Store into DataStore
-    DataStore.setCollection('users', users);
+    // Store only reference data into DataStore
     DataStore.setCollection('destinations', SEED_DESTINATIONS);
-    DataStore.setCollection('trips', trips);
-    DataStore.setCollection('itineraryDays', itineraryDays);
-    DataStore.setCollection('expenses', expenses);
-    DataStore.setCollection('savedPlaces', savedPlaces);
-    DataStore.setCollection('notifications', notifications);
+    
+    // Ensure user-specific collections are initialized as empty arrays
+    if (!DataStore.getCollection('trips')) DataStore.setCollection('trips', []);
+    if (!DataStore.getCollection('itineraryDays')) DataStore.setCollection('itineraryDays', []);
+    if (!DataStore.getCollection('expenses')) DataStore.setCollection('expenses', []);
+    if (!DataStore.getCollection('savedPlaces')) DataStore.setCollection('savedPlaces', []);
+    if (!DataStore.getCollection('notifications')) DataStore.setCollection('notifications', []);
+    if (!DataStore.getCollection('checklists')) DataStore.setCollection('checklists', []);
+    if (!DataStore.getCollection('packingLists')) DataStore.setCollection('packingLists', []);
+    if (!DataStore.getCollection('documents')) DataStore.setCollection('documents', []);
+    if (!DataStore.getCollection('groupTrips')) DataStore.setCollection('groupTrips', []);
+    if (!DataStore.getCollection('groupJournalMemories')) DataStore.setCollection('groupJournalMemories', []);
 
-    // If MongoDB is connected, also populate MongoDB collections
+    // If MongoDB is connected, populate reference destinations
     if (getIsMongoConnected()) {
       try {
-        await User.deleteMany({});
         await Destination.deleteMany({});
-        await Trip.deleteMany({});
-        await ItineraryDay.deleteMany({});
-        await Expense.deleteMany({});
-        await SavedPlace.deleteMany({});
-
-        await User.insertMany(users.map((u) => ({ ...u, _id: undefined })));
         await Destination.insertMany(SEED_DESTINATIONS.map((d) => ({ ...d, _id: undefined })));
-        console.log('[Seed] Populated MongoDB collections.');
+        console.log('[Seed] Populated MongoDB reference destinations.');
       } catch (e) {
         console.warn('[Seed] MongoDB insertion notice:', e.message);
       }
     }
 
-    console.log(`[Seed] Successfully seeded ${SEED_DESTINATIONS.length} destinations, ${users.length} demo users, and ${trips.length} trips into database.`);
+    console.log(`[Seed] Successfully seeded ${SEED_DESTINATIONS.length} reference destinations into database.`);
     return true;
   } catch (error) {
     console.error('[Seed Error]:', error.message);
@@ -791,3 +766,4 @@ export default seedDatabase;
 if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('seed.js')) {
   seedDatabase().then(() => process.exit(0));
 }
+

@@ -1,6 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { mockCommunityTrips } from '../data/mockCommunity';
 import { useTrips } from '../context/TripContext';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
@@ -23,12 +22,12 @@ import {
 } from 'lucide-react';
 
 export function Community() {
-  const { trips, forkCommunityTrip } = useTrips();
+  const { trips } = useTrips();
   const { currentUser, formatMoney } = useAuth();
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
 
-  const [communityTrips, setCommunityTrips] = useState(mockCommunityTrips);
+  const [communityTrips, setCommunityTrips] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState('all');
   const [likesMap, setLikesMap] = useState({});
@@ -37,31 +36,15 @@ export function Community() {
     const fetchPublicTrips = async () => {
       try {
         const res = await communityApi.getPublicTrips();
-        if (res?.success && res.trips && res.trips.length > 0) {
+        if (res?.success && Array.isArray(res.trips)) {
           setCommunityTrips(res.trips);
         }
       } catch (e) {
-        // Fallback to local trips or mockCommunityTrips (which are real Priya Sharma trips)
-        if (trips && trips.length > 0) {
-          const userTrips = trips.map((t) => ({
-            ...t,
-            destinations: t.cities?.map((c) => c.name) || [t.destination || 'India'],
-            tags: t.interests || [t.travelStyle || 'Balanced'],
-            rating: t.rating || 4.9,
-            likesCount: t.likesCount || 15,
-            author: t.author || {
-              name: currentUser?.name || 'Priya Sharma',
-              handle: `@${(currentUser?.name || 'priya_sharma').toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
-              avatar: currentUser?.profileImage || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
-              badge: 'Verified Explorer',
-            },
-          }));
-          setCommunityTrips(userTrips);
-        }
+        console.warn('[Community] API fetch notice:', e.message);
       }
     };
     fetchPublicTrips();
-  }, [trips, currentUser]);
+  }, []);
 
   const toggleLike = async (id, initialLikes) => {
     const current = likesMap[id] !== undefined ? likesMap[id] : initialLikes;

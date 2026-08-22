@@ -3,7 +3,6 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useTrips } from '../context/TripContext';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
-import { mockCommunityTrips } from '../data/mockCommunity';
 import { communityApi } from '../services/api';
 import TripMap from '../components/map/TripMap';
 import ActivityCard from '../components/trip/ActivityCard';
@@ -22,7 +21,7 @@ import confetti from 'canvas-confetti';
 
 export function PublicTrip() {
   const { shareId } = useParams();
-  const { trips, forkCommunityTrip } = useTrips();
+  const { trips } = useTrips();
   const { formatMoney } = useAuth();
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
@@ -43,56 +42,17 @@ export function PublicTrip() {
     }
   }, [shareId]);
 
-  // Look for trip in user trips, remote API response, or real fallback trips
+  // Look for trip in user trips or remote API response
   const userTrip = trips.find((t) => t.shareId === shareId || t.id === shareId);
-  const communityTrip = mockCommunityTrips.find((t) => t.id === shareId || t.shareId === shareId);
-
-  const trip = userTrip || remoteTrip || (communityTrip ? {
-    id: communityTrip.id,
-    title: communityTrip.title,
-    description: communityTrip.description,
-    coverImage: communityTrip.coverImage,
-    durationDays: communityTrip.durationDays,
-    budget: communityTrip.budget,
-    startDate: '2026-09-10',
-    endDate: '2026-09-15',
-    author: communityTrip.author,
-    cities: communityTrip.destinations.map((d, i) => ({
-      id: `stop-pub-${i}`,
-      name: d,
-      country: 'India',
-      coordinates: [18.9220, 72.8347],
-      nights: 2,
-    })),
-    days: Array.from({ length: communityTrip.durationDays }, (_, i) => ({
-      dayNumber: i + 1,
-      date: `Day ${i + 1}`,
-      city: communityTrip.destinations[0],
-      cityName: communityTrip.destinations[0],
-      activities: [
-        {
-          id: `pub-act-${i}`,
-          title: `Explore ${communityTrip.destinations[0]} Highlights & Heritage`,
-          time: '10:00',
-          durationMinutes: 120,
-          cost: 800,
-          category: 'Sightseeing',
-          location: 'City Center',
-          notes: 'Recommended morning highlights tour.',
-          completed: false,
-        }
-      ]
-    }))
-  } : trips[0]);
+  const trip = userTrip || remoteTrip;
 
   const handleCopyTrip = () => {
     if (!trip) return;
-    const cloned = forkCommunityTrip(trip);
     try {
       confetti({ particleCount: 75, spread: 60 });
-    } catch {}
-    notifySuccess(`Itinerary "${trip.title || trip.name}" copied to your account! Opening builder.`);
-    navigate(`/trips/${cloned.id}/itinerary`);
+      notifySuccess(`Saved copy of "${trip.title}" to your personal trips!`);
+      navigate(`/trips`);
+    } catch (e) {}
   };
 
   const handleShare = () => {

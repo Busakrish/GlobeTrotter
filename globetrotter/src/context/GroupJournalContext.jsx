@@ -4,144 +4,17 @@ import { useAuth } from './AuthContext';
 
 const GroupJournalContext = createContext(null);
 
-const DEFAULT_GROUPS = [
-  {
-    id: 'group-goa-squad',
-    _id: 'group-goa-squad',
-    name: 'Coastal Wanderers & Goa Crew',
-    title: 'Goa Sunsets, Heritage Latin Quarter & Beach Trail',
-    destination: 'Goa, India',
-    startDate: '2026-10-15',
-    endDate: '2026-10-22',
-    coverImage: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80',
-    description: 'Shared travel album for our week-long coastal journey across North & South Goa beaches, spice plantations, and historic Portuguese mansions.',
-    creatorId: 'user-priya-sharma',
-    creatorName: 'Priya Sharma',
-    adminIds: ['user-priya-sharma'],
-    members: [
-      {
-        userId: 'user-priya-sharma',
-        id: 'user-priya-sharma',
-        _id: 'user-priya-sharma',
-        name: 'Priya Sharma',
-        email: 'priya.sharma@globetrotter.io',
-        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
-        role: 'admin',
-        joinedAt: '2026-08-20T10:00:00.000Z',
-      },
-      {
-        userId: 'user-admin',
-        id: 'user-admin',
-        _id: 'user-admin',
-        name: 'Alex Rivera (Admin)',
-        email: 'admin@globetrotter.io',
-        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
-        role: 'member',
-        joinedAt: '2026-08-20T11:30:00.000Z',
-      },
-    ],
-    inviteCode: 'JOURNAL-GOA26',
-    memoriesCount: 2,
-    photosCount: 3,
-  },
-  {
-    id: 'group-rajasthan-heritage',
-    _id: 'group-rajasthan-heritage',
-    name: 'Royal Rajasthan Heritage Expedition',
-    title: 'Jaipur, Jodhpur & Udaipur Palace Odyssey',
-    destination: 'Rajasthan, India',
-    startDate: '2026-11-05',
-    endDate: '2026-11-14',
-    coverImage: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=80',
-    description: 'Collaborative memory vault capturing our multi-city palace tour, royal camel rides, and colorful night bazaars.',
-    creatorId: 'user-priya-sharma',
-    creatorName: 'Priya Sharma',
-    adminIds: ['user-priya-sharma'],
-    members: [
-      {
-        userId: 'user-priya-sharma',
-        id: 'user-priya-sharma',
-        _id: 'user-priya-sharma',
-        name: 'Priya Sharma',
-        email: 'priya.sharma@globetrotter.io',
-        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
-        role: 'admin',
-        joinedAt: '2026-08-21T08:00:00.000Z',
-      },
-    ],
-    inviteCode: 'JOURNAL-RAJ26',
-    memoriesCount: 0,
-    photosCount: 0,
-  },
-];
-
-const DEFAULT_MEMORIES = [
-  {
-    id: 'memory-1',
-    _id: 'memory-1',
-    groupId: 'group-goa-squad',
-    photos: [
-      'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
-    ],
-    caption: 'Magical golden hour at Vagator cliffside! The waves crashing against the red rocks while watching the sunset with fresh coconut water.',
-    location: 'Vagator Beach Cliff, North Goa',
-    date: '2026-10-16',
-    time: '18:15',
-    author: {
-      userId: 'user-priya-sharma',
-      id: 'user-priya-sharma',
-      name: 'Priya Sharma',
-      email: 'priya.sharma@globetrotter.io',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
-      role: 'admin',
-    },
-    likes: ['user-admin'],
-    likesCount: 1,
-    createdAt: '2026-10-16T18:30:00.000Z',
-  },
-  {
-    id: 'memory-2',
-    _id: 'memory-2',
-    groupId: 'group-goa-squad',
-    photos: [
-      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1200&q=80',
-    ],
-    caption: 'Explored the historic Fontainhas Latin Quarter early morning. Every doorway is a burst of pastel yellow, sky blue, and Portuguese tiles!',
-    location: 'Fontainhas, Panaji, Goa',
-    date: '2026-10-17',
-    time: '09:40',
-    author: {
-      userId: 'user-admin',
-      id: 'user-admin',
-      name: 'Alex Rivera (Admin)',
-      email: 'admin@globetrotter.io',
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
-      role: 'member',
-    },
-    likes: ['user-priya-sharma'],
-    likesCount: 1,
-    createdAt: '2026-10-17T09:55:00.000Z',
-  },
-];
-
 export function GroupJournalProvider({ children }) {
   const { currentUser } = useAuth();
 
   const [groupTrips, setGroupTrips] = useState(() => {
     const saved = localStorage.getItem('globetrotter_group_trips');
-    return saved ? JSON.parse(saved) : DEFAULT_GROUPS;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [memoriesMap, setMemoriesMap] = useState(() => {
     const saved = localStorage.getItem('globetrotter_group_memories');
-    if (saved) return JSON.parse(saved);
-    const map = {};
-    DEFAULT_MEMORIES.forEach((m) => {
-      if (!map[m.groupId]) map[m.groupId] = [];
-      map[m.groupId].push(m);
-    });
-    return map;
+    return saved ? JSON.parse(saved) : {};
   });
 
   const [loading, setLoading] = useState(false);
@@ -160,11 +33,11 @@ export function GroupJournalProvider({ children }) {
     setLoading(true);
     try {
       const res = await groupJournalApi.getGroupTrips();
-      if (res.success && Array.isArray(res.groups) && res.groups.length > 0) {
+      if (res?.success && Array.isArray(res.groups)) {
         setGroupTrips(res.groups);
       }
     } catch (err) {
-      console.warn('[GroupJournalContext] API fetch error, using local state:', err.message);
+      console.warn('[GroupJournalContext] API fetch error:', err.message);
     } finally {
       setLoading(false);
     }

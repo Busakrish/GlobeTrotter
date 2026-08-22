@@ -1,15 +1,13 @@
 {
   "users": [
     {
-      "_id": "user-priya-sharma",
-      "id": "user-priya-sharma",
-      "name": "Priya Sharma",
-      "email": "priya.sharma@globetrotter.io",
-      "password": "$2a$10$CX1eBqIxlkXVsumtvotJZ.0Z8ucwXX.2dadd/jj9LJrXrZpItcSfq",
-      "profileImage": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
+      "_id": "use-1787392885876-puohy",
+      "id": "use-1787392885876-puohy",
+      "name": "Clean Tester",
+      "email": "clean_tester_1787392885743@globetrotter.io",
+      "password": "$2a$10$SqYN77eT/KXs0RAeFNtYtuIlYRUuebYOp2EvEAQ2lnexheLK3u9XC",
+      "profileImage": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
       "travelStyle": "Balanced Explorer",
-      "homeAirport": "BOM (Mumbai, India)",
-      "preferredCurrency": "INR",
       "country": "India",
       "bio": "Passionate multi-city traveler exploring cultural heritage & vibrant food trails.",
       "travelInterests": [
@@ -18,464 +16,16 @@
         "Relaxation",
         "Photography"
       ],
-      "travelPersonality": {
-        "primaryArchetype": "The Cultural Explorer",
-        "tagline": "Loves discovering local heritage, authentic dining, and hidden alleyways.",
-        "scores": {
-          "adventure": 35,
-          "culture": 85,
-          "food": 75,
-          "nature": 50,
-          "relaxation": 60,
-          "shopping": 40,
-          "budget": 65,
-          "luxury": 45
-        }
-      },
-      "savedDestinations": [
-        "dest-goa",
-        "dest-jaipur",
-        "dest-tokyo",
-        "dest-paris"
-      ],
-      "role": "traveler"
-    },
-    {
-      "_id": "user-admin",
-      "id": "user-admin",
-      "name": "Alex Rivera (Admin)",
-      "email": "admin@globetrotter.io",
-      "password": "$2a$10$CX1eBqIxlkXVsumtvotJZ.0Z8ucwXX.2dadd/jj9LJrXrZpItcSfq",
-      "profileImage": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
-      "travelStyle": "Luxury Nomad",
-      "homeAirport": "DEL (New Delhi, India)",
       "preferredCurrency": "INR",
-      "country": "India",
-      "bio": "Global platform manager & adventure photographer.",
-      "travelInterests": [
-        "Adventure",
-        "Luxury",
-        "Photography"
-      ],
-      "role": "admin"
+      "language": "English (US)",
+      "role": "traveler",
+      "createdAt": "2026-08-22T10:01:25.876Z",
+      "updatedAt": "2026-08-22T10:01:25.876Z"
     }
   ],
-  "trips": [
-    {
-      "_id": "trip-1",
-      "id": "trip-1",
-      "userId": "user-priya-sharma",
-      "title": "Golden Triangle & Royal Palaces Tour",
-      "name": "Golden Triangle & Royal Palaces Tour",
-      "destination": "Delhi → Jaipur → Agra",
-      "country": "India",
-      "coverImage": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=80",
-      "startDate": "2026-10-15",
-      "endDate": "2026-10-22",
-      "durationDays": 7,
-      "travelers": 2,
-      "travelersCount": 2,
-      "budget": 65000,
-      "budgetBreakdown": {
-        "flights": 15000,
-        "accommodation": 22000,
-        "food": 10000,
-        "transportation": 8000,
-        "activities": 7000,
-        "shopping": 3000
-      },
-      "currency": "INR",
-      "travelStyle": "Culture",
-      "interests": [
-        "Culture",
-        "Palaces",
-        "Food"
-      ],
-      "status": "Upcoming",
-      "description": "Immersive exploration of royal Rajasthani architecture, Mughal tombs, and vibrant night bazaars.",
-      "cities": [
-        {
-          "id": "stop-1",
-          "name": "Delhi",
-          "country": "India",
-          "coordinates": [
-            28.6139,
-            77.209
-          ],
-          "nights": 2
-        },
-        {
-          "id": "stop-2",
-          "name": "Jaipur",
-          "country": "India",
-          "coordinates": [
-            26.9124,
-            75.7873
-          ],
-          "nights": 3
-        },
-        {
-          "id": "stop-3",
-          "name": "Agra",
-          "country": "India",
-          "coordinates": [
-            27.1767,
-            78.0081
-          ],
-          "nights": 2
-        }
-      ],
-      "isPublic": true,
-      "likesCount": 14
-    },
-    {
-      "_id": "trip-2",
-      "id": "trip-2",
-      "userId": "user-priya-sharma",
-      "title": "Goa Coastal Sunsets & Heritage Villas",
-      "name": "Goa Coastal Sunsets & Heritage Villas",
-      "destination": "Goa (North & South)",
-      "country": "India",
-      "coverImage": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80",
-      "startDate": "2026-11-05",
-      "endDate": "2026-11-10",
-      "durationDays": 5,
-      "travelers": 2,
-      "travelersCount": 2,
-      "budget": 45000,
-      "budgetBreakdown": {
-        "flights": 12000,
-        "accommodation": 16000,
-        "food": 8000,
-        "transportation": 4000,
-        "activities": 3500,
-        "shopping": 1500
-      },
-      "currency": "INR",
-      "travelStyle": "Relaxation",
-      "interests": [
-        "Beach",
-        "Seafood",
-        "Relaxation"
-      ],
-      "status": "Upcoming",
-      "description": "Relaxing coastal escape with Latin Quarter walks, water sports, and sunset dinner cruises.",
-      "cities": [
-        {
-          "id": "stop-201",
-          "name": "Panaji & Fontainhas",
-          "country": "India",
-          "coordinates": [
-            15.4909,
-            73.8278
-          ],
-          "nights": 2
-        },
-        {
-          "id": "stop-202",
-          "name": "Palolem Beach",
-          "country": "India",
-          "coordinates": [
-            15.01,
-            74.0232
-          ],
-          "nights": 3
-        }
-      ],
-      "isPublic": true,
-      "likesCount": 28
-    },
-    {
-      "_id": "trip-3",
-      "id": "trip-3",
-      "userId": "user-priya-sharma",
-      "title": "Tokyo Neon Lights & Kyoto Gardens",
-      "name": "Tokyo Neon Lights & Kyoto Gardens",
-      "destination": "Tokyo → Kyoto → Osaka",
-      "country": "Japan",
-      "coverImage": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=80",
-      "startDate": "2026-04-10",
-      "endDate": "2026-04-18",
-      "durationDays": 8,
-      "travelers": 2,
-      "travelersCount": 2,
-      "budget": 180000,
-      "budgetBreakdown": {
-        "flights": 65000,
-        "accommodation": 55000,
-        "food": 30000,
-        "transportation": 15000,
-        "activities": 10000,
-        "shopping": 5000
-      },
-      "currency": "INR",
-      "travelStyle": "Balanced",
-      "interests": [
-        "Culture",
-        "Tech",
-        "Food"
-      ],
-      "status": "Completed",
-      "description": "Cherry blossom expedition through Shinto shrines, bullet trains, and Michelin ramen alleys.",
-      "cities": [
-        {
-          "id": "stop-301",
-          "name": "Tokyo",
-          "country": "Japan",
-          "coordinates": [
-            35.6762,
-            139.6503
-          ],
-          "nights": 4
-        },
-        {
-          "id": "stop-302",
-          "name": "Kyoto",
-          "country": "Japan",
-          "coordinates": [
-            35.0116,
-            135.7681
-          ],
-          "nights": 4
-        }
-      ],
-      "isPublic": true,
-      "likesCount": 42
-    }
-  ],
-  "itineraryDays": [
-    {
-      "_id": "day-trip-1-1",
-      "id": "day-trip-1-1",
-      "tripId": "trip-1",
-      "dayNumber": 1,
-      "date": "2026-10-15",
-      "cityName": "Delhi",
-      "title": "Arrival in Delhi & South Delhi Heritage",
-      "weather": {
-        "condition": "Sunny",
-        "temp": 29,
-        "icon": "Sun"
-      },
-      "activities": [
-        {
-          "id": "act-101",
-          "activityId": "act-101",
-          "title": "Hotel Check-in & Connaught Place Walk",
-          "name": "Hotel Check-in & Connaught Place Walk",
-          "time": "11:00",
-          "startTime": "11:00",
-          "durationMinutes": 90,
-          "category": "Sightseeing",
-          "cost": 0,
-          "location": "Connaught Place, New Delhi",
-          "notes": "Exchange currency and grab cold coffee at Wenger’s.",
-          "completed": true
-        },
-        {
-          "id": "act-102",
-          "activityId": "act-102",
-          "title": "Humayun’s Tomb UNESCO Garden Stroll",
-          "name": "Humayun’s Tomb UNESCO Garden Stroll",
-          "time": "15:30",
-          "startTime": "15:30",
-          "durationMinutes": 120,
-          "category": "Sightseeing",
-          "cost": 250,
-          "location": "Nizamuddin East, New Delhi",
-          "notes": "Magnificent Persian charbagh gardens.",
-          "completed": false
-        },
-        {
-          "id": "act-103",
-          "activityId": "act-103",
-          "title": "Welcome Mughlai Dinner & Kebabs",
-          "name": "Welcome Mughlai Dinner & Kebabs",
-          "time": "19:30",
-          "startTime": "19:30",
-          "durationMinutes": 90,
-          "category": "Food & Dining",
-          "cost": 1400,
-          "location": "Pandara Road Market",
-          "notes": "Famous butter chicken and roomali roti.",
-          "completed": false
-        }
-      ]
-    },
-    {
-      "_id": "day-trip-1-2",
-      "id": "day-trip-1-2",
-      "tripId": "trip-1",
-      "dayNumber": 2,
-      "date": "2026-10-16",
-      "cityName": "Delhi",
-      "title": "Old Delhi Food Trail & Jama Masjid",
-      "weather": {
-        "condition": "Clear Skies",
-        "temp": 28,
-        "icon": "Sun"
-      },
-      "activities": [
-        {
-          "id": "act-104",
-          "activityId": "act-104",
-          "title": "Old Delhi Rickshaw Safari & Spice Bazaar",
-          "name": "Old Delhi Rickshaw Safari & Spice Bazaar",
-          "time": "09:30",
-          "startTime": "09:30",
-          "durationMinutes": 150,
-          "category": "Sightseeing",
-          "cost": 600,
-          "location": "Khari Baoli & Chandni Chowk",
-          "notes": "Visit the largest wholesale spice market in Asia.",
-          "completed": false
-        },
-        {
-          "id": "act-105",
-          "activityId": "act-105",
-          "title": "Jama Masjid & Karim’s Feast",
-          "name": "Jama Masjid & Karim’s Feast",
-          "time": "13:00",
-          "startTime": "13:00",
-          "durationMinutes": 90,
-          "category": "Food & Dining",
-          "cost": 1100,
-          "location": "Gali Kababian, Jama Masjid",
-          "notes": "Mutton Burra and crisp naan.",
-          "completed": false
-        },
-        {
-          "id": "act-106",
-          "activityId": "act-106",
-          "title": "Qutub Minar Complex & Sunset Tea",
-          "name": "Qutub Minar Complex & Sunset Tea",
-          "time": "16:30",
-          "startTime": "16:30",
-          "durationMinutes": 120,
-          "category": "Sightseeing",
-          "cost": 250,
-          "location": "Mehrauli, New Delhi",
-          "notes": "Iconic 12th-century tower and iron pillar.",
-          "completed": false
-        }
-      ]
-    },
-    {
-      "_id": "day-trip-1-3",
-      "id": "day-trip-1-3",
-      "tripId": "trip-1",
-      "dayNumber": 3,
-      "date": "2026-10-17",
-      "cityName": "Jaipur",
-      "title": "Express Train to Jaipur & Amber Fort",
-      "weather": {
-        "condition": "Sunny",
-        "temp": 27,
-        "icon": "Sun"
-      },
-      "activities": [
-        {
-          "id": "act-107",
-          "activityId": "act-107",
-          "title": "Vande Bharat Express to Jaipur",
-          "name": "Vande Bharat Express to Jaipur",
-          "time": "06:10",
-          "startTime": "06:10",
-          "durationMinutes": 240,
-          "category": "Transport",
-          "cost": 1200,
-          "location": "New Delhi Railway Station to Jaipur Junction",
-          "notes": "Scenic 4-hour high-speed train transit.",
-          "completed": false
-        },
-        {
-          "id": "act-108",
-          "activityId": "act-108",
-          "title": "Amber Palace & Sheesh Mahal Exploration",
-          "name": "Amber Palace & Sheesh Mahal Exploration",
-          "time": "14:00",
-          "startTime": "14:00",
-          "durationMinutes": 180,
-          "category": "Sightseeing",
-          "cost": 500,
-          "location": "Amer, Jaipur",
-          "notes": "Incredible mirrored ceilings and royal courtyards.",
-          "completed": false
-        },
-        {
-          "id": "act-109",
-          "activityId": "act-109",
-          "title": "Nahargarh Fort Sunset Viewpoint & Chai",
-          "name": "Nahargarh Fort Sunset Viewpoint & Chai",
-          "time": "17:30",
-          "startTime": "17:30",
-          "durationMinutes": 90,
-          "category": "Sightseeing",
-          "cost": 200,
-          "location": "Padao Restaurant, Nahargarh Fort",
-          "notes": "Sweeping panoramic view of the entire Pink City.",
-          "completed": false
-        }
-      ]
-    }
-  ],
-  "expenses": [
-    {
-      "id": "exp-1",
-      "tripId": "trip-1",
-      "userId": "user-priya-sharma",
-      "title": "Roundtrip Flight BOM - DEL",
-      "category": "Flights",
-      "amount": 12500,
-      "currency": "INR",
-      "date": "2026-10-15",
-      "notes": "IndiGo direct flight"
-    },
-    {
-      "id": "exp-2",
-      "tripId": "trip-1",
-      "userId": "user-priya-sharma",
-      "title": "Boutique Haveli Stay Jaipur (3 Nights)",
-      "category": "Accommodation",
-      "amount": 16500,
-      "currency": "INR",
-      "date": "2026-10-17",
-      "notes": "Heritage room with breakfast included"
-    },
-    {
-      "id": "exp-3",
-      "tripId": "trip-1",
-      "userId": "user-priya-sharma",
-      "title": "Vande Bharat Express Train Tickets",
-      "category": "Transportation",
-      "amount": 2400,
-      "currency": "INR",
-      "date": "2026-10-17",
-      "notes": "2 Executive Chair Car seats"
-    },
-    {
-      "id": "exp-4",
-      "tripId": "trip-1",
-      "userId": "user-priya-sharma",
-      "title": "Old Delhi Street Food & Dinner",
-      "category": "Food",
-      "amount": 2500,
-      "currency": "INR",
-      "date": "2026-10-16",
-      "notes": "Karim’s, Jalebi Wala and Kulfi"
-    },
-    {
-      "id": "exp-5",
-      "tripId": "trip-1",
-      "userId": "user-priya-sharma",
-      "title": "Monument Entry Composite Passes",
-      "category": "Activities",
-      "amount": 1800,
-      "currency": "INR",
-      "date": "2026-10-16",
-      "notes": "Amber Fort, Qutub Minar, Humayun Tomb"
-    }
-  ],
+  "trips": [],
+  "itineraryDays": [],
+  "expenses": [],
   "destinations": [
     {
       "id": "dest-mumbai",
@@ -1393,105 +943,316 @@
       ]
     }
   ],
-  "savedPlaces": [
+  "savedPlaces": [],
+  "checklists": [],
+  "packingLists": [],
+  "notifications": [],
+  "groupTrips": [],
+  "cities": [
     {
-      "id": "saved-1",
-      "userId": "user-priya-sharma",
-      "destinationId": "dest-goa",
+      "id": "city-mumbai",
+      "name": "Mumbai",
+      "country": "India",
+      "region": "Maharashtra",
+      "description": "The City of Dreams, buzzing with colonial landmarks, Bollywood glamour, vibrant street food, and the Arabian Sea.",
+      "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=1000&q=80",
+      "coordinates": [
+        18.922,
+        72.8347
+      ],
+      "costIndex": "",
+      "avgDailyCost": 3500,
+      "popularity": 96,
+      "bestMonths": [
+        "Nov",
+        "Dec",
+        "Jan",
+        "Feb"
+      ],
+      "tags": [
+        "Culture",
+        "Nightlife",
+        "Foodie",
+        "Coastal",
+        "Heritage"
+      ],
+      "rating": 4.8
+    },
+    {
+      "id": "city-goa",
       "name": "Goa",
       "country": "India",
-      "type": "Destination",
-      "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80",
-      "description": "Golden beaches, Portuguese heritage churches, and coastal seafood.",
-      "rating": 4.9,
-      "avgCost": 3800,
+      "region": "West Coast",
+      "description": "Sun-kissed golden beaches, Portuguese heritage churches, lively beach shacks, water sports, and tranquil backwaters.",
+      "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1000&q=80",
       "coordinates": [
         15.2993,
         74.124
-      ]
+      ],
+      "costIndex": "",
+      "avgDailyCost": 4000,
+      "popularity": 98,
+      "bestMonths": [
+        "Oct",
+        "Nov",
+        "Dec",
+        "Jan",
+        "Feb",
+        "Mar"
+      ],
+      "tags": [
+        "Beach",
+        "Nightlife",
+        "Relaxation",
+        "Water Sports",
+        "Party"
+      ],
+      "rating": 4.9
     },
     {
-      "id": "saved-2",
-      "userId": "user-priya-sharma",
-      "destinationId": "dest-jaipur",
+      "id": "city-jaipur",
       "name": "Jaipur",
       "country": "India",
-      "type": "Destination",
-      "image": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=600&q=80",
-      "description": "The Pink City famous for hilltop forts, Hawa Mahal, and royal palaces.",
-      "rating": 4.9,
-      "avgCost": 3400,
+      "region": "Rajasthan",
+      "description": "The Pink City famous for majestic hilltop forts, ornate royal palaces, vibrant bazaars, and rich Rajasthani heritage.",
+      "image": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1000&q=80",
       "coordinates": [
         26.9124,
         75.7873
-      ]
+      ],
+      "costIndex": "",
+      "avgDailyCost": 3000,
+      "popularity": 94,
+      "bestMonths": [
+        "Oct",
+        "Nov",
+        "Dec",
+        "Jan",
+        "Feb",
+        "Mar"
+      ],
+      "tags": [
+        "Heritage",
+        "Architecture",
+        "Shopping",
+        "Photography"
+      ],
+      "rating": 4.7
     },
     {
-      "id": "saved-3",
-      "userId": "user-priya-sharma",
-      "destinationId": "dest-tokyo",
+      "id": "city-delhi",
+      "name": "New Delhi",
+      "country": "India",
+      "region": "North India",
+      "description": "India’s historic capital featuring UNESCO heritage monuments, sprawling Mughal gardens, and famous culinary hubs.",
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1000&q=80",
+      "coordinates": [
+        28.6139,
+        77.209
+      ],
+      "costIndex": "",
+      "avgDailyCost": 3200,
+      "popularity": 95,
+      "bestMonths": [
+        "Oct",
+        "Nov",
+        "Dec",
+        "Jan",
+        "Feb"
+      ],
+      "tags": [
+        "Heritage",
+        "Foodie",
+        "Museums",
+        "Monuments"
+      ],
+      "rating": 4.6
+    },
+    {
+      "id": "city-udaipur",
+      "name": "Udaipur",
+      "country": "India",
+      "region": "Rajasthan",
+      "description": "The City of Lakes with romantic marble palaces, shimmering waters, sunset boat cruises, and royal Mewar history.",
+      "image": "https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?auto=format&fit=crop&w=1000&q=80",
+      "coordinates": [
+        24.5854,
+        73.7125
+      ],
+      "costIndex": "$",
+      "avgDailyCost": 4500,
+      "popularity": 92,
+      "bestMonths": [
+        "Oct",
+        "Nov",
+        "Dec",
+        "Jan",
+        "Feb",
+        "Mar"
+      ],
+      "tags": [
+        "Romance",
+        "Lakes",
+        "Palaces",
+        "Scenic"
+      ],
+      "rating": 4.9
+    },
+    {
+      "id": "city-tokyo",
       "name": "Tokyo",
       "country": "Japan",
-      "type": "Destination",
-      "image": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=600&q=80",
-      "description": "Futuristic neon lights, historic Shinto shrines, ramen bars, and digital art.",
-      "rating": 4.9,
-      "avgCost": 14000,
+      "region": "Kanto",
+      "description": "A dazzling metropolis where hyper-modern skyscrapers, digital art, neon alleys, and Michelin ramen meet ancient Shinto shrines.",
+      "image": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80",
       "coordinates": [
         35.6762,
         139.6503
-      ]
+      ],
+      "costIndex": "",
+      "avgDailyCost": 14000,
+      "popularity": 99,
+      "bestMonths": [
+        "Mar",
+        "Apr",
+        "Oct",
+        "Nov"
+      ],
+      "tags": [
+        "Futuristic",
+        "Foodie",
+        "Anime",
+        "Shopping",
+        "Culture"
+      ],
+      "rating": 4.9
     },
     {
-      "id": "saved-4",
-      "userId": "user-priya-sharma",
-      "destinationId": "dest-paris",
+      "id": "city-kyoto",
+      "name": "Kyoto",
+      "country": "Japan",
+      "region": "Kansai",
+      "description": "Ancient imperial heart of Japan with thousands of classical Buddhist temples, serene Zen rock gardens, and traditional Geisha districts.",
+      "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80",
+      "coordinates": [
+        35.0116,
+        135.7681
+      ],
+      "costIndex": "$",
+      "avgDailyCost": 11000,
+      "popularity": 97,
+      "bestMonths": [
+        "Mar",
+        "Apr",
+        "Oct",
+        "Nov"
+      ],
+      "tags": [
+        "Temples",
+        "Gardens",
+        "Heritage",
+        "Tranquility"
+      ],
+      "rating": 4.9
+    },
+    {
+      "id": "city-paris",
       "name": "Paris",
       "country": "France",
-      "type": "Destination",
-      "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80",
-      "description": "Romantic Haussmann avenues, world-class art galleries, and riverside bistros.",
-      "rating": 4.9,
-      "avgCost": 16500,
+      "region": "Île-de-France",
+      "description": "The City of Light famed for iconic Eiffel Tower vistas, Louvre art treasures, romantic Seine cruises, and Parisian pastry cafes.",
+      "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1000&q=80",
       "coordinates": [
         48.8566,
         2.3522
-      ]
+      ],
+      "costIndex": "",
+      "avgDailyCost": 16500,
+      "popularity": 98,
+      "bestMonths": [
+        "Apr",
+        "May",
+        "Jun",
+        "Sep",
+        "Oct"
+      ],
+      "tags": [
+        "Art",
+        "Romance",
+        "Architecture",
+        "Cuisine"
+      ],
+      "rating": 4.8
     }
   ],
-  "checklists": [],
-  "packingLists": [],
-  "notifications": [
+  "activities": [
     {
-      "id": "notif-1",
-      "userId": "user-priya-sharma",
-      "title": "Itinerary Synchronized",
-      "message": "Day 2 schedule for \"Golden Triangle & Royal Palaces\" updated.",
-      "type": "trip",
-      "link": "/trips/trip-1/itinerary",
-      "read": false,
-      "time": "10 mins ago"
+      "id": "act-mumbai-1",
+      "cityId": "city-mumbai",
+      "cityName": "Mumbai",
+      "title": "Sunrise Walk at Marine Drive & Breakfast at Irani Cafe",
+      "name": "Sunrise Walk at Marine Drive & Breakfast at Irani Cafe",
+      "category": "Food & Dining",
+      "categoryKey": "food",
+      "duration": 120,
+      "cost": 450,
+      "rating": 4.8,
+      "reviewsCount": 340,
+      "timeOfDay": "Morning",
+      "suggestedTime": "08:00",
+      "image": "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?auto=format&fit=crop&w=600&q=80",
+      "description": "Stroll along the Queen's Necklace and enjoy classic Bun Maska and Chai at Kyani & Co."
     },
     {
-      "id": "notif-2",
-      "userId": "user-priya-sharma",
-      "title": "Budget Health Alert",
-      "message": "You have spent 55% of your total planned budget. On track for target.",
-      "type": "budget",
-      "link": "/trips/trip-1/budget",
-      "read": true,
-      "time": "2 hours ago"
+      "id": "act-mumbai-2",
+      "cityId": "city-mumbai",
+      "cityName": "Mumbai",
+      "title": "Heritage Tour: Gateway of India & Taj Mahal Palace",
+      "name": "Heritage Tour: Gateway of India & Taj Mahal Palace",
+      "category": "Sightseeing",
+      "categoryKey": "sightseeing",
+      "duration": 150,
+      "cost": 500,
+      "rating": 4.9,
+      "reviewsCount": 820,
+      "timeOfDay": "Morning",
+      "suggestedTime": "10:30",
+      "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=600&q=80",
+      "description": "Explore the iconic waterfront monument built in 1924 and the grand heritage architecture of South Bombay."
     },
     {
-      "id": "notif-3",
-      "userId": "user-priya-sharma",
-      "title": "Weather Advisory: Jaipur",
-      "message": "Clear sunny skies forecasted for your upcoming Jaipur arrival.",
-      "type": "weather",
-      "link": "/explore/dest-jaipur",
-      "read": true,
-      "time": "Yesterday"
+      "id": "act-goa-1",
+      "cityId": "city-goa",
+      "cityName": "Goa",
+      "title": "Vagator Beach Cliff Sunset & Beach Shack Dinner",
+      "name": "Vagator Beach Cliff Sunset & Beach Shack Dinner",
+      "category": "Relaxation & Beach",
+      "categoryKey": "beach",
+      "duration": 180,
+      "cost": 1500,
+      "rating": 4.9,
+      "reviewsCount": 650,
+      "timeOfDay": "Evening",
+      "suggestedTime": "17:30",
+      "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80",
+      "description": "Watch the Arabian Sea sunset from red cliff viewpoints followed by candlelit seafood dinner."
+    },
+    {
+      "id": "act-jaipur-1",
+      "cityId": "city-jaipur",
+      "cityName": "Jaipur",
+      "title": "Amber Fort & Palace Royal Heritage Tour",
+      "name": "Amber Fort & Palace Royal Heritage Tour",
+      "category": "Culture & Heritage",
+      "categoryKey": "culture",
+      "duration": 180,
+      "cost": 500,
+      "rating": 4.9,
+      "reviewsCount": 1100,
+      "timeOfDay": "Morning",
+      "suggestedTime": "09:00",
+      "image": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=600&q=80",
+      "description": "Explore the magnificent UNESCO World Heritage Amber Palace with its iconic Sheesh Mahal."
     }
-  ],
-  "groupTrips": []
+  ]
 }

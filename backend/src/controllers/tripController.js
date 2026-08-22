@@ -18,11 +18,7 @@ export const getTrips = async (req, res) => {
     }
 
     if (!trips.length) {
-      trips = DataStore.find('trips', { userId });
-      // If user has no trips yet in local store, also include demo trips for priya/admin if relevant
-      if (!trips.length && (userId === 'user-priya-sharma' || userId === 'user-101' || req.user.email?.includes('priya'))) {
-        trips = DataStore.getCollection('trips');
-      }
+      trips = DataStore.find('trips', { userId }) || [];
     }
 
     // Attach days and expenses to each trip
@@ -43,6 +39,7 @@ export const getTrips = async (req, res) => {
       success: true,
       count: fullTrips.length,
       trips: fullTrips,
+      data: fullTrips,
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -325,10 +322,13 @@ export const deleteTrip = async (req, res) => {
     DataStore.findByIdAndDelete('trips', id);
     DataStore.deleteMany('itineraryDays', { tripId: id });
     DataStore.deleteMany('expenses', { tripId: id });
+    DataStore.deleteMany('checklists', { tripId: id });
+    DataStore.deleteMany('packingLists', { tripId: id });
+    DataStore.deleteMany('documents', { tripId: id });
 
     return res.json({
       success: true,
-      message: 'Trip and associated schedule deleted successfully',
+      message: 'Trip and all associated schedule records deleted successfully',
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });

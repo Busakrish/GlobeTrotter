@@ -244,10 +244,86 @@ export const getSavedDestinations = async (req, res) => {
   }
 };
 
+export const getCities = async (req, res) => {
+  try {
+    const { country, q } = req.query;
+    let cities = DataStore.getCollection('cities') || [];
+
+    if (country && country !== 'all') {
+      cities = cities.filter((c) => c.country?.toLowerCase() === country.toLowerCase());
+    }
+
+    if (q && q.trim()) {
+      const search = q.toLowerCase();
+      cities = cities.filter(
+        (c) =>
+          c.name?.toLowerCase().includes(search) ||
+          c.country?.toLowerCase().includes(search) ||
+          c.region?.toLowerCase().includes(search)
+      );
+    }
+
+    return res.json({
+      success: true,
+      count: cities.length,
+      cities,
+      data: cities,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const getActivities = async (req, res) => {
+  try {
+    const { cityId, cityName, category, q } = req.query;
+    let activities = DataStore.getCollection('activities') || [];
+
+    if (cityId && cityId !== 'all') {
+      activities = activities.filter((a) => a.cityId === cityId);
+    }
+
+    if (cityName && cityName !== 'all') {
+      activities = activities.filter((a) => a.cityName?.toLowerCase() === cityName.toLowerCase());
+    }
+
+    if (category && category !== 'all') {
+      activities = activities.filter(
+        (a) =>
+          a.category?.toLowerCase() === category.toLowerCase() ||
+          a.categoryKey?.toLowerCase() === category.toLowerCase()
+      );
+    }
+
+    if (q && q.trim()) {
+      const search = q.toLowerCase();
+      activities = activities.filter(
+        (a) =>
+          a.title?.toLowerCase().includes(search) ||
+          a.name?.toLowerCase().includes(search) ||
+          a.description?.toLowerCase().includes(search) ||
+          a.cityName?.toLowerCase().includes(search)
+      );
+    }
+
+    return res.json({
+      success: true,
+      count: activities.length,
+      activities,
+      data: activities,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export default {
   getDestinations,
   getDestinationById,
   saveDestination,
   unsaveDestination,
   getSavedDestinations,
+  getCities,
+  getActivities,
 };
+

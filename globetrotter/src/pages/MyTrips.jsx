@@ -76,9 +76,11 @@ export function MyTrips() {
           </p>
         </div>
 
-        <Button to="/trips/create" variant="primary" icon={Plus}>
-          Plan New Trip
-        </Button>
+        <Link to="/trips/create">
+          <Button variant="primary" icon={Plus}>
+            Plan New Trip
+          </Button>
+        </Link>
       </div>
 
       {/* Filter & Search Bar */}

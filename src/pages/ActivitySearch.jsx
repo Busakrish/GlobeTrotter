@@ -1,7 +1,5 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { mockActivities, activityCategories } from '../data/mockActivities';
-import { mockCities } from '../data/mockCities';
 import { useTrips } from '../context/TripContext';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
@@ -21,8 +19,18 @@ import {
   Layers,
 } from 'lucide-react';
 
+export const activityCategories = [
+  'All',
+  'Sightseeing',
+  'Food & Dining',
+  'Culture & Heritage',
+  'Relaxation & Beach',
+  'Adventure & Sports',
+  'Shopping & Nightlife',
+];
+
 export function ActivitySearch() {
-  const { trips, addActivityToDay } = useTrips();
+  const { trips, addActivityToDay, activities, cities } = useTrips();
   const { formatMoney } = useAuth();
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
@@ -42,22 +50,22 @@ export function ActivitySearch() {
 
   // Filtered activities
   const filteredActivities = useMemo(() => {
-    return mockActivities.filter((act) => {
-      if (selectedCategory !== 'all' && act.categoryKey !== selectedCategory) return false;
+    return (activities || []).filter((act) => {
+      if (selectedCategory !== 'all' && act.categoryKey !== selectedCategory && act.category !== selectedCategory) return false;
       if (selectedCity !== 'all' && act.cityName !== selectedCity) return false;
       if (selectedTimeOfDay !== 'all' && act.timeOfDay !== selectedTimeOfDay) return false;
 
       if (query.trim()) {
         const q = query.toLowerCase();
-        const matchTitle = act.title.toLowerCase().includes(q);
-        const matchCity = act.cityName.toLowerCase().includes(q);
-        const matchDesc = act.description.toLowerCase().includes(q);
-        const matchCat = act.category.toLowerCase().includes(q);
+        const matchTitle = (act.title || act.name)?.toLowerCase().includes(q);
+        const matchCity = act.cityName?.toLowerCase().includes(q);
+        const matchDesc = act.description?.toLowerCase().includes(q);
+        const matchCat = act.category?.toLowerCase().includes(q);
         return matchTitle || matchCity || matchDesc || matchCat;
       }
       return true;
     });
-  }, [query, selectedCategory, selectedCity, selectedTimeOfDay]);
+  }, [activities, query, selectedCategory, selectedCity, selectedTimeOfDay]);
 
   const handleAddActivitySubmit = (e) => {
     e.preventDefault();
@@ -135,7 +143,7 @@ export function ActivitySearch() {
             className="px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 font-semibold text-slate-700 focus:outline-none"
           >
             <option value="all">All Cities</option>
-            {mockCities.map((c) => (
+            {(cities || []).map((c) => (
               <option key={c.id} value={c.name}>
                 {c.name}
               </option>

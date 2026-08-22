@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTrips } from '../context/TripContext';
 import { destinationsApi } from '../services/api';
-import { mockDestinations } from '../data/mockDestinations';
 import {
   Compass,
   MapPin,
@@ -14,7 +13,6 @@ import {
   ArrowRight,
   TrendingUp,
   DollarSign,
-  Users,
   Layers,
   Heart,
   Activity,
@@ -27,13 +25,13 @@ import SmartBudgetAlert from '../components/budget/SmartBudgetAlert';
 export function Dashboard() {
   const { currentUser, formatMoney } = useAuth();
   const { trips, activeTrip, calculateTripBudgetSummary, setActiveTripId, savedPlaces } = useTrips();
-  const [trendingDestinations, setTrendingDestinations] = useState(mockDestinations.slice(0, 4));
+  const [trendingDestinations, setTrendingDestinations] = useState([]);
 
   useEffect(() => {
     const fetchTrending = async () => {
       try {
         const res = await destinationsApi.getDestinations({ sort: 'rating' });
-        if (res?.success && res.destinations?.length) {
+        if (res?.success && Array.isArray(res.destinations)) {
           setTrendingDestinations(res.destinations.slice(0, 4));
         }
       } catch (e) {}
@@ -41,8 +39,8 @@ export function Dashboard() {
     fetchTrending();
   }, []);
 
-  const upcomingTrip = activeTrip || trips[0];
-  const budgetSummary = calculateTripBudgetSummary(upcomingTrip);
+  const upcomingTrip = activeTrip || (trips.length > 0 ? trips[0] : null);
+  const budgetSummary = upcomingTrip ? calculateTripBudgetSummary(upcomingTrip) : null;
 
   // Time-of-day greeting
   const getGreeting = () => {
@@ -58,41 +56,13 @@ export function Dashboard() {
   const savedPlacesCount = savedPlaces.length;
 
   const uniqueCountries = new Set(
-    trips.flatMap((t) => t.cities?.map((c) => c.country) || [t.country || 'India'])
+    trips.flatMap((t) => t.cities?.map((c) => c.country) || (t.country ? [t.country] : []))
   ).size;
 
   const totalPlannedActivities = trips.reduce(
     (sum, t) => sum + (t.days || []).reduce((dSum, d) => dSum + (d.activities?.length || 0), 0),
     0
   );
-
-  // Recent Platform & Traveler Activity Stream
-  const recentActivities = [
-    {
-      id: 'act-1',
-      title: 'Itinerary Synchronized',
-      desc: `Day schedule for "${upcomingTrip?.title || 'Trip'}" updated`,
-      time: '10 mins ago',
-      icon: Clock,
-      color: 'bg-[#714B67]/10 text-[#714B67]',
-    },
-    {
-      id: 'act-2',
-      title: 'Destination Wishlisted',
-      desc: `Added ${savedPlaces[0]?.name || 'Goa'} to Wishlist`,
-      time: '2 hours ago',
-      icon: Heart,
-      color: 'bg-[#F16E62]/15 text-[#F16E62]',
-    },
-    {
-      id: 'act-3',
-      title: 'Budget Allocation Adjusted',
-      desc: `Allocated ${formatMoney(upcomingTrip?.budget || 45000)} across categories`,
-      time: 'Yesterday',
-      icon: DollarSign,
-      color: 'bg-[#2AB79B]/15 text-[#2AB79B]',
-    },
-  ];
 
   return (
     <div className="space-y-8 text-left animate-fade-in pb-16">
@@ -107,7 +77,13 @@ export function Dashboard() {
             {getGreeting()}, {currentUser?.name?.split(' ')[0] || 'Traveler'}! ✈️
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            You have <strong className="text-[#1B1B26] font-semibold">{upcomingTripsCount} active journey(s)</strong> planned across {uniqueCountries} country destinations.
+            {trips.length === 0 ? (
+              <span>You haven't planned any trips yet. Create your first trip to get started.</span>
+            ) : (
+              <span>
+                You have <strong className="text-[#1B1B26] font-semibold">{upcomingTripsCount} active journey(s)</strong> planned across {uniqueCountries} country destination(s).
+              </span>
+            )}
           </p>
         </div>
 
@@ -184,11 +160,11 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* 3. Featured Active / Upcoming Trip Hero Banner */}
-      {upcomingTrip && (
+      {/* 3. Active Trip Hero Banner OR Clean Empty State */}
+      {upcomingTrip ? (
         <div className="rounded-[6px] bg-[#1B1B26] text-white overflow-hidden relative shadow-lg">
           <img
-            src={upcomingTrip.coverImage}
+            src={upcomingTrip.coverImage || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80'}
             alt={upcomingTrip.title}
             className="absolute inset-0 w-full h-full object-cover opacity-35"
           />
@@ -208,38 +184,48 @@ export function Dashboard() {
                   <MapPin className="w-4 h-4 shrink-0" />
                   {upcomingTrip.cities?.map((c) => c.name).join(' → ') || upcomingTrip.destination || 'Multi-City'}
                 </span>
-                <span>•</span>
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4 text-slate-400" />
-                  {upcomingTrip.startDate} to {upcomingTrip.endDate}
-                </span>
-                <span>•</span>
-                <span className="flex items-center gap-1.5 font-bold text-[#2AB79B]">
-                  <Clock className="w-4 h-4" />
-                  {upcomingTrip.durationDays} Days
-                </span>
+                {upcomingTrip.startDate && (
+                  <>
+                    <span>•</span>
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-4 h-4 text-slate-400" />
+                      {upcomingTrip.startDate} to {upcomingTrip.endDate}
+                    </span>
+                  </>
+                )}
+                {upcomingTrip.durationDays && (
+                  <>
+                    <span>•</span>
+                    <span className="flex items-center gap-1.5 font-bold text-[#2AB79B]">
+                      <Clock className="w-4 h-4" />
+                      {upcomingTrip.durationDays} Days
+                    </span>
+                  </>
+                )}
               </div>
               <p className="text-xs sm:text-sm text-slate-300 line-clamp-2 leading-relaxed mb-6">
-                {upcomingTrip.description}
+                {upcomingTrip.description || 'Custom multi-city travel itinerary with day-by-day scheduling.'}
               </p>
 
               <div className="flex flex-wrap items-center gap-3">
                 <Link
-                  to={`/trips/${upcomingTrip.id}`}
-                  onClick={() => setActiveTripId(upcomingTrip.id)}
+                  to={`/trips/${upcomingTrip.id || upcomingTrip._id}`}
+                  onClick={() => setActiveTripId(upcomingTrip.id || upcomingTrip._id)}
                 >
                   <Button variant="primary" size="md" iconRight={ArrowRight}>
                     View Workspace
                   </Button>
                 </Link>
-                <Link
-                  to={`/trips/${upcomingTrip.id}/budget`}
-                  onClick={() => setActiveTripId(upcomingTrip.id)}
-                >
-                  <Button variant="secondary" size="md" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
-                    Budget: {formatMoney(budgetSummary.totalSpent)} / {formatMoney(upcomingTrip.budget)}
-                  </Button>
-                </Link>
+                {budgetSummary && (
+                  <Link
+                    to={`/trips/${upcomingTrip.id || upcomingTrip._id}/budget`}
+                    onClick={() => setActiveTripId(upcomingTrip.id || upcomingTrip._id)}
+                  >
+                    <Button variant="secondary" size="md" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
+                      Budget: {formatMoney(budgetSummary.totalSpent)} / {formatMoney(upcomingTrip.budget)}
+                    </Button>
+                  </Link>
+                )}
               </div>
             </div>
 
@@ -249,10 +235,34 @@ export function Dashboard() {
             </div>
           </div>
         </div>
+      ) : (
+        <div className="rounded-[6px] bg-white border-2 border-dashed border-slate-200 p-8 sm:p-12 text-center shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+          <div className="w-16 h-16 rounded-full bg-[#714B67]/10 text-[#714B67] flex items-center justify-center mx-auto mb-4">
+            <Compass className="w-8 h-8" />
+          </div>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2">
+            You haven't planned any trips yet
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mb-6 leading-relaxed">
+            Create your first trip to build custom itineraries, track daily budgets, pack checklists, and monitor real-time weather forecasts.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link to="/trips/create">
+              <Button variant="primary" size="md" icon={Plus}>
+                Plan Your First Trip
+              </Button>
+            </Link>
+            <Link to="/explore">
+              <Button variant="secondary" size="md" icon={Compass}>
+                Explore Destinations
+              </Button>
+            </Link>
+          </div>
+        </div>
       )}
 
       {/* 4. Smart Budget Status Banner */}
-      {upcomingTrip && (
+      {upcomingTrip && budgetSummary && (
         <div>
           <SmartBudgetAlert budgetSummary={budgetSummary} />
         </div>
@@ -314,20 +324,33 @@ export function Dashboard() {
               <h3 className="text-lg font-bold text-[#1B1B26]">Your Trips Library</h3>
               <p className="text-xs text-slate-500">Pick up where you left off</p>
             </div>
-            <Link
-              to="/trips"
-              className="inline-flex items-center gap-1 text-xs font-bold text-[#714B67] hover:underline"
-            >
-              <span>View All ({trips.length})</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+            {trips.length > 0 && (
+              <Link
+                to="/trips"
+                className="inline-flex items-center gap-1 text-xs font-bold text-[#714B67] hover:underline"
+              >
+                <span>View All ({trips.length})</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {trips.slice(0, 4).map((trip, i) => (
-              <TripCard key={trip.id || trip._id} trip={trip} index={i} />
-            ))}
-          </div>
+          {trips.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {trips.slice(0, 4).map((trip, i) => (
+                <TripCard key={trip.id || trip._id} trip={trip} index={i} />
+              ))}
+            </div>
+          ) : (
+            <div className="p-8 rounded-[6px] bg-white border border-slate-200 text-center">
+              <p className="text-sm text-slate-500 mb-4">No trips found in your database account.</p>
+              <Link to="/trips/create">
+                <Button variant="primary" size="sm" icon={Plus}>
+                  Create Your First Trip
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Right: Recent Activity Stream */}
@@ -338,23 +361,24 @@ export function Dashboard() {
           </h3>
 
           <div className="p-6 rounded-[6px] bg-white border border-slate-200 shadow-[0_2px_8px_rgba(0,0,0,0.06)] space-y-4">
-            {recentActivities.map((act) => {
-              const Icon = act.icon;
-              return (
-                <div key={act.id} className="flex items-start gap-3 text-xs">
-                  <div
-                    className={`w-8 h-8 rounded-[4px] flex items-center justify-center font-bold shrink-0 mt-0.5 ${act.color}`}
-                  >
-                    <Icon className="w-4 h-4" />
+            {trips.length > 0 ? (
+              trips.slice(0, 3).map((t, idx) => (
+                <div key={t.id || t._id || idx} className="flex items-start gap-3 text-xs">
+                  <div className="w-8 h-8 rounded-[4px] bg-[#714B67]/10 text-[#714B67] flex items-center justify-center font-bold shrink-0 mt-0.5">
+                    <Clock className="w-4 h-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-[#1B1B26]">{act.title}</h4>
-                    <p className="text-[11px] text-slate-500 leading-snug mt-0.5">{act.desc}</p>
-                    <span className="text-[10px] text-slate-400 mt-1 block">{act.time}</span>
+                    <h4 className="font-bold text-[#1B1B26] truncate">{t.title || 'Trip Itinerary'}</h4>
+                    <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
+                      {t.cities?.map((c) => c.name).join(' → ') || t.destination || 'Multi-City'}
+                    </p>
+                    <span className="text-[10px] text-slate-400 mt-1 block">Active</span>
                   </div>
                 </div>
-              );
-            })}
+              ))
+            ) : (
+              <p className="text-xs text-slate-400 text-center py-4">No recent activity recorded.</p>
+            )}
           </div>
 
           {/* Quick AI Matcher teaser */}
@@ -376,61 +400,63 @@ export function Dashboard() {
       </div>
 
       {/* 7. Trending Destinations */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h3 className="text-lg font-bold text-[#1B1B26]">Trending Destinations</h3>
-            <p className="text-xs text-slate-500">Popular travel hotspots</p>
-          </div>
-          <Link
-            to="/explore"
-            className="inline-flex items-center gap-1 text-xs font-bold text-[#714B67] hover:underline"
-          >
-            <span>Explore All</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {trendingDestinations.map((dest, i) => (
-            <div
-              key={dest.id || dest._id}
-              className="group relative rounded-[6px] overflow-hidden bg-white border border-slate-200 border-t-3 border-t-[#2AB79B] shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-md transition-all card-hover flex flex-col justify-between"
-            >
-              <div className="relative h-40 w-full overflow-hidden bg-slate-100">
-                <img
-                  src={dest.image}
-                  alt={dest.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-                <div className="absolute bottom-2.5 inset-x-3 text-white">
-                  <h4 className="text-sm font-bold text-white">{dest.name}</h4>
-                  <p className="text-[11px] text-slate-300">{dest.country} • {dest.costIndex}</p>
-                </div>
-              </div>
-
-              <div className="p-4">
-                <p className="text-xs text-[#1B1B26]/80 line-clamp-2 leading-relaxed mb-3">
-                  {dest.shortDescription || dest.description}
-                </p>
-                <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
-                  <span className="font-bold text-[#1B1B26]">
-                    {formatMoney(dest.avgDailyCost)} <span className="text-[10px] font-normal text-slate-500">/ day</span>
-                  </span>
-                  <Link
-                    to={`/explore/${dest.id}`}
-                    className="font-bold text-xs text-[#714B67] hover:underline flex items-center gap-1"
-                  >
-                    <span>View Guide</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </div>
-              </div>
+      {trendingDestinations.length > 0 && (
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-bold text-[#1B1B26]">Trending Destinations</h3>
+              <p className="text-xs text-slate-500">Popular travel hotspots from database catalog</p>
             </div>
-          ))}
+            <Link
+              to="/explore"
+              className="inline-flex items-center gap-1 text-xs font-bold text-[#714B67] hover:underline"
+            >
+              <span>Explore All</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {trendingDestinations.map((dest) => (
+              <div
+                key={dest.id || dest._id}
+                className="group relative rounded-[6px] overflow-hidden bg-white border border-slate-200 border-t-3 border-t-[#2AB79B] shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-md transition-all card-hover flex flex-col justify-between"
+              >
+                <div className="relative h-40 w-full overflow-hidden bg-slate-100">
+                  <img
+                    src={dest.image}
+                    alt={dest.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                  <div className="absolute bottom-2.5 inset-x-3 text-white">
+                    <h4 className="text-sm font-bold text-white">{dest.name}</h4>
+                    <p className="text-[11px] text-slate-300">{dest.country} • {dest.costIndex}</p>
+                  </div>
+                </div>
+
+                <div className="p-4">
+                  <p className="text-xs text-[#1B1B26]/80 line-clamp-2 leading-relaxed mb-3">
+                    {dest.shortDescription || dest.description}
+                  </p>
+                  <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+                    <span className="font-bold text-[#1B1B26]">
+                      {formatMoney(dest.avgDailyCost)} <span className="text-[10px] font-normal text-slate-500">/ day</span>
+                    </span>
+                    <Link
+                      to={`/explore/${dest.id}`}
+                      className="font-bold text-xs text-[#714B67] hover:underline flex items-center gap-1"
+                    >
+                      <span>View Guide</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

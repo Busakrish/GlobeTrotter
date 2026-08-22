@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import { useTrips } from '../context/TripContext';
 import { useAuth } from '../context/AuthContext';
 import { adminApi } from '../services/api';
-import { mockAdminStats } from '../data/mockAdmin';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -182,7 +181,7 @@ export function AdminDashboard() {
     return {
       kpis,
       userGrowthData,
-      popularDestinations: popularDestinations.length ? popularDestinations : mockAdminStats.popularDestinations,
+      popularDestinations,
       categorySpendingDistribution,
       recentPlatformEvents,
     };

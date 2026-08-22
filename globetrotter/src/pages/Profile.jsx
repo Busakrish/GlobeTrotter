@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
-import { mockCities } from '../data/mockCities';
+import { useTrips } from '../context/TripContext';
 import Input, { Select } from '../components/common/Input';
 import Button from '../components/common/Button';
 import Badge from '../components/common/Badge';
@@ -22,17 +22,18 @@ import {
 export function Profile() {
   const { currentUser, updateProfile, currency, setCurrency } = useAuth();
   const { notifySuccess } = useNotification();
+  const { cities } = useTrips();
 
   const [formData, setFormData] = useState({
-    name: currentUser?.name || 'Priya Sharma',
-    email: currentUser?.email || 'priya.sharma@globetrotter.io',
-    avatar: currentUser?.avatar || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
+    name: currentUser?.name || 'Traveler',
+    email: currentUser?.email || '',
+    avatar: currentUser?.avatar || currentUser?.profileImage || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
     travelStyle: currentUser?.travelStyle || 'Balanced Explorer',
     homeAirport: currentUser?.homeAirport || 'BOM (Mumbai, India)',
     dietary: 'Vegetarian Friendly',
   });
 
-  const [wishlist, setWishlist] = useState(currentUser?.savedDestinations || ['city-goa', 'city-jaipur', 'city-tokyo']);
+  const [wishlist, setWishlist] = useState(currentUser?.savedDestinations || []);
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -48,7 +49,7 @@ export function Profile() {
     notifySuccess('Removed destination from saved wishlist.');
   };
 
-  const wishlistCities = mockCities.filter((c) => wishlist.includes(c.id));
+  const wishlistCities = (cities || []).filter((c) => wishlist.includes(c.id));
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 text-left animate-fade-in pb-16">

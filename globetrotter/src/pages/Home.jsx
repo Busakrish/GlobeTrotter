@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { destinationsApi } from '../services/api';
-import { mockDestinations } from '../data/mockDestinations';
 import { useAuth } from '../context/AuthContext';
 import { useTrips } from '../context/TripContext';
 import DestinationCard from '../components/destination/DestinationCard';
@@ -32,10 +31,10 @@ import {
 
 export function Home() {
   const { currentUser } = useAuth();
-  const { trips, addCityToTrip } = useTrips();
+  const { trips, addCityStop } = useTrips();
   const navigate = useNavigate();
 
-  const [destinations, setDestinations] = useState(mockDestinations);
+  const [destinations, setDestinations] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -66,7 +65,7 @@ export function Home() {
     e.preventDefault();
     if (!targetDestModal || !selectedTripId) return;
 
-    addCityToTrip(selectedTripId, {
+    addCityStop(selectedTripId, {
       id: targetDestModal.id,
       name: targetDestModal.name,
       country: targetDestModal.country,

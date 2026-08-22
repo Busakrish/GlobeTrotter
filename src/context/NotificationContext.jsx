@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { initialNotifications } from '../data/mockNotifications';
 
 const NotificationContext = createContext(null);
 
@@ -7,7 +6,7 @@ export function NotificationProvider({ children }) {
   const [toasts, setToasts] = useState([]);
   const [notifications, setNotifications] = useState(() => {
     const saved = localStorage.getItem('globetrotter_notifications');
-    return saved ? JSON.parse(saved) : initialNotifications;
+    return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
@@ -36,6 +35,16 @@ export function NotificationProvider({ children }) {
   const notifyWarning = (msg) => showToast(msg, 'warning');
   const notifyInfo = (msg) => showToast(msg, 'info');
 
+  const addNotification = (notif) => {
+    const newN = {
+      ...notif,
+      id: notif.id || `notif-${Date.now()}`,
+      time: 'Just now',
+      read: false,
+    };
+    setNotifications((prev) => [newN, ...prev]);
+  };
+
   const markAsRead = (id) => {
     setNotifications((prev) =>
       prev.map((n) => (n.id === id ? { ...n, read: true } : n))
@@ -63,6 +72,7 @@ export function NotificationProvider({ children }) {
         notifyError,
         notifyWarning,
         notifyInfo,
+        addNotification,
         markAsRead,
         markAllAsRead,
         deleteNotification,

@@ -41,9 +41,9 @@ export function Sidebar() {
       title: 'Planning & Tools',
       items: [
         { label: 'Plan New Trip', path: '/trips/create', icon: Plus, highlight: true },
+        { label: 'Document Vault', path: '/documents', icon: FileText, badge: documents?.length || 0, badgeColor: 'indigo' },
         { label: 'Itinerary Builder', path: activeTrip ? `/trips/${activeTrip.id}/itinerary` : '/itinerary', icon: Compass },
         { label: 'AI Trip Matcher', path: '/recommendations', icon: Sparkles },
-        { label: 'Document Vault', path: '/documents', icon: FileText, badge: (documents || []).length || null },
         { label: 'Travel Checklist', path: activeTrip ? `/trips/${activeTrip.id}/checklist` : '/dashboard', icon: CheckSquare },
         { label: 'Packing Assistant', path: '/packing-list', icon: Package },
       ],

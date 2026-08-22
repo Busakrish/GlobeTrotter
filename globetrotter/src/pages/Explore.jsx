@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { destinationsApi } from '../services/api';
-import { mockDestinations, destinationCategories } from '../data/mockDestinations';
 import { useTrips } from '../context/TripContext';
 import { useNotification } from '../context/NotificationContext';
 import DestinationCard from '../components/destination/DestinationCard';
@@ -20,15 +19,24 @@ import {
   RotateCcw,
 } from 'lucide-react';
 
+export const destinationCategories = [
+  { id: 'all', label: 'All Categories' },
+  { id: 'beach', label: '🏖️ Beaches' },
+  { id: 'historical', label: '🏰 Palaces & Heritage' },
+  { id: 'mountain', label: '🏔️ Mountains' },
+  { id: 'city', label: '🏙️ Vibrant Cities' },
+  { id: 'nature', label: '🌿 Nature & Wildlife' },
+];
+
 export function Explore() {
   const [searchParams] = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
 
-  const { trips, addCityToTrip } = useTrips();
+  const { trips, addCityStop } = useTrips();
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
 
-  const [destinations, setDestinations] = useState(mockDestinations);
+  const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [query, setQuery] = useState(initialQuery);
@@ -49,11 +57,11 @@ export function Explore() {
       setLoading(true);
       try {
         const res = await destinationsApi.getDestinations();
-        if (res?.success && res.destinations?.length > 0) {
+        if (res?.success && Array.isArray(res.destinations)) {
           setDestinations(res.destinations);
         }
       } catch (e) {
-        console.warn('[Explore] Fallback to mock catalog:', e.message);
+        console.warn('[Explore] API fetch notice:', e.message);
       } finally {
         setLoading(false);
       }
@@ -125,7 +133,7 @@ export function Explore() {
     e.preventDefault();
     if (!targetDestModal || !selectedTripId) return;
 
-    addCityToTrip(selectedTripId, {
+    addCityStop(selectedTripId, {
       id: targetDestModal.id,
       name: targetDestModal.name,
       country: targetDestModal.country,

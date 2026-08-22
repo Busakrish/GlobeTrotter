@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { mockCities } from '../data/mockCities';
 import { useTrips } from '../context/TripContext';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
@@ -24,7 +23,7 @@ export function CitySearch() {
   const [searchParams] = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
 
-  const { trips, addCityToTrip } = useTrips();
+  const { trips, addCityStop, cities } = useTrips();
   const { formatMoney } = useAuth();
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
@@ -41,35 +40,35 @@ export function CitySearch() {
 
   // Available countries
   const countries = useMemo(() => {
-    const set = new Set(mockCities.map((c) => c.country));
+    const set = new Set((cities || []).map((c) => c.country));
     return ['all', ...Array.from(set)];
-  }, []);
+  }, [cities]);
 
   // Filtered cities list
   const filteredCities = useMemo(() => {
-    return mockCities.filter((city) => {
+    return (cities || []).filter((city) => {
       if (selectedCountry !== 'all' && city.country !== selectedCountry) return false;
       if (selectedCost !== 'all' && city.costIndex !== selectedCost) return false;
       if (selectedTag !== 'all' && !city.tags?.includes(selectedTag)) return false;
 
       if (query.trim()) {
         const q = query.toLowerCase();
-        const matchName = city.name.toLowerCase().includes(q);
-        const matchCountry = city.country.toLowerCase().includes(q);
-        const matchRegion = city.region.toLowerCase().includes(q);
-        const matchDesc = city.description.toLowerCase().includes(q);
+        const matchName = city.name?.toLowerCase().includes(q);
+        const matchCountry = city.country?.toLowerCase().includes(q);
+        const matchRegion = city.region?.toLowerCase().includes(q);
+        const matchDesc = city.description?.toLowerCase().includes(q);
         const matchTags = city.tags?.some((t) => t.toLowerCase().includes(q));
         return matchName || matchCountry || matchRegion || matchDesc || matchTags;
       }
       return true;
     });
-  }, [query, selectedCountry, selectedCost, selectedTag]);
+  }, [cities, selectedCountry, selectedCost, selectedTag, query]);
 
   const handleAddStopSubmit = (e) => {
     e.preventDefault();
     if (!targetCityModal || !selectedTripId) return;
 
-    addCityToTrip(selectedTripId, {
+    addCityStop(selectedTripId, {
       ...targetCityModal,
       nights: Number(nights),
     });

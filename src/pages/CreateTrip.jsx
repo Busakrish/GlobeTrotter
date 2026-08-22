@@ -3,7 +3,6 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useTrips } from '../context/TripContext';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
-import { mockCities } from '../data/mockCities';
 import Input, { TextArea, Select } from '../components/common/Input';
 import Button from '../components/common/Button';
 import {
@@ -65,7 +64,7 @@ export function CreateTrip() {
   const [searchParams] = useSearchParams();
   const initialCity = searchParams.get('city') || 'Mumbai';
 
-  const { createTrip } = useTrips();
+  const { createTrip, cities } = useTrips();
   const { formatMoney, currency } = useAuth();
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
@@ -132,7 +131,7 @@ export function CreateTrip() {
     e.preventDefault();
     setLoading(true);
 
-    const startCityObj = mockCities.find(
+    const startCityObj = cities.find(
       (c) => c.name.toLowerCase() === formData.startingCity.toLowerCase()
     ) || {
       name: formData.startingCity,
@@ -140,7 +139,7 @@ export function CreateTrip() {
       coordinates: [18.9220, 72.8347],
     };
 
-    const secondCityObj = mockCities.find(
+    const secondCityObj = cities.find(
       (c) => c.name.toLowerCase() === formData.secondaryCity.toLowerCase()
     ) || {
       name: formData.secondaryCity,
@@ -286,13 +285,13 @@ export function CreateTrip() {
                 label="Starting City Stop"
                 value={formData.startingCity}
                 onChange={(e) => setFormData({ ...formData, startingCity: e.target.value })}
-                options={mockCities.map((c) => ({ value: c.name, label: `${c.name} (${c.country})` }))}
+                options={cities.map((c) => ({ value: c.name, label: `${c.name} (${c.country})` }))}
               />
               <Select
                 label="Second City Stop (Multi-City)"
                 value={formData.secondaryCity}
                 onChange={(e) => setFormData({ ...formData, secondaryCity: e.target.value })}
-                options={mockCities.map((c) => ({ value: c.name, label: `${c.name} (${c.country})` }))}
+                options={cities.map((c) => ({ value: c.name, label: `${c.name} (${c.country})` }))}
               />
             </div>
 

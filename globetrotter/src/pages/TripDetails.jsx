@@ -3,7 +3,6 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useTrips } from '../context/TripContext';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
-import { mockCities } from '../data/mockCities';
 import TripHeader from '../components/trip/TripHeader';
 import ActivityCard from '../components/trip/ActivityCard';
 import TripMap from '../components/map/TripMap';
@@ -31,6 +30,7 @@ import {
   Users,
   Receipt,
   ExternalLink,
+  Compass,
 } from 'lucide-react';
 
 export function TripDetails() {
@@ -38,19 +38,20 @@ export function TripDetails() {
   const {
     trips,
     activeTrip,
-    getTripById,
     toggleActivityCompleted,
     calculateTripBudgetSummary,
     addActivityToDay,
     addExpense,
     deleteExpense,
-    addCityToTrip,
+    addCityStop,
+    cities,
   } = useTrips();
   const { formatMoney } = useAuth();
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
 
-  const trip = getTripById(tripId || id) || activeTrip || trips[0];
+  const currentId = tripId || id;
+  const trip = trips.find((t) => (t.id || t._id) === currentId) || activeTrip || (trips.length > 0 ? trips[0] : null);
 
   // Modals state
   const [shareModalOpen, setShareModalOpen] = useState(false);
@@ -76,7 +77,7 @@ export function TripDetails() {
     notes: '',
   });
 
-  const [selectedCityOption, setSelectedCityOption] = useState(mockCities[4]?.name || 'Udaipur');
+  const [selectedCityOption, setSelectedCityOption] = useState(cities[0]?.name || 'Mumbai');
   const [customCityName, setCustomCityName] = useState('');
   const [stopNights, setStopNights] = useState(2);
 
@@ -131,11 +132,11 @@ export function TripDetails() {
     const finalCityName = customCityName.trim() || selectedCityOption;
     if (!finalCityName) return;
 
-    const matched = mockCities.find(
+    const matched = cities.find(
       (c) => c.name.toLowerCase() === finalCityName.toLowerCase()
     );
 
-    addCityToTrip(trip.id, {
+    addCityStop(trip.id || trip._id, {
       name: finalCityName,
       country: matched?.country || 'India',
       coordinates: matched?.coordinates || [15.2993, 74.1240],
@@ -527,7 +528,7 @@ export function TripDetails() {
                 Popular Destinations
               </label>
               <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto p-2 bg-slate-50 border border-slate-200 rounded-xl">
-                {mockCities.map((city) => (
+                {cities.map((city) => (
                   <button
                     key={city.id}
                     type="button"

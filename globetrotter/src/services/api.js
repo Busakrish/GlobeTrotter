@@ -51,10 +51,12 @@ export const tripsApi = {
   addStop: (tripId, stopData) => apiClient.post(`/trips/${tripId}/stops`, stopData),
 };
 
-// Destinations
+// Destinations & Catalog
 export const destinationsApi = {
   getDestinations: (params) => apiClient.get('/destinations', { params }),
   getDestinationById: (id) => apiClient.get(`/destinations/${id}`),
+  getCities: (params) => apiClient.get('/destinations/cities', { params }),
+  getActivities: (params) => apiClient.get('/destinations/activities', { params }),
   saveDestination: (id, placeData) => apiClient.post(`/destinations/${id}/save`, placeData),
   unsaveDestination: (id) => apiClient.delete(`/destinations/${id}/save`),
   getSavedDestinations: () => apiClient.get('/destinations/saved'),

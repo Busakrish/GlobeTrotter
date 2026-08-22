@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getDestinationById } from '../data/mockDestinations';
+import { destinationsApi } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useTrips } from '../context/TripContext';
 import { useNotification } from '../context/NotificationContext';
@@ -26,35 +26,70 @@ import {
 export function DestinationDetails() {
   const { destinationId } = useParams();
   const { formatMoney } = useAuth();
-  const { trips, addCityToTrip, isSaved, toggleSavePlace } = useTrips();
+  const { trips, addCityStop, isPlaceSaved, savePlace, removeSavedPlace } = useTrips();
   const { notifySuccess } = useNotification();
   const navigate = useNavigate();
 
-  const destination = getDestinationById(destinationId) || getDestinationById('dest-mumbai');
+  const [destination, setDestination] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Modal State
   const [addToTripModalOpen, setAddToTripModalOpen] = useState(false);
   const [selectedTripId, setSelectedTripId] = useState(trips[0]?.id || '');
   const [nights, setNights] = useState(2);
 
+  useEffect(() => {
+    const fetchDest = async () => {
+      setLoading(true);
+      try {
+        const res = await destinationsApi.getDestinationById(destinationId);
+        if (res?.success && res.destination) {
+          setDestination(res.destination);
+        }
+      } catch (e) {
+        console.warn('[DestinationDetails] API notice:', e.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (destinationId) {
+      fetchDest();
+    }
+  }, [destinationId]);
+
+  if (loading) {
+    return (
+      <div className="text-center py-16 text-slate-400 text-sm">
+        Loading destination guide...
+      </div>
+    );
+  }
+
   if (!destination) {
     return (
-      <div className="text-center py-16">
-        <p className="text-sm text-slate-500">Destination not found.</p>
-        <Link to="/explore" className="text-xs font-bold text-indigo-600 mt-2 inline-block">
-          Return to Explore
+      <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8">
+        <Compass className="w-12 h-12 text-[#714B67] mx-auto mb-3" />
+        <h3 className="text-lg font-bold text-slate-900 mb-1">Destination Not Found</h3>
+        <p className="text-xs sm:text-sm text-slate-500 mb-4">
+          The requested destination is not available in the database catalog.
+        </p>
+        <Link to="/explore">
+          <Button variant="primary" size="sm">
+            Return to Explore
+          </Button>
         </Link>
       </div>
     );
   }
 
-  const saved = isSaved(destination.id);
+  const saved = isPlaceSaved(destination.id || destination._id);
 
   const handleToggleSave = () => {
-    toggleSavePlace(destination);
     if (!saved) {
+      savePlace(destination);
       notifySuccess(`Saved ${destination.name} to your Wishlist!`);
     } else {
+      removeSavedPlace(destination.id || destination._id);
       notifySuccess(`Removed ${destination.name} from saved places.`);
     }
   };
@@ -63,8 +98,8 @@ export function DestinationDetails() {
     e.preventDefault();
     if (!selectedTripId) return;
 
-    addCityToTrip(selectedTripId, {
-      id: destination.id,
+    addCityStop(selectedTripId, {
+      id: destination.id || destination._id,
       name: destination.name,
       country: destination.country,
       coordinates: destination.coordinates,

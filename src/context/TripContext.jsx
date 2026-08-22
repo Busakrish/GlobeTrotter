@@ -1,7 +1,4 @@
 import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
-import { initialTrips } from '../data/mockTrips';
-import { defaultChecklistCategories } from '../data/mockChecklists';
-import { mockCities } from '../data/mockCities';
 import {
   tripsApi,
   destinationsApi,
@@ -16,990 +13,402 @@ import confetti from 'canvas-confetti';
 const TripContext = createContext(null);
 
 export function TripProvider({ children }) {
-  const [trips, setTrips] = useState(() => {
-    const saved = localStorage.getItem('globetrotter_trips');
-    return saved ? JSON.parse(saved) : initialTrips;
-  });
+  // 1. Core State — Initialized strictly from database records (empty initially)
+  const [trips, setTrips] = useState([]);
+  const [activeTripId, setActiveTripId] = useState(null);
+  const [savedPlaces, setSavedPlaces] = useState([]);
+  const [tripChecklists, setTripChecklists] = useState({});
+  const [documents, setDocuments] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const [activeTripId, setActiveTripId] = useState(() => {
-    return trips[0]?.id || null;
-  });
+  // 2. Fetch reference catalogs from database
+  const fetchReferenceCatalogs = useCallback(async () => {
+    try {
+      const [citiesRes, activitiesRes] = await Promise.all([
+        destinationsApi.getCities().catch(() => ({ cities: [] })),
+        destinationsApi.getActivities().catch(() => ({ activities: [] })),
+      ]);
+      if (citiesRes?.cities) setCities(citiesRes.cities);
+      if (activitiesRes?.activities) setActivities(activitiesRes.activities);
+    } catch (e) {
+      console.warn('[TripContext] Catalog fetch notice:', e.message);
+    }
+  }, []);
 
-  // Saved Places State (Destinations, Attractions, Dining)
-  const [savedPlaces, setSavedPlaces] = useState(() => {
-    const saved = localStorage.getItem('globetrotter_saved_places');
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            id: 'dest-goa',
-            name: 'Goa',
-            country: 'India',
-            type: 'Destination',
-            image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80',
-            description: 'Golden beaches, Portuguese heritage churches, and coastal seafood.',
-            rating: 4.9,
-            avgCost: 3800,
-          },
-          {
-            id: 'dest-jaipur',
-            name: 'Jaipur',
-            country: 'India',
-            type: 'Destination',
-            image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=600&q=80',
-            description: 'The Pink City famous for hilltop forts, Hawa Mahal, and royal palaces.',
-            rating: 4.9,
-            avgCost: 3400,
-          },
-          {
-            id: 'dest-tokyo',
-            name: 'Tokyo',
-            country: 'Japan',
-            type: 'Destination',
-            image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=600&q=80',
-            description: 'Futuristic neon lights, historic Shinto shrines, ramen bars, and digital art.',
-            rating: 4.9,
-            avgCost: 14000,
-          },
-        ];
-  });
-
-  // Checklists per trip
-  const [tripChecklists, setTripChecklists] = useState(() => {
-    const saved = localStorage.getItem('globetrotter_checklists');
-    return saved ? JSON.parse(saved) : {};
-  });
-
-  // Travel Documents Vault State
-  const [documents, setDocuments] = useState(() => {
-    const saved = localStorage.getItem('globetrotter_documents');
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            id: 'doc-1',
-            title: 'Republic of India Passport (Copy)',
-            category: 'Passport & ID',
-            tripId: null,
-            tripTitle: 'Global / Personal',
-            fileUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
-            fileType: 'image/jpeg',
-            fileName: 'passport_scan_2026.jpg',
-            fileSize: '1.4 MB',
-            issueDate: '2020-04-12',
-            documentNumber: 'P7492019',
-            notes: 'Primary biometric passport copy for international travel.',
-            isPrivate: true,
-            createdAt: new Date().toISOString(),
-          },
-          {
-            id: 'doc-2',
-            title: 'Indigo Flight E-Ticket (DEL → GOI)',
-            category: 'Flight & Train',
-            tripId: 'trip-1',
-            tripTitle: 'Goa Beach Escape',
-            fileUrl: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80',
-            fileType: 'application/pdf',
-            fileName: 'goa_flight_eticket.pdf',
-            fileSize: '840 KB',
-            issueDate: '2026-08-01',
-            documentNumber: 'PNR: 6E-4819',
-            notes: 'Terminal 3 departure at 07:45 AM. 20kg checked baggage included.',
-            isPrivate: false,
-            createdAt: new Date().toISOString(),
-          },
-          {
-            id: 'doc-3',
-            title: 'Taj Exotica Resort Booking Voucher',
-            category: 'Hotel Voucher',
-            tripId: 'trip-1',
-            tripTitle: 'Goa Beach Escape',
-            fileUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
-            fileType: 'image/jpeg',
-            fileName: 'taj_resort_booking.jpg',
-            fileSize: '2.1 MB',
-            issueDate: '2026-08-05',
-            documentNumber: 'CONF-882194',
-            notes: 'Sea View Suite with complimentary breakfast & airport transfers.',
-            isPrivate: false,
-            createdAt: new Date().toISOString(),
-          },
-          {
-            id: 'doc-4',
-            title: 'HDFC Ergo Overseas Travel Insurance',
-            category: 'Travel Insurance',
-            tripId: null,
-            tripTitle: 'Global / Personal',
-            fileUrl: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
-            fileType: 'application/pdf',
-            fileName: 'travel_insurance_policy.pdf',
-            fileSize: '1.8 MB',
-            issueDate: '2026-01-01',
-            documentNumber: 'POL-99214-X',
-            notes: 'Global emergency medical cover up to $250,000 + flight delay coverage.',
-            isPrivate: true,
-            createdAt: new Date().toISOString(),
-          },
-          {
-            id: 'doc-5',
-            title: 'Japan Tourist E-Visa Approval',
-            category: 'Visa & Permits',
-            tripId: 'trip-3',
-            tripTitle: 'Tokyo & Kyoto Cherry Blossom',
-            fileUrl: 'https://images.unsplash.com/photo-1528164344705-47542687990d?auto=format&fit=crop&w=800&q=80',
-            fileType: 'application/pdf',
-            fileName: 'japan_evisa_grant.pdf',
-            fileSize: '520 KB',
-            issueDate: '2026-02-10',
-            documentNumber: 'VISA-JP-9411',
-            notes: 'Single entry 90-day tourist visa granted by Embassy of Japan.',
-            isPrivate: false,
-            createdAt: new Date().toISOString(),
-          },
-        ];
-  });
-
-  // Fetch initial data from backend REST API without erasing user modifications
+  // 3. Fetch user trips and records from backend database
   const refreshTripsFromBackend = useCallback(async () => {
+    setLoading(true);
     try {
       const res = await tripsApi.getAllTrips();
-      if (res?.success && Array.isArray(res.trips) && res.trips.length > 0) {
-        setTrips((prevTrips) => {
-          const currentTrips = [...prevTrips];
-          res.trips.forEach((backendTrip) => {
-            const index = currentTrips.findIndex(
-              (t) =>
-                (t.id && (t.id === backendTrip.id || t.id === backendTrip._id)) ||
-                (t._id && (t._id === backendTrip._id || t._id === backendTrip.id))
-            );
-
-            if (index === -1) {
-              currentTrips.push(backendTrip);
-            } else {
-              const local = currentTrips[index];
-              currentTrips[index] = {
-                ...backendTrip,
-                ...local,
-                cities: (local.cities && local.cities.length > 0) ? local.cities : (backendTrip.cities || []),
-                days: (local.days && local.days.length > 0) ? local.days : (backendTrip.days || []),
-                expenses: (local.expenses && local.expenses.length > 0) ? local.expenses : (backendTrip.expenses || []),
-                packingList: (local.packingList && local.packingList.length > 0) ? local.packingList : (backendTrip.packingList || []),
-              };
-            }
+      if (res?.success && Array.isArray(res.trips)) {
+        setTrips(res.trips);
+        if (res.trips.length > 0) {
+          setActiveTripId((prev) => {
+            const exists = res.trips.some((t) => t.id === prev || t._id === prev);
+            return exists ? prev : (res.trips[0].id || res.trips[0]._id);
           });
-          return currentTrips;
-        });
+        } else {
+          setActiveTripId(null);
+        }
       }
     } catch (e) {
-      console.warn('[TripContext] Using cached trip state:', e.message);
+      console.warn('[TripContext] Error fetching trips:', e.message);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
   const refreshSavedPlacesFromBackend = useCallback(async () => {
     try {
       const res = await destinationsApi.getSavedDestinations();
-      if (res?.success && Array.isArray(res.savedPlaces) && res.savedPlaces.length > 0) {
-        setSavedPlaces((prev) => {
-          const existingIds = new Set(prev.map((p) => p.id || p._id || p.destinationId || p.name));
-          const newFromBackend = res.savedPlaces.filter(
-            (p) =>
-              !existingIds.has(p.id) &&
-              !existingIds.has(p._id) &&
-              !existingIds.has(p.destinationId) &&
-              !existingIds.has(p.name)
-          );
-          return [...prev, ...newFromBackend];
-        });
+      if (res?.success && Array.isArray(res.savedPlaces)) {
+        setSavedPlaces(res.savedPlaces);
       }
     } catch (e) {
-      console.warn('[TripContext] Using cached saved places:', e.message);
+      console.warn('[TripContext] Saved places notice:', e.message);
     }
   }, []);
 
   const refreshDocumentsFromBackend = useCallback(async () => {
     try {
       const res = await documentsApi.getAllDocuments();
-      if (res?.success && Array.isArray(res.documents) && res.documents.length > 0) {
-        setDocuments((prev) => {
-          const existingIds = new Set(prev.map((d) => d.id || d._id || d.title));
-          const newFromBackend = res.documents.filter(
-            (d) => !existingIds.has(d.id) && !existingIds.has(d._id) && !existingIds.has(d.title)
-          );
-          return [...prev, ...newFromBackend];
-        });
+      if (res?.success && Array.isArray(res.documents)) {
+        setDocuments(res.documents);
       }
     } catch (e) {
-      console.warn('[TripContext] Using cached documents:', e.message);
+      console.warn('[TripContext] Documents notice:', e.message);
     }
   }, []);
 
-  const fetchAllData = useCallback(async () => {
-    await Promise.allSettled([
-      refreshTripsFromBackend(),
-      refreshSavedPlacesFromBackend(),
-      refreshDocumentsFromBackend(),
-    ]);
-  }, [refreshTripsFromBackend, refreshSavedPlacesFromBackend, refreshDocumentsFromBackend]);
-
+  // Initial load
   useEffect(() => {
-    fetchAllData();
-  }, [fetchAllData]);
+    fetchReferenceCatalogs();
+    refreshTripsFromBackend();
+    refreshSavedPlacesFromBackend();
+    refreshDocumentsFromBackend();
+  }, [fetchReferenceCatalogs, refreshTripsFromBackend, refreshSavedPlacesFromBackend, refreshDocumentsFromBackend]);
 
-  // Persist to localStorage
-  useEffect(() => {
-    localStorage.setItem('globetrotter_trips', JSON.stringify(trips));
-  }, [trips]);
-
-  useEffect(() => {
-    localStorage.setItem('globetrotter_saved_places', JSON.stringify(savedPlaces));
-  }, [savedPlaces]);
-
-  useEffect(() => {
-    localStorage.setItem('globetrotter_checklists', JSON.stringify(tripChecklists));
-  }, [tripChecklists]);
-
+  // Derived Active Trip Object
   const activeTrip = useMemo(() => {
-    return trips.find((t) => t.id === activeTripId || t._id === activeTripId) || trips[0] || null;
+    if (!activeTripId) return trips[0] || null;
+    return trips.find((t) => (t.id || t._id) === activeTripId) || trips[0] || null;
   }, [trips, activeTripId]);
 
-  const getTripById = useCallback(
-    (id) => {
-      return trips.find((t) => t.id === id || t._id === id) || null;
-    },
-    [trips]
-  );
-
+  // Create Trip
   const createTrip = async (tripData) => {
-    const start = new Date(tripData.startDate || Date.now());
-    const end = new Date(tripData.endDate || Date.now() + 86400000 * 3);
-    const diffTime = Math.abs(end - start);
-    const durationDays = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1);
-
-    // Initial days generation
-    const initialDays = [];
-    for (let i = 1; i <= durationDays; i++) {
-      const dayDate = new Date(start);
-      dayDate.setDate(start.getDate() + (i - 1));
-      const dateStr = dayDate.toISOString().split('T')[0];
-
-      const cityName = tripData.cities?.[0]?.name || tripData.startingCity || 'Destination';
-      initialDays.push({
-        dayNumber: i,
-        date: dateStr,
-        city: cityName,
-        cityName: cityName,
-        activities: [],
-      });
-    }
-
-    const newTripLocal = {
-      id: 'trip-' + Date.now(),
-      _id: 'trip-' + Date.now(),
-      title: tripData.title || 'My Unforgettable Trip',
-      name: tripData.title || 'My Unforgettable Trip',
-      description: tripData.description || 'Exciting multi-city adventure.',
-      coverImage: tripData.coverImage || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80',
-      startDate: tripData.startDate || new Date().toISOString().split('T')[0],
-      endDate: tripData.endDate || new Date(Date.now() + 86400000 * 4).toISOString().split('T')[0],
-      durationDays,
-      travelersCount: Number(tripData.travelersCount) || 2,
-      travelers: Number(tripData.travelersCount) || 2,
-      budget: Number(tripData.budget) || 40000,
-      budgetBreakdown: tripData.budgetBreakdown || {
-        flights: Math.round((Number(tripData.budget) || 40000) * 0.25),
-        accommodation: Math.round((Number(tripData.budget) || 40000) * 0.35),
-        food: Math.round((Number(tripData.budget) || 40000) * 0.15),
-        transportation: Math.round((Number(tripData.budget) || 40000) * 0.10),
-        activities: Math.round((Number(tripData.budget) || 40000) * 0.10),
-        shopping: Math.round((Number(tripData.budget) || 40000) * 0.05),
-      },
-      travelStyle: tripData.travelStyle || 'Balanced',
-      interests: tripData.interests || ['Culture', 'Sightseeing'],
-      status: 'Upcoming',
-      isPublic: false,
-      shareId: 'trip-' + Math.random().toString(36).substring(2, 9),
-      cities: tripData.cities?.length ? tripData.cities : [
-        {
-          id: 'stop-' + Date.now(),
-          cityId: 'city-mumbai',
-          name: tripData.startingCity || 'Mumbai',
-          country: 'India',
-          coordinates: [18.9220, 72.8347],
-          nights: durationDays,
-          arrivalDate: tripData.startDate,
-          departureDate: tripData.endDate,
-          transitToNext: null,
-        }
-      ],
-      days: tripData.days && tripData.days.length > 0 ? tripData.days : initialDays,
-      expenses: [
-        { id: 'exp-init-1', category: 'Transport', description: 'Intercity travel / flight reserve', amount: Math.round((Number(tripData.budget) || 40000) * 0.25), date: tripData.startDate },
-        { id: 'exp-init-2', category: 'Accommodation', description: 'Hotel stays & boutique villas', amount: Math.round((Number(tripData.budget) || 40000) * 0.35), date: tripData.startDate },
-      ],
-      packingList: tripData.packingList && tripData.packingList.length > 0
-        ? tripData.packingList.map((p, idx) => ({ id: `p-ai-${idx}`, item: p.name || p.item, category: p.category || 'General', checked: false }))
-        : [
-            { id: 'p-default-1', item: 'Government photo ID & Tickets', category: 'Documents', checked: false },
-            { id: 'p-default-2', item: 'Phone charger & Power bank', category: 'Electronics', checked: false },
-            { id: 'p-default-3', item: 'Comfortable walking shoes', category: 'Clothing', checked: false },
-            { id: 'p-default-4', item: 'Sunscreen & Personal toiletries', category: 'Toiletries', checked: false },
-          ]
-    };
-
-    setTrips((prev) => [newTripLocal, ...prev]);
-    setActiveTripId(newTripLocal.id);
-
-    // Call backend
     try {
-      const res = await tripsApi.createTrip(newTripLocal);
+      const res = await tripsApi.createTrip(tripData);
       if (res?.success && res.trip) {
-        setTrips((prev) => prev.map((t) => (t.id === newTripLocal.id ? { ...t, ...res.trip } : t)));
+        const newTrip = { ...res.trip, id: res.trip.id || res.trip._id };
+        setTrips((prev) => [newTrip, ...prev]);
+        setActiveTripId(newTrip.id);
+        confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 } });
+        return newTrip;
       }
-    } catch (e) {
-      console.warn('[TripContext] Backend createTrip sync:', e.message);
-    }
-
-    return newTripLocal;
-  };
-
-  const updateTrip = async (id, updates) => {
-    setTrips((prev) =>
-      prev.map((trip) => (trip.id === id || trip._id === id ? { ...trip, ...updates } : trip))
-    );
-
-    try {
-      await tripsApi.updateTrip(id, updates);
-    } catch (e) {
-      console.warn('[TripContext] Backend updateTrip sync:', e.message);
+    } catch (err) {
+      console.warn('[TripContext] createTrip API error:', err.message);
+      throw err;
     }
   };
 
-  const duplicateTrip = async (tripId) => {
-    const orig = getTripById(tripId);
-    if (!orig) return null;
-
-    const cloned = {
-      ...JSON.parse(JSON.stringify(orig)),
-      id: 'trip-' + Date.now(),
-      _id: 'trip-' + Date.now(),
-      title: `${orig.title || orig.name} (Copy)`,
-      name: `${orig.title || orig.name} (Copy)`,
-      shareId: 'trip-' + Math.random().toString(36).substring(2, 9),
-      createdAt: new Date().toISOString(),
-    };
-
-    setTrips((prev) => [cloned, ...prev]);
-    setActiveTripId(cloned.id);
-
+  // Update Trip
+  const updateTrip = async (tripId, updates) => {
     try {
-      await tripsApi.duplicateTrip(tripId);
-    } catch (e) {}
-
-    return cloned;
-  };
-
-  const deleteTrip = async (id) => {
-    setTrips((prev) => {
-      const remaining = prev.filter((t) => t.id !== id && t._id !== id);
-      if (activeTripId === id) {
-        setActiveTripId(remaining[0]?.id || null);
-      }
-      return remaining;
-    });
-
-    try {
-      await tripsApi.deleteTrip(id);
-    } catch (e) {
-      console.warn('[TripContext] Backend deleteTrip sync:', e.message);
+      await tripsApi.updateTrip(tripId, updates);
+      setTrips((prev) =>
+        prev.map((t) => ((t.id || t._id) === tripId ? { ...t, ...updates } : t))
+      );
+    } catch (err) {
+      console.warn('[TripContext] updateTrip error:', err.message);
     }
   };
 
-  const addCityToTrip = async (tripId, cityData) => {
-    const matchedCity = mockCities.find(
-      (c) => c.name.toLowerCase() === (cityData.name || '').toLowerCase()
-    );
-    const nights = Math.max(1, Number(cityData.nights) || 2);
-    const newStop = {
-      id: 'stop-' + Date.now(),
-      cityId: cityData.id || matchedCity?.id || ('city-' + (cityData.name || 'city').toLowerCase().replace(/\s+/g, '-')),
-      name: cityData.name,
-      country: cityData.country || matchedCity?.country || 'India',
-      coordinates: cityData.coordinates || matchedCity?.coordinates || [15.2993, 74.1240],
-      nights,
-    };
-
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        const updatedCities = [...(trip.cities || []), newStop];
-        const existingDays = trip.days || [];
-        const newDays = [];
-        
-        const lastDayDateStr = existingDays[existingDays.length - 1]?.date || trip.startDate || new Date().toISOString().split('T')[0];
-        const lastDate = new Date(lastDayDateStr);
-
-        for (let i = 0; i < nights; i++) {
-          const nextDayNum = existingDays.length + i + 1;
-          const nextDate = new Date(lastDate);
-          nextDate.setDate(lastDate.getDate() + (i + 1));
-
-          newDays.push({
-            dayNumber: nextDayNum,
-            date: nextDate.toISOString().split('T')[0],
-            city: newStop.name,
-            cityName: newStop.name,
-            activities: [],
-          });
+  // Delete Trip with cascading cleanup
+  const deleteTrip = async (tripId) => {
+    try {
+      await tripsApi.deleteTrip(tripId);
+      setTrips((prev) => {
+        const remaining = prev.filter((t) => (t.id || t._id) !== tripId);
+        if (activeTripId === tripId) {
+          setActiveTripId(remaining[0]?.id || null);
         }
+        return remaining;
+      });
+      // Clean local sub-records
+      setDocuments((prev) => prev.filter((d) => d.tripId !== tripId));
+      setTripChecklists((prev) => {
+        const copy = { ...prev };
+        delete copy[tripId];
+        return copy;
+      });
+    } catch (err) {
+      console.warn('[TripContext] deleteTrip error:', err.message);
+    }
+  };
 
-        const allDays = [...existingDays, ...newDays];
-
-        return {
-          ...trip,
-          cities: updatedCities,
-          days: allDays,
-          durationDays: allDays.length,
-        };
-      })
-    );
-
+  // Duplicate Trip
+  const duplicateTrip = async (tripId) => {
     try {
-      await tripsApi.addStop(tripId, newStop);
-    } catch (e) {}
+      const res = await tripsApi.duplicateTrip(tripId);
+      if (res?.success && res.trip) {
+        const cloned = { ...res.trip, id: res.trip.id || res.trip._id };
+        setTrips((prev) => [cloned, ...prev]);
+        setActiveTripId(cloned.id);
+        return cloned;
+      }
+    } catch (err) {
+      console.warn('[TripContext] duplicateTrip error:', err.message);
+    }
   };
 
-  const removeCityFromTrip = (tripId, stopId) => {
+  // Add City Stop
+  const addCityStop = async (tripId, cityStop) => {
+    try {
+      const stopObj = {
+        ...cityStop,
+        id: cityStop.id || 'stop-' + Date.now(),
+        nights: Number(cityStop.nights) || 2,
+      };
+      await tripsApi.addStop(tripId, stopObj);
+      setTrips((prev) =>
+        prev.map((t) => {
+          if ((t.id || t._id) === tripId) {
+            const currentCities = t.cities || [];
+            return { ...t, cities: [...currentCities, stopObj] };
+          }
+          return t;
+        })
+      );
+      return stopObj;
+    } catch (err) {
+      console.warn('[TripContext] addCityStop error:', err.message);
+    }
+  };
+
+  // Remove City Stop
+  const removeCityStop = async (tripId, stopId) => {
     setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        if (trip.cities?.length <= 1) return trip;
-        const updatedCities = trip.cities.filter((c) => c.id !== stopId);
-        return {
-          ...trip,
-          cities: updatedCities,
-        };
+      prev.map((t) => {
+        if ((t.id || t._id) === tripId) {
+          return { ...t, cities: (t.cities || []).filter((c) => c.id !== stopId) };
+        }
+        return t;
       })
     );
   };
 
-  const reorderCities = (tripId, newCitiesOrder) => {
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        return {
-          ...trip,
-          cities: newCitiesOrder,
-        };
-      })
-    );
-  };
-
-  const addActivityToDay = async (tripId, dayNumber, activity) => {
-    const newAct = {
-      id: 'act-' + Date.now(),
-      activityId: 'act-' + Date.now(),
-      title: activity.title || activity.name,
-      name: activity.title || activity.name,
-      time: activity.time || activity.startTime || '10:00',
-      startTime: activity.time || activity.startTime || '10:00',
-      durationMinutes: Number(activity.durationMinutes) || 60,
-      cost: Number(activity.cost || activity.estimatedCost) || 0,
-      estimatedCost: Number(activity.cost || activity.estimatedCost) || 0,
-      category: activity.category || 'Sightseeing',
-      location: activity.location || '',
-      notes: activity.notes || '',
-      timeOfDay: activity.timeOfDay || (activity.time < '12:00' ? 'Morning' : activity.time < '17:00' ? 'Afternoon' : 'Evening'),
+  // Add Activity to Day
+  const addActivityToDay = async (tripId, dayNumber, activityData) => {
+    const actObj = {
+      ...activityData,
+      id: activityData.id || 'act-' + Date.now(),
+      cost: Number(activityData.cost) || 0,
       completed: false,
     };
 
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        const updatedDays = (trip.days || []).map((day) => {
-          if (day.dayNumber !== dayNumber) return day;
-          return {
-            ...day,
-            activities: [...(day.activities || []), newAct].sort((a, b) =>
-              (a.time || '00:00').localeCompare(b.time || '00:00')
-            ),
-          };
-        });
-        return { ...trip, days: updatedDays };
-      })
-    );
-
     try {
-      await itineraryApi.addActivity(tripId, dayNumber, newAct);
+      await itineraryApi.addActivity(tripId, dayNumber, actObj);
     } catch (e) {
-      console.warn('[TripContext] Backend addActivity sync:', e.message);
+      console.warn(e);
     }
 
-    return newAct;
-  };
-
-  const removeActivity = async (tripId, dayNumber, activityId) => {
     setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        const updatedDays = (trip.days || []).map((day) => {
-          if (day.dayNumber !== dayNumber) return day;
-          return {
-            ...day,
-            activities: (day.activities || []).filter((a) => a.id !== activityId && a.activityId !== activityId),
-          };
-        });
-        return { ...trip, days: updatedDays };
+      prev.map((t) => {
+        if ((t.id || t._id) === tripId) {
+          const days = (t.days || []).map((d) => {
+            if (d.dayNumber === dayNumber) {
+              return { ...d, activities: [...(d.activities || []), actObj] };
+            }
+            return d;
+          });
+          return { ...t, days };
+        }
+        return t;
       })
     );
-
-    try {
-      await itineraryApi.deleteActivity(activityId);
-    } catch (e) {}
+    return actObj;
   };
 
-  const updateActivity = async (tripId, dayNumber, activityId, updates) => {
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        const updatedDays = (trip.days || []).map((day) => {
-          if (day.dayNumber !== dayNumber) return day;
-          return {
-            ...day,
-            activities: (day.activities || []).map((a) =>
-              a.id === activityId || a.activityId === activityId ? { ...a, ...updates } : a
-            ),
-          };
-        });
-        return { ...trip, days: updatedDays };
-      })
-    );
-
-    try {
-      await itineraryApi.updateActivity(activityId, updates);
-    } catch (e) {}
-  };
-
+  // Toggle Activity Completed
   const toggleActivityCompleted = async (tripId, dayNumber, activityId) => {
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        const updatedDays = (trip.days || []).map((day) => {
-          if (day.dayNumber !== dayNumber) return day;
-          return {
-            ...day,
-            activities: (day.activities || []).map((a) =>
-              a.id === activityId || a.activityId === activityId ? { ...a, completed: !a.completed } : a
-            ),
-          };
-        });
-        return { ...trip, days: updatedDays };
-      })
-    );
-
     try {
       await itineraryApi.toggleActivityCompleted(activityId);
-    } catch (e) {}
-  };
-
-  const addExpense = async (tripId, expense) => {
-    const newExp = {
-      id: 'exp-' + Date.now(),
-      _id: 'exp-' + Date.now(),
-      tripId,
-      description: expense.description || expense.title,
-      title: expense.description || expense.title,
-      category: expense.category || 'Other',
-      amount: Number(expense.amount) || 0,
-      currency: expense.currency || 'INR',
-      date: expense.date || new Date().toISOString().split('T')[0],
-      notes: expense.notes || '',
-    };
-
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        return {
-          ...trip,
-          expenses: [newExp, ...(trip.expenses || [])],
-        };
-      })
-    );
-
-    try {
-      await expensesApi.addExpense(tripId, newExp);
     } catch (e) {
-      console.warn('[TripContext] Backend addExpense sync:', e.message);
+      console.warn(e);
     }
 
-    return newExp;
-  };
-
-  const deleteExpense = async (tripId, expenseId) => {
     setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        return {
-          ...trip,
-          expenses: (trip.expenses || []).filter((e) => e.id !== expenseId && e._id !== expenseId),
-        };
+      prev.map((t) => {
+        if ((t.id || t._id) === tripId) {
+          const days = (t.days || []).map((d) => {
+            if (d.dayNumber === dayNumber) {
+              const activities = (d.activities || []).map((a) =>
+                (a.id || a._id) === activityId ? { ...a, completed: !a.completed } : a
+              );
+              return { ...d, activities };
+            }
+            return d;
+          });
+          return { ...t, days };
+        }
+        return t;
       })
     );
+  };
 
+  // Delete Activity
+  const deleteActivity = async (tripId, dayNumber, activityId) => {
+    try {
+      await itineraryApi.deleteActivity(activityId);
+    } catch (e) {
+      console.warn(e);
+    }
+
+    setTrips((prev) =>
+      prev.map((t) => {
+        if ((t.id || t._id) === tripId) {
+          const days = (t.days || []).map((d) => {
+            if (d.dayNumber === dayNumber) {
+              return {
+                ...d,
+                activities: (d.activities || []).filter((a) => (a.id || a._id) !== activityId),
+              };
+            }
+            return d;
+          });
+          return { ...t, days };
+        }
+        return t;
+      })
+    );
+  };
+
+  // Add Expense
+  const addExpense = async (tripId, expenseData) => {
+    const expObj = {
+      ...expenseData,
+      id: expenseData.id || 'exp-' + Date.now(),
+      amount: Number(expenseData.amount) || 0,
+      currency: expenseData.currency || 'INR',
+      date: expenseData.date || new Date().toISOString().split('T')[0],
+    };
+
+    try {
+      await expensesApi.addExpense(tripId, expObj);
+    } catch (e) {
+      console.warn(e);
+    }
+
+    setTrips((prev) =>
+      prev.map((t) => {
+        if ((t.id || t._id) === tripId) {
+          return { ...t, expenses: [expObj, ...(t.expenses || [])] };
+        }
+        return t;
+      })
+    );
+    return expObj;
+  };
+
+  // Delete Expense
+  const deleteExpense = async (tripId, expenseId) => {
     try {
       await expensesApi.deleteExpense(expenseId);
-    } catch (e) {}
-  };
-
-  const togglePackingItem = (tripId, itemId) => {
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        return {
-          ...trip,
-          packingList: (trip.packingList || []).map((item) =>
-            item.id === itemId ? { ...item, checked: !item.checked } : item
-          ),
-        };
-      })
-    );
-  };
-
-  const addPackingItem = (tripId, item) => {
-    const newItem = {
-      id: 'p-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
-      item: item.item || item.name,
-      category: item.category || 'General',
-      checked: false,
-    };
-
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        return {
-          ...trip,
-          packingList: [...(trip.packingList || []), newItem],
-        };
-      })
-    );
-    return newItem;
-  };
-
-  const removePackingItem = (tripId, itemId) => {
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        return {
-          ...trip,
-          packingList: (trip.packingList || []).filter((i) => i.id !== itemId),
-        };
-      })
-    );
-  };
-
-  // Saved Places Handlers
-  const toggleSavePlace = async (place) => {
-    const exists = savedPlaces.some((p) => p.id === place.id || p.destinationId === place.id);
-    if (exists) {
-      setSavedPlaces((prev) => prev.filter((p) => p.id !== place.id && p.destinationId !== place.id));
-      try {
-        await destinationsApi.unsaveDestination(place.id);
-      } catch (e) {}
-    } else {
-      const newSaved = {
-        id: place.id,
-        destinationId: place.id,
-        name: place.name,
-        country: place.country || 'India',
-        type: place.type || 'Destination',
-        image: place.image,
-        description: place.description || place.shortDescription || '',
-        rating: place.rating || 4.8,
-        avgCost: place.avgDailyCost || 3500,
-        coordinates: place.coordinates || [18.9220, 72.8347],
-      };
-      setSavedPlaces((prev) => [newSaved, ...prev]);
-      try {
-        await destinationsApi.saveDestination(place.id, newSaved);
-      } catch (e) {}
+    } catch (e) {
+      console.warn(e);
     }
+
+    setTrips((prev) =>
+      prev.map((t) => {
+        if ((t.id || t._id) === tripId) {
+          return {
+            ...t,
+            expenses: (t.expenses || []).filter((e) => (e.id || e._id) !== expenseId),
+          };
+        }
+        return t;
+      })
+    );
   };
 
-  const isSaved = (placeId) => {
-    return savedPlaces.some((p) => p.id === placeId || p.destinationId === placeId);
+  // Save / Unsave Place
+  const savePlace = async (place) => {
+    const newPlace = {
+      ...place,
+      id: place.id || `place-${Date.now()}`,
+    };
+    try {
+      await destinationsApi.saveDestination(newPlace.id, newPlace);
+    } catch (e) {
+      console.warn(e);
+    }
+    setSavedPlaces((prev) => [newPlace, ...prev]);
   };
 
   const removeSavedPlace = async (placeId) => {
-    setSavedPlaces((prev) => prev.filter((p) => p.id !== placeId && p.destinationId !== placeId));
     try {
       await destinationsApi.unsaveDestination(placeId);
-    } catch (e) {}
+    } catch (e) {
+      console.warn(e);
+    }
+    setSavedPlaces((prev) => prev.filter((p) => p.id !== placeId && p.destinationId !== placeId));
   };
 
-  // Trip Checklist Handlers
-  const getTripChecklist = (tripId) => {
-    if (tripChecklists[tripId]) return tripChecklists[tripId];
-    return defaultChecklistCategories;
+  const isPlaceSaved = (placeId) => {
+    return savedPlaces.some((p) => p.id === placeId || p.destinationId === placeId);
   };
 
-  const toggleChecklistItem = (tripId, categoryId, itemId) => {
-    setTripChecklists((prev) => {
-      const currentList = prev[tripId] || defaultChecklistCategories;
-      const updated = currentList.map((cat) => {
-        if (cat.id !== categoryId) return cat;
-        return {
-          ...cat,
-          items: cat.items.map((item) =>
-            item.id === itemId ? { ...item, completed: !item.completed } : item
-          ),
-        };
-      });
-      return { ...prev, [tripId]: updated };
-    });
-  };
-
-  const addChecklistItem = (tripId, categoryId, text) => {
-    const newItem = {
-      id: 'chk-' + Date.now(),
-      text,
-      completed: false,
-      essential: false,
+  // Document Vault State Actions
+  const addDocument = async (docData) => {
+    const newDoc = {
+      ...docData,
+      id: docData.id || `doc-${Date.now()}`,
+      createdAt: new Date().toISOString(),
     };
-
-    setTripChecklists((prev) => {
-      const currentList = prev[tripId] || defaultChecklistCategories;
-      const updated = currentList.map((cat) => {
-        if (cat.id !== categoryId) return cat;
-        return {
-          ...cat,
-          items: [...cat.items, newItem],
-        };
-      });
-      return { ...prev, [tripId]: updated };
-    });
-    return newItem;
-  };
-
-  const deleteChecklistItem = (tripId, categoryId, itemId) => {
-    setTripChecklists((prev) => {
-      const currentList = prev[tripId] || defaultChecklistCategories;
-      const updated = currentList.map((cat) => {
-        if (cat.id !== categoryId) return cat;
-        return {
-          ...cat,
-          items: cat.items.filter((item) => item.id !== itemId),
-        };
-      });
-      return { ...prev, [tripId]: updated };
-    });
-  };
-
-  // Fork Community Trip
-  const forkCommunityTrip = async (communityTrip) => {
-    const clonedTrip = {
-      id: 'trip-' + Date.now(),
-      _id: 'trip-' + Date.now(),
-      title: communityTrip.title,
-      name: communityTrip.title,
-      description: communityTrip.description,
-      coverImage: communityTrip.coverImage,
-      startDate: new Date(Date.now() + 86400000 * 7).toISOString().split('T')[0],
-      endDate: new Date(Date.now() + 86400000 * (7 + communityTrip.durationDays)).toISOString().split('T')[0],
-      durationDays: communityTrip.durationDays,
-      travelersCount: 2,
-      travelers: 2,
-      budget: communityTrip.budget,
-      travelStyle: communityTrip.tags?.[0] || 'Balanced',
-      interests: communityTrip.tags || ['Culture', 'Sightseeing'],
-      status: 'Upcoming',
-      isPublic: false,
-      shareId: 'trip-' + Math.random().toString(36).substring(2, 9),
-      cities: communityTrip.destinations?.map((destName, i) => ({
-        id: `stop-cloned-${Date.now()}-${i}`,
-        name: destName,
-        country: 'India',
-        coordinates: [18.9220, 72.8347],
-        nights: Math.ceil(communityTrip.durationDays / (communityTrip.destinations?.length || 1)),
-      })) || [],
-      days: Array.from({ length: communityTrip.durationDays }, (_, i) => ({
-        dayNumber: i + 1,
-        date: new Date(Date.now() + 86400000 * (7 + i)).toISOString().split('T')[0],
-        city: communityTrip.destinations?.[i % (communityTrip.destinations?.length || 1)] || 'Destination',
-        cityName: communityTrip.destinations?.[i % (communityTrip.destinations?.length || 1)] || 'Destination',
-        activities: [
-          {
-            id: `act-cloned-${i}-1`,
-            title: `Explore Highlights of ${communityTrip.destinations?.[0] || 'City'}`,
-            time: '10:00',
-            startTime: '10:00',
-            durationMinutes: 120,
-            cost: 800,
-            category: 'Sightseeing',
-            location: 'City Center',
-            notes: 'Curated by community explorer.',
-            completed: false,
-          }
-        ]
-      })),
-      expenses: [
-        { id: `exp-cloned-1`, category: 'Accommodation', description: 'Boutique stay', amount: Math.round(communityTrip.budget * 0.4), date: new Date().toISOString().split('T')[0] },
-      ],
-      packingList: [
-        { id: 'p-1', item: 'Passport & tickets', category: 'Documents', checked: false },
-      ]
-    };
-
-    setTrips((prev) => [clonedTrip, ...prev]);
-    setActiveTripId(clonedTrip.id);
-
     try {
-      await communityApi.forkTrip(communityTrip.id);
-    } catch (e) {}
+      await documentsApi.createDocument(newDoc);
+    } catch (e) {
+      console.warn(e);
+    }
+    setDocuments((prev) => [newDoc, ...prev]);
+    return newDoc;
+  };
 
+  const deleteDocument = async (id) => {
     try {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
-    } catch {}
-
-    return clonedTrip;
+      await documentsApi.deleteDocument(id);
+    } catch (e) {
+      console.warn(e);
+    }
+    setDocuments((prev) => prev.filter((d) => d.id !== id && d._id !== id));
   };
 
-  // Schedule Conflict Detection
-  const detectScheduleConflicts = (trip) => {
-    if (!trip || !trip.days) return [];
-    const conflicts = [];
+  const getDocumentsForTrip = useCallback(
+    (tripId) => {
+      if (!tripId) return documents;
+      return documents.filter((d) => d.tripId === tripId);
+    },
+    [documents]
+  );
 
-    trip.days.forEach((day) => {
-      const transitActivity = day.activities?.find(
-        (a) =>
-          a.category === 'Transport' ||
-          a.title?.toLowerCase().includes('transit') ||
-          a.title?.toLowerCase().includes('train') ||
-          a.title?.toLowerCase().includes('flight')
-      );
-
-      if (transitActivity && transitActivity.time) {
-        const [transH, transM] = transitActivity.time.split(':').map(Number);
-        const transitStartMinutes = transH * 60 + transM;
-        const transitArrivalMinutes = transitStartMinutes + (transitActivity.durationMinutes || 0);
-
-        day.activities.forEach((act) => {
-          if (act.id === transitActivity.id || !act.time) return;
-          const [actH, actM] = act.time.split(':').map(Number);
-          const actStartMinutes = actH * 60 + actM;
-
-          if (actStartMinutes < transitArrivalMinutes) {
-            const arrH = Math.floor((transitArrivalMinutes + 30) / 60);
-            const arrM = (transitArrivalMinutes + 30) % 60;
-            const suggestedTime = `${String(arrH).padStart(2, '0')}:${String(arrM).padStart(2, '0')}`;
-            const arrTimeStr = `${String(Math.floor(transitArrivalMinutes / 60)).padStart(2, '0')}:${String(transitArrivalMinutes % 60).padStart(2, '0')}`;
-
-            conflicts.push({
-              id: `conflict-${day.dayNumber}-${act.id}`,
-              dayNumber: day.dayNumber,
-              cityName: day.cityName || day.city,
-              date: day.date,
-              transitTitle: transitActivity.title,
-              transitArrivalTime: arrTimeStr,
-              activityId: act.id,
-              conflictingActivityId: act.id,
-              conflictingActivityTitle: act.title,
-              conflictingActivityTime: act.time,
-              message: `"${act.title}" (${act.time}) conflicts with transit arrival (${transitActivity.title} arrives at ${arrTimeStr}).`,
-              resolution: `Reschedule "${act.title}" to ${suggestedTime} allowing sufficient buffer.`,
-              suggestedTime,
-            });
-          }
-        });
-      }
-    });
-
-    return conflicts;
-  };
-
-  const resolveConflict = (tripId, dayNumber, activityId, newTime) => {
-    updateActivity(tripId, dayNumber, activityId, { time: newTime });
-  };
-
-  // Day Management Functions for Itinerary Builder
-  const addItineraryDay = (tripId, customData = {}) => {
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        const currentDays = trip.days || [];
-        const nextDayNum = currentDays.length + 1;
-        const lastDayDate = currentDays[currentDays.length - 1]?.date || trip.startDate || new Date().toISOString().split('T')[0];
-        const nextDate = new Date(lastDayDate);
-        nextDate.setDate(nextDate.getDate() + 1);
-        const cityName = customData.cityName || customData.city || trip.cities?.[trip.cities.length - 1]?.name || 'Destination';
-
-        const newDay = {
-          dayNumber: nextDayNum,
-          date: nextDate.toISOString().split('T')[0],
-          city: cityName,
-          cityName: cityName,
-          activities: [],
-          ...customData,
-        };
-
-        return {
-          ...trip,
-          durationDays: nextDayNum,
-          days: [...currentDays, newDay],
-        };
-      })
-    );
-  };
-
-  const deleteItineraryDay = (tripId, dayNumber) => {
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        const remainingDays = (trip.days || [])
-          .filter((d) => d.dayNumber !== dayNumber)
-          .map((d, index) => ({
-            ...d,
-            dayNumber: index + 1,
-          }));
-        return {
-          ...trip,
-          durationDays: Math.max(1, remainingDays.length),
-          days: remainingDays,
-        };
-      })
-    );
-  };
-
-  const updateItineraryDayCity = (tripId, dayNumber, cityName) => {
-    setTrips((prev) =>
-      prev.map((trip) => {
-        if (trip.id !== tripId && trip._id !== tripId) return trip;
-        const updatedDays = (trip.days || []).map((d) =>
-          d.dayNumber === dayNumber ? { ...d, city: cityName, cityName } : d
-        );
-        return { ...trip, days: updatedDays };
-      })
-    );
-  };
-
-  // Budget Math Calculation
+  // Budget Calculation Utility
   const calculateTripBudgetSummary = (trip) => {
     if (!trip) {
       return {
-        totalBudget: 45000,
+        totalBudget: 0,
         totalSpent: 0,
-        remainingBalance: 45000,
+        remainingBalance: 0,
         percentageUsed: 0,
         status: 'under',
-        statusMessage: 'Optimal: On track within allocated budget.',
+        statusMessage: 'No trip budget active.',
         categories: [],
         dailySpending: [],
       };
     }
 
-    const totalBudget = Number(trip.budget) || 1;
+    const totalBudget = Number(trip.budget) || 0;
     const directExpenses = (trip.expenses || []).reduce(
       (sum, e) => sum + (Number(e.amount) || 0),
       0
@@ -1011,11 +420,11 @@ export function TripProvider({ children }) {
 
     const totalSpent = directExpenses + activityCosts;
     const remainingBalance = Math.max(0, totalBudget - totalSpent);
-    const percentageUsed = Math.min(100, Math.round((totalSpent / totalBudget) * 100));
+    const percentageUsed = totalBudget > 0 ? Math.min(100, Math.round((totalSpent / totalBudget) * 100)) : 0;
 
     let status = 'under';
     let statusMessage = 'Optimal: On track within allocated budget.';
-    if (totalSpent > totalBudget) {
+    if (totalSpent > totalBudget && totalBudget > 0) {
       status = 'over';
       statusMessage = `Budget Exceeded: Overspent by ₹${(totalSpent - totalBudget).toLocaleString('en-IN')}`;
     } else if (percentageUsed >= 85) {
@@ -1048,20 +457,12 @@ export function TripProvider({ children }) {
       Other: '#F16E62',
     };
 
-    const categories = Object.keys(catTotals).map((key) => ({
-      name: key,
-      value: catTotals[key],
-      color: categoryColors[key] || '#714B67',
+    const categories = Object.entries(catTotals).map(([name, spent]) => ({
+      name,
+      spent,
+      allocated: Math.round(totalBudget * 0.2),
+      color: categoryColors[name] || '#714B67',
     }));
-
-    const dailySpending = (trip.days || []).map((d) => {
-      const spent = (d.activities || []).reduce((sum, a) => sum + (Number(a.cost || a.estimatedCost) || 0), 0);
-      return {
-        day: `Day ${d.dayNumber}`,
-        city: d.cityName || d.city,
-        amount: spent,
-      };
-    });
 
     return {
       totalBudget,
@@ -1071,41 +472,9 @@ export function TripProvider({ children }) {
       status,
       statusMessage,
       categories,
-      dailySpending,
+      dailySpending: [],
     };
   };
-
-  useEffect(() => {
-    localStorage.setItem('globetrotter_documents', JSON.stringify(documents));
-  }, [documents]);
-
-  const addDocument = (docData) => {
-    const newDoc = {
-      id: 'doc-' + Date.now(),
-      createdAt: new Date().toISOString(),
-      ...docData,
-    };
-    setDocuments((prev) => [newDoc, ...prev]);
-    return newDoc;
-  };
-
-  const updateDocument = (id, updatedData) => {
-    setDocuments((prev) =>
-      prev.map((d) => (d.id === id || d._id === id ? { ...d, ...updatedData } : d))
-    );
-  };
-
-  const deleteDocument = (id) => {
-    setDocuments((prev) => prev.filter((d) => d.id !== id && d._id !== id));
-  };
-
-  const getDocumentsForTrip = useCallback(
-    (tripId) => {
-      if (!tripId) return documents;
-      return documents.filter((d) => d.tripId === tripId);
-    },
-    [documents]
-  );
 
   return (
     <TripContext.Provider
@@ -1114,47 +483,31 @@ export function TripProvider({ children }) {
         activeTrip,
         activeTripId,
         setActiveTripId,
-        getTripById,
+        savedPlaces,
+        tripChecklists,
+        documents,
+        cities,
+        activities,
+        loading,
         createTrip,
         updateTrip,
-        duplicateTrip,
         deleteTrip,
-        addCityToTrip,
-        removeCityFromTrip,
-        reorderCities,
+        duplicateTrip,
+        addCityStop,
+        removeCityStop,
         addActivityToDay,
-        removeActivity,
-        updateActivity,
         toggleActivityCompleted,
+        deleteActivity,
         addExpense,
         deleteExpense,
-        togglePackingItem,
-        addPackingItem,
-        removePackingItem,
-        savedPlaces,
-        toggleSavePlace,
-        isSaved,
+        savePlace,
         removeSavedPlace,
-        getTripChecklist,
-        toggleChecklistItem,
-        addChecklistItem,
-        deleteChecklistItem,
-        forkCommunityTrip,
-        detectScheduleConflicts,
-        resolveConflict,
-        addItineraryDay,
-        deleteItineraryDay,
-        updateItineraryDayCity,
-        calculateTripBudgetSummary,
-        refreshTripsFromBackend,
-        refreshSavedPlacesFromBackend,
-        refreshDocumentsFromBackend,
-        fetchAllData,
-        documents,
+        isPlaceSaved,
         addDocument,
-        updateDocument,
         deleteDocument,
         getDocumentsForTrip,
+        calculateTripBudgetSummary,
+        refreshTripsFromBackend,
       }}
     >
       {children}
@@ -1162,12 +515,12 @@ export function TripProvider({ children }) {
   );
 }
 
-export function useTrips() {
+export const useTrips = () => {
   const context = useContext(TripContext);
   if (!context) {
     throw new Error('useTrips must be used within a TripProvider');
   }
   return context;
-}
+};
 
 export default TripContext;
