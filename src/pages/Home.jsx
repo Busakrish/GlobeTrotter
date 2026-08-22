@@ -298,7 +298,7 @@ export function Home() {
             {[
               { step: '01', title: 'Choose Destination', desc: 'Pick your dream places from our curated catalog.' },
               { step: '02', title: 'Create Trip', desc: 'Set dates, travelers count, and budget allocations.' },
-              { step: '03', title: 'Build Itinerary', desc: 'Organize day stops and transit connections.' },
+              { step: '03', title: 'Route & Schedule', desc: 'Auto-generate and customize day stops and transit.' },
               { step: '04', title: 'Add Activities', desc: 'Schedule sights, dining, and walking tours.' },
               { step: '05', title: 'Track Budget', desc: 'Monitor live spending by category.' },
               { step: '06', title: 'Travel Confidently', desc: 'Access packing lists and offline plans anywhere.' },

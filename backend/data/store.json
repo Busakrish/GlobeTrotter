@@ -917,6 +917,646 @@
       "collaborators": [],
       "createdAt": "2026-08-22T10:31:44.977Z",
       "updatedAt": "2026-08-22T10:31:44.977Z"
+    },
+    {
+      "_id": "trip-1787394985491",
+      "id": "trip-1787394985491",
+      "userId": "user-priya-sharma",
+      "title": "Mumbai to Goa Coastal Escape",
+      "name": "Mumbai to Goa Coastal Escape",
+      "destination": "Mumbai → Goa → Jaipur → New Delhi",
+      "country": "India",
+      "startDate": "2026-08-29",
+      "endDate": "2026-09-02",
+      "durationDays": 5,
+      "travelersCount": 2,
+      "travelers": 2,
+      "budget": 50000,
+      "budgetBreakdown": {
+        "flights": 12500,
+        "accommodation": 17500,
+        "food": 7500,
+        "transportation": 5000,
+        "activities": 5000,
+        "shopping": 2500
+      },
+      "currency": "INR",
+      "travelStyle": "Moderate",
+      "interests": [
+        "Culture",
+        "Food",
+        "Relaxation"
+      ],
+      "coverImage": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80",
+      "description": "5-day Moderate vacation covering Mumbai → Goa → Jaipur → New Delhi.",
+      "status": "Upcoming",
+      "cities": [
+        {
+          "id": "stop-1",
+          "cityId": "city-mumbai",
+          "name": "Mumbai",
+          "country": "India",
+          "coordinates": [
+            18.922,
+            72.8347
+          ],
+          "nights": 1,
+          "transitMode": "Train / AC Express"
+        },
+        {
+          "id": "stop-2",
+          "cityId": "city-goa",
+          "name": "Goa",
+          "country": "India",
+          "coordinates": [
+            15.2993,
+            74.124
+          ],
+          "nights": 1,
+          "transitMode": "Direct Departure"
+        },
+        {
+          "id": "stop-1787394959377",
+          "cityId": "city-jaipur",
+          "name": "Jaipur",
+          "country": "India",
+          "coordinates": [
+            26.9124,
+            75.7873
+          ],
+          "nights": 1,
+          "transitMode": "Train / AC Express"
+        },
+        {
+          "id": "stop-1787394967855",
+          "cityId": "city-delhi",
+          "name": "New Delhi",
+          "country": "India",
+          "coordinates": [
+            28.6139,
+            77.209
+          ],
+          "nights": 1,
+          "transitMode": "Train / AC Express"
+        }
+      ],
+      "days": [
+        {
+          "id": "day-trip-1787394985491-1",
+          "tripId": "trip-1787394985491",
+          "dayNumber": 1,
+          "date": "2026-08-29",
+          "city": "Mumbai",
+          "cityName": "Mumbai",
+          "title": "Arrival & Mumbai Exploration",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787394985491-1-1",
+              "activityId": "act-trip-1787394985491-1-1",
+              "title": "Hotel Check-in & Mumbai Area Orientation",
+              "name": "Hotel Check-in & Mumbai Area Orientation",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Mumbai",
+              "notes": "Arrive in Mumbai, check in to hotel, and explore the immediate neighborhood.",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787394985491-1-2",
+              "activityId": "act-trip-1787394985491-1-2",
+              "title": "Authentic Mumbai Local Food & Sunset Experience",
+              "name": "Authentic Mumbai Local Food & Sunset Experience",
+              "time": "18:30",
+              "startTime": "18:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Mumbai",
+              "notes": "Enjoy authentic cuisine and evening ambiance in Mumbai.",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787394985491-2",
+          "tripId": "trip-1787394985491",
+          "dayNumber": 2,
+          "date": "2026-08-30",
+          "city": "Goa",
+          "cityName": "Goa",
+          "title": "Transit to Goa & City Highlights",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787394985491-2-1",
+              "activityId": "act-trip-1787394985491-2-1",
+              "title": "Transit / Check-in at Goa",
+              "name": "Transit / Check-in at Goa",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Goa",
+              "notes": "Travel from Mumbai to Goa and settle in.",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787394985491-2-2",
+              "activityId": "act-trip-1787394985491-2-2",
+              "title": "Authentic Goa Local Food & Sunset Experience",
+              "name": "Authentic Goa Local Food & Sunset Experience",
+              "time": "18:30",
+              "startTime": "18:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Goa",
+              "notes": "Enjoy authentic cuisine and evening ambiance in Goa.",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787394985491-3",
+          "tripId": "trip-1787394985491",
+          "dayNumber": 3,
+          "date": "2026-08-31",
+          "city": "Jaipur",
+          "cityName": "Jaipur",
+          "title": "Transit to Jaipur & City Highlights",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787394985491-3-1",
+              "activityId": "act-trip-1787394985491-3-1",
+              "title": "Transit / Check-in at Jaipur",
+              "name": "Transit / Check-in at Jaipur",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "notes": "Travel from Goa to Jaipur and settle in.",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787394985491-3-2",
+              "activityId": "act-trip-1787394985491-3-2",
+              "title": "Authentic Jaipur Local Food & Sunset Experience",
+              "name": "Authentic Jaipur Local Food & Sunset Experience",
+              "time": "18:30",
+              "startTime": "18:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "notes": "Enjoy authentic cuisine and evening ambiance in Jaipur.",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787394985491-4",
+          "tripId": "trip-1787394985491",
+          "dayNumber": 4,
+          "date": "2026-09-01",
+          "city": "New Delhi",
+          "cityName": "New Delhi",
+          "title": "Transit to New Delhi & City Highlights",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787394985491-4-1",
+              "activityId": "act-trip-1787394985491-4-1",
+              "title": "Transit / Check-in at New Delhi",
+              "name": "Transit / Check-in at New Delhi",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "New Delhi",
+              "notes": "Travel from Jaipur to New Delhi and settle in.",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787394985491-4-2",
+              "activityId": "act-trip-1787394985491-4-2",
+              "title": "Authentic New Delhi Local Food & Sunset Experience",
+              "name": "Authentic New Delhi Local Food & Sunset Experience",
+              "time": "18:30",
+              "startTime": "18:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "New Delhi",
+              "notes": "Enjoy authentic cuisine and evening ambiance in New Delhi.",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787394985491-5",
+          "tripId": "trip-1787394985491",
+          "dayNumber": 5,
+          "date": "2026-09-02",
+          "city": "New Delhi",
+          "cityName": "New Delhi",
+          "title": "Day 5 in New Delhi",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787394985491-5-1",
+              "activityId": "act-trip-1787394985491-5-1",
+              "title": "New Delhi Heritage Landmark & Walking Tour",
+              "name": "New Delhi Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "New Delhi",
+              "notes": "Explore the historical highlights and iconic architecture of New Delhi.",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787394985491-5-2",
+              "activityId": "act-trip-1787394985491-5-2",
+              "title": "Authentic New Delhi Local Food & Sunset Experience",
+              "name": "Authentic New Delhi Local Food & Sunset Experience",
+              "time": "18:30",
+              "startTime": "18:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "New Delhi",
+              "notes": "Enjoy authentic cuisine and evening ambiance in New Delhi.",
+              "completed": false
+            }
+          ]
+        }
+      ],
+      "isPublic": false,
+      "likesCount": 0,
+      "collaborators": [],
+      "createdAt": "2026-08-22T10:36:25.780Z",
+      "updatedAt": "2026-08-22T10:36:25.781Z"
+    },
+    {
+      "_id": "trip-1787395036991",
+      "id": "trip-1787395036991",
+      "userId": "user-priya-sharma",
+      "title": "Mumbai to Goa Coastal Escape",
+      "name": "Mumbai to Goa Coastal Escape",
+      "destination": "Mumbai → Goa → Jaipur → New Delhi",
+      "country": "India",
+      "startDate": "2026-08-29",
+      "endDate": "2026-09-02",
+      "durationDays": 5,
+      "travelersCount": 2,
+      "travelers": 2,
+      "budget": 50000,
+      "budgetBreakdown": {
+        "flights": 12500,
+        "accommodation": 17500,
+        "food": 7500,
+        "transportation": 5000,
+        "activities": 5000,
+        "shopping": 2500
+      },
+      "currency": "INR",
+      "travelStyle": "Moderate",
+      "interests": [
+        "Culture",
+        "Food",
+        "Relaxation"
+      ],
+      "coverImage": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80",
+      "description": "5-day Moderate vacation covering Mumbai → Goa → Jaipur → New Delhi.",
+      "status": "Upcoming",
+      "cities": [
+        {
+          "id": "stop-1",
+          "cityId": "city-mumbai",
+          "name": "Mumbai",
+          "country": "India",
+          "coordinates": [
+            18.922,
+            72.8347
+          ],
+          "nights": 1,
+          "transitMode": "Train / AC Express"
+        },
+        {
+          "id": "stop-2",
+          "cityId": "city-goa",
+          "name": "Goa",
+          "country": "India",
+          "coordinates": [
+            15.2993,
+            74.124
+          ],
+          "nights": 1,
+          "transitMode": "Direct Departure"
+        },
+        {
+          "id": "stop-1787395023303",
+          "cityId": "city-jaipur",
+          "name": "Jaipur",
+          "country": "India",
+          "coordinates": [
+            26.9124,
+            75.7873
+          ],
+          "nights": 1,
+          "transitMode": "Train / AC Express"
+        },
+        {
+          "id": "stop-1787395028277",
+          "cityId": "city-delhi",
+          "name": "New Delhi",
+          "country": "India",
+          "coordinates": [
+            28.6139,
+            77.209
+          ],
+          "nights": 1,
+          "transitMode": "Train / AC Express"
+        }
+      ],
+      "days": [
+        {
+          "id": "day-trip-1787395036991-1",
+          "tripId": "trip-1787395036991",
+          "dayNumber": 1,
+          "date": "2026-08-29",
+          "city": "Mumbai",
+          "cityName": "Mumbai",
+          "title": "Arrival & Mumbai Exploration",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787395036991-1-1",
+              "activityId": "act-trip-1787395036991-1-1",
+              "title": "Hotel Check-in & Mumbai Area Orientation",
+              "name": "Hotel Check-in & Mumbai Area Orientation",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Mumbai",
+              "notes": "Arrive in Mumbai, check in to hotel, and explore the immediate neighborhood.",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787395036991-1-2",
+              "activityId": "act-trip-1787395036991-1-2",
+              "title": "Authentic Mumbai Local Food & Sunset Experience",
+              "name": "Authentic Mumbai Local Food & Sunset Experience",
+              "time": "18:30",
+              "startTime": "18:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Mumbai",
+              "notes": "Enjoy authentic cuisine and evening ambiance in Mumbai.",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787395036991-2",
+          "tripId": "trip-1787395036991",
+          "dayNumber": 2,
+          "date": "2026-08-30",
+          "city": "Goa",
+          "cityName": "Goa",
+          "title": "Transit to Goa & City Highlights",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787395036991-2-1",
+              "activityId": "act-trip-1787395036991-2-1",
+              "title": "Transit / Check-in at Goa",
+              "name": "Transit / Check-in at Goa",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Goa",
+              "notes": "Travel from Mumbai to Goa and settle in.",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787395036991-2-2",
+              "activityId": "act-trip-1787395036991-2-2",
+              "title": "Authentic Goa Local Food & Sunset Experience",
+              "name": "Authentic Goa Local Food & Sunset Experience",
+              "time": "18:30",
+              "startTime": "18:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Goa",
+              "notes": "Enjoy authentic cuisine and evening ambiance in Goa.",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787395036991-3",
+          "tripId": "trip-1787395036991",
+          "dayNumber": 3,
+          "date": "2026-08-31",
+          "city": "Jaipur",
+          "cityName": "Jaipur",
+          "title": "Transit to Jaipur & City Highlights",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787395036991-3-1",
+              "activityId": "act-trip-1787395036991-3-1",
+              "title": "Transit / Check-in at Jaipur",
+              "name": "Transit / Check-in at Jaipur",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "notes": "Travel from Goa to Jaipur and settle in.",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787395036991-3-2",
+              "activityId": "act-trip-1787395036991-3-2",
+              "title": "Authentic Jaipur Local Food & Sunset Experience",
+              "name": "Authentic Jaipur Local Food & Sunset Experience",
+              "time": "18:30",
+              "startTime": "18:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "notes": "Enjoy authentic cuisine and evening ambiance in Jaipur.",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787395036991-4",
+          "tripId": "trip-1787395036991",
+          "dayNumber": 4,
+          "date": "2026-09-01",
+          "city": "New Delhi",
+          "cityName": "New Delhi",
+          "title": "Transit to New Delhi & City Highlights",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787395036991-4-1",
+              "activityId": "act-trip-1787395036991-4-1",
+              "title": "Transit / Check-in at New Delhi",
+              "name": "Transit / Check-in at New Delhi",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "New Delhi",
+              "notes": "Travel from Jaipur to New Delhi and settle in.",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787395036991-4-2",
+              "activityId": "act-trip-1787395036991-4-2",
+              "title": "Authentic New Delhi Local Food & Sunset Experience",
+              "name": "Authentic New Delhi Local Food & Sunset Experience",
+              "time": "18:30",
+              "startTime": "18:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "New Delhi",
+              "notes": "Enjoy authentic cuisine and evening ambiance in New Delhi.",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787395036991-5",
+          "tripId": "trip-1787395036991",
+          "dayNumber": 5,
+          "date": "2026-09-02",
+          "city": "New Delhi",
+          "cityName": "New Delhi",
+          "title": "Day 5 in New Delhi",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787395036991-5-1",
+              "activityId": "act-trip-1787395036991-5-1",
+              "title": "New Delhi Heritage Landmark & Walking Tour",
+              "name": "New Delhi Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "New Delhi",
+              "notes": "Explore the historical highlights and iconic architecture of New Delhi.",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787395036991-5-2",
+              "activityId": "act-trip-1787395036991-5-2",
+              "title": "Authentic New Delhi Local Food & Sunset Experience",
+              "name": "Authentic New Delhi Local Food & Sunset Experience",
+              "time": "18:30",
+              "startTime": "18:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "New Delhi",
+              "notes": "Enjoy authentic cuisine and evening ambiance in New Delhi.",
+              "completed": false
+            }
+          ]
+        }
+      ],
+      "isPublic": false,
+      "likesCount": 0,
+      "collaborators": [],
+      "createdAt": "2026-08-22T10:37:17.431Z",
+      "updatedAt": "2026-08-22T10:37:17.431Z"
     }
   ],
   "itineraryDays": [
@@ -1667,6 +2307,496 @@
       ],
       "createdAt": "2026-08-22T10:31:44.949Z",
       "updatedAt": "2026-08-22T10:31:44.949Z"
+    },
+    {
+      "_id": "day-trip-1787394985491-1",
+      "id": "day-trip-1787394985491-1",
+      "tripId": "trip-1787394985491",
+      "dayNumber": 1,
+      "date": "2026-08-29",
+      "city": "Mumbai",
+      "cityName": "Mumbai",
+      "title": "Arrival & Mumbai Exploration",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787394985491-1-1",
+          "activityId": "act-trip-1787394985491-1-1",
+          "title": "Hotel Check-in & Mumbai Area Orientation",
+          "name": "Hotel Check-in & Mumbai Area Orientation",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "notes": "Arrive in Mumbai, check in to hotel, and explore the immediate neighborhood.",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787394985491-1-2",
+          "activityId": "act-trip-1787394985491-1-2",
+          "title": "Authentic Mumbai Local Food & Sunset Experience",
+          "name": "Authentic Mumbai Local Food & Sunset Experience",
+          "time": "18:30",
+          "startTime": "18:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Mumbai",
+          "notes": "Enjoy authentic cuisine and evening ambiance in Mumbai.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T10:36:25.513Z",
+      "updatedAt": "2026-08-22T10:36:25.513Z"
+    },
+    {
+      "_id": "day-trip-1787394985491-2",
+      "id": "day-trip-1787394985491-2",
+      "tripId": "trip-1787394985491",
+      "dayNumber": 2,
+      "date": "2026-08-30",
+      "city": "Goa",
+      "cityName": "Goa",
+      "title": "Transit to Goa & City Highlights",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787394985491-2-1",
+          "activityId": "act-trip-1787394985491-2-1",
+          "title": "Transit / Check-in at Goa",
+          "name": "Transit / Check-in at Goa",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Goa",
+          "notes": "Travel from Mumbai to Goa and settle in.",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787394985491-2-2",
+          "activityId": "act-trip-1787394985491-2-2",
+          "title": "Authentic Goa Local Food & Sunset Experience",
+          "name": "Authentic Goa Local Food & Sunset Experience",
+          "time": "18:30",
+          "startTime": "18:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Goa",
+          "notes": "Enjoy authentic cuisine and evening ambiance in Goa.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T10:36:25.565Z",
+      "updatedAt": "2026-08-22T10:36:25.565Z"
+    },
+    {
+      "_id": "day-trip-1787394985491-3",
+      "id": "day-trip-1787394985491-3",
+      "tripId": "trip-1787394985491",
+      "dayNumber": 3,
+      "date": "2026-08-31",
+      "city": "Jaipur",
+      "cityName": "Jaipur",
+      "title": "Transit to Jaipur & City Highlights",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787394985491-3-1",
+          "activityId": "act-trip-1787394985491-3-1",
+          "title": "Transit / Check-in at Jaipur",
+          "name": "Transit / Check-in at Jaipur",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "notes": "Travel from Goa to Jaipur and settle in.",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787394985491-3-2",
+          "activityId": "act-trip-1787394985491-3-2",
+          "title": "Authentic Jaipur Local Food & Sunset Experience",
+          "name": "Authentic Jaipur Local Food & Sunset Experience",
+          "time": "18:30",
+          "startTime": "18:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "notes": "Enjoy authentic cuisine and evening ambiance in Jaipur.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T10:36:25.610Z",
+      "updatedAt": "2026-08-22T10:36:25.610Z"
+    },
+    {
+      "_id": "day-trip-1787394985491-4",
+      "id": "day-trip-1787394985491-4",
+      "tripId": "trip-1787394985491",
+      "dayNumber": 4,
+      "date": "2026-09-01",
+      "city": "New Delhi",
+      "cityName": "New Delhi",
+      "title": "Transit to New Delhi & City Highlights",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787394985491-4-1",
+          "activityId": "act-trip-1787394985491-4-1",
+          "title": "Transit / Check-in at New Delhi",
+          "name": "Transit / Check-in at New Delhi",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "New Delhi",
+          "notes": "Travel from Jaipur to New Delhi and settle in.",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787394985491-4-2",
+          "activityId": "act-trip-1787394985491-4-2",
+          "title": "Authentic New Delhi Local Food & Sunset Experience",
+          "name": "Authentic New Delhi Local Food & Sunset Experience",
+          "time": "18:30",
+          "startTime": "18:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "New Delhi",
+          "notes": "Enjoy authentic cuisine and evening ambiance in New Delhi.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T10:36:25.656Z",
+      "updatedAt": "2026-08-22T10:36:25.656Z"
+    },
+    {
+      "_id": "day-trip-1787394985491-5",
+      "id": "day-trip-1787394985491-5",
+      "tripId": "trip-1787394985491",
+      "dayNumber": 5,
+      "date": "2026-09-02",
+      "city": "New Delhi",
+      "cityName": "New Delhi",
+      "title": "Day 5 in New Delhi",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787394985491-5-1",
+          "activityId": "act-trip-1787394985491-5-1",
+          "title": "New Delhi Heritage Landmark & Walking Tour",
+          "name": "New Delhi Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "New Delhi",
+          "notes": "Explore the historical highlights and iconic architecture of New Delhi.",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787394985491-5-2",
+          "activityId": "act-trip-1787394985491-5-2",
+          "title": "Authentic New Delhi Local Food & Sunset Experience",
+          "name": "Authentic New Delhi Local Food & Sunset Experience",
+          "time": "18:30",
+          "startTime": "18:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "New Delhi",
+          "notes": "Enjoy authentic cuisine and evening ambiance in New Delhi.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T10:36:25.703Z",
+      "updatedAt": "2026-08-22T10:36:25.703Z"
+    },
+    {
+      "_id": "day-trip-1787395036991-1",
+      "id": "day-trip-1787395036991-1",
+      "tripId": "trip-1787395036991",
+      "dayNumber": 1,
+      "date": "2026-08-29",
+      "city": "Mumbai",
+      "cityName": "Mumbai",
+      "title": "Arrival & Mumbai Exploration",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787395036991-1-1",
+          "activityId": "act-trip-1787395036991-1-1",
+          "title": "Hotel Check-in & Mumbai Area Orientation",
+          "name": "Hotel Check-in & Mumbai Area Orientation",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "notes": "Arrive in Mumbai, check in to hotel, and explore the immediate neighborhood.",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787395036991-1-2",
+          "activityId": "act-trip-1787395036991-1-2",
+          "title": "Authentic Mumbai Local Food & Sunset Experience",
+          "name": "Authentic Mumbai Local Food & Sunset Experience",
+          "time": "18:30",
+          "startTime": "18:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Mumbai",
+          "notes": "Enjoy authentic cuisine and evening ambiance in Mumbai.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T10:37:17.051Z",
+      "updatedAt": "2026-08-22T10:37:17.051Z"
+    },
+    {
+      "_id": "day-trip-1787395036991-2",
+      "id": "day-trip-1787395036991-2",
+      "tripId": "trip-1787395036991",
+      "dayNumber": 2,
+      "date": "2026-08-30",
+      "city": "Goa",
+      "cityName": "Goa",
+      "title": "Transit to Goa & City Highlights",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787395036991-2-1",
+          "activityId": "act-trip-1787395036991-2-1",
+          "title": "Transit / Check-in at Goa",
+          "name": "Transit / Check-in at Goa",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Goa",
+          "notes": "Travel from Mumbai to Goa and settle in.",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787395036991-2-2",
+          "activityId": "act-trip-1787395036991-2-2",
+          "title": "Authentic Goa Local Food & Sunset Experience",
+          "name": "Authentic Goa Local Food & Sunset Experience",
+          "time": "18:30",
+          "startTime": "18:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Goa",
+          "notes": "Enjoy authentic cuisine and evening ambiance in Goa.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T10:37:17.149Z",
+      "updatedAt": "2026-08-22T10:37:17.149Z"
+    },
+    {
+      "_id": "day-trip-1787395036991-3",
+      "id": "day-trip-1787395036991-3",
+      "tripId": "trip-1787395036991",
+      "dayNumber": 3,
+      "date": "2026-08-31",
+      "city": "Jaipur",
+      "cityName": "Jaipur",
+      "title": "Transit to Jaipur & City Highlights",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787395036991-3-1",
+          "activityId": "act-trip-1787395036991-3-1",
+          "title": "Transit / Check-in at Jaipur",
+          "name": "Transit / Check-in at Jaipur",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "notes": "Travel from Goa to Jaipur and settle in.",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787395036991-3-2",
+          "activityId": "act-trip-1787395036991-3-2",
+          "title": "Authentic Jaipur Local Food & Sunset Experience",
+          "name": "Authentic Jaipur Local Food & Sunset Experience",
+          "time": "18:30",
+          "startTime": "18:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "notes": "Enjoy authentic cuisine and evening ambiance in Jaipur.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T10:37:17.226Z",
+      "updatedAt": "2026-08-22T10:37:17.226Z"
+    },
+    {
+      "_id": "day-trip-1787395036991-4",
+      "id": "day-trip-1787395036991-4",
+      "tripId": "trip-1787395036991",
+      "dayNumber": 4,
+      "date": "2026-09-01",
+      "city": "New Delhi",
+      "cityName": "New Delhi",
+      "title": "Transit to New Delhi & City Highlights",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787395036991-4-1",
+          "activityId": "act-trip-1787395036991-4-1",
+          "title": "Transit / Check-in at New Delhi",
+          "name": "Transit / Check-in at New Delhi",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "New Delhi",
+          "notes": "Travel from Jaipur to New Delhi and settle in.",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787395036991-4-2",
+          "activityId": "act-trip-1787395036991-4-2",
+          "title": "Authentic New Delhi Local Food & Sunset Experience",
+          "name": "Authentic New Delhi Local Food & Sunset Experience",
+          "time": "18:30",
+          "startTime": "18:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "New Delhi",
+          "notes": "Enjoy authentic cuisine and evening ambiance in New Delhi.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T10:37:17.275Z",
+      "updatedAt": "2026-08-22T10:37:17.275Z"
+    },
+    {
+      "_id": "day-trip-1787395036991-5",
+      "id": "day-trip-1787395036991-5",
+      "tripId": "trip-1787395036991",
+      "dayNumber": 5,
+      "date": "2026-09-02",
+      "city": "New Delhi",
+      "cityName": "New Delhi",
+      "title": "Day 5 in New Delhi",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787395036991-5-1",
+          "activityId": "act-trip-1787395036991-5-1",
+          "title": "New Delhi Heritage Landmark & Walking Tour",
+          "name": "New Delhi Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "New Delhi",
+          "notes": "Explore the historical highlights and iconic architecture of New Delhi.",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787395036991-5-2",
+          "activityId": "act-trip-1787395036991-5-2",
+          "title": "Authentic New Delhi Local Food & Sunset Experience",
+          "name": "Authentic New Delhi Local Food & Sunset Experience",
+          "time": "18:30",
+          "startTime": "18:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "New Delhi",
+          "notes": "Enjoy authentic cuisine and evening ambiance in New Delhi.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T10:37:17.344Z",
+      "updatedAt": "2026-08-22T10:37:17.344Z"
     }
   ],
   "expenses": [],

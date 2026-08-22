@@ -345,7 +345,7 @@ export function CreateTrip() {
       setLoading(false);
       const tripId = newTrip?.id || newTrip?._id;
       notifySuccess(`Trip "${newTrip?.title || formData.title}" created successfully! Opening workspace.`);
-      navigate(tripId ? `/trips/${tripId}/itinerary` : '/trips');
+      navigate(tripId ? `/trips/${tripId}` : '/trips');
     } catch (err) {
       setLoading(false);
       setError('Failed to create trip. Please try again.');
