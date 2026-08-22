@@ -1493,5 +1493,39 @@
       "time": "Yesterday"
     }
   ],
-  "groupTrips": []
+  "groupTrips": [],
+  "documents": [
+    {
+      "id": "doc-1",
+      "title": "Republic of India Passport (Copy)",
+      "category": "Passport & ID",
+      "tripId": null,
+      "tripTitle": "Global / Personal",
+      "fileUrl": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
+      "fileType": "image/jpeg",
+      "fileName": "passport_scan_2026.jpg",
+      "fileSize": "1.4 MB",
+      "issueDate": "2020-04-12",
+      "documentNumber": "P7492019",
+      "notes": "Primary biometric passport copy for international travel.",
+      "isPrivate": true,
+      "createdAt": "2026-08-22T08:34:01.819Z"
+    },
+    {
+      "id": "doc-2",
+      "title": "Indigo Flight E-Ticket (DEL → GOI)",
+      "category": "Flight & Train",
+      "tripId": "trip-1",
+      "tripTitle": "Goa Beach Escape",
+      "fileUrl": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80",
+      "fileType": "application/pdf",
+      "fileName": "goa_flight_eticket.pdf",
+      "fileSize": "840 KB",
+      "issueDate": "2026-08-01",
+      "documentNumber": "PNR: 6E-4819",
+      "notes": "Terminal 3 departure at 07:45 AM. 20kg checked baggage included.",
+      "isPrivate": false,
+      "createdAt": "2026-08-22T08:34:01.820Z"
+    }
+  ]
 }

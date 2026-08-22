@@ -90,10 +90,46 @@ export function Recommendations() {
   const handleGenerate = (e) => {
     e.preventDefault();
     setGenerating(true);
+
     setTimeout(() => {
+      const destList = interest.includes('Beach')
+        ? ['Mumbai', 'Goa', 'South Goa']
+        : interest.includes('Heritage')
+        ? ['Jaipur', 'Jodhpur', 'Udaipur']
+        : interest.includes('Mountains')
+        ? ['Manali', 'Solang Valley', 'Kasol']
+        : ['Tokyo', 'Kyoto', 'Osaka'];
+
+      const image = interest.includes('Beach')
+        ? 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80'
+        : interest.includes('Heritage')
+        ? 'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=80'
+        : interest.includes('Mountains')
+        ? 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80'
+        : 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=80';
+
+      const dynamicPlan = {
+        id: 'ai-gen-' + Date.now(),
+        title: `Custom ${style} ${interest} Experience`,
+        tagline: `Optimized ${duration}-Day Journey • Est. ${formatMoney(Math.round(budget * 0.92))}`,
+        matchScore: 99,
+        destinations: destList,
+        durationDays: duration,
+        estimatedCost: Math.round(budget * 0.92),
+        style: `${style} Vibe`,
+        coverImage: image,
+        highlights: [
+          `Tailored ${duration}-day route traversing ${destList.join(', ')}`,
+          `Customized activity pacing for ${style} travel style`,
+          `Smart budget allocation target of ${formatMoney(budget)} with local transport & stay`,
+        ],
+        whyItFits: `Direct match for your selected ${duration}-day timeframe, ${style} travel style, and focus on ${interest}.`,
+      };
+
+      setRecommendations([dynamicPlan, ...AI_PRESET_RECOMMENDATIONS]);
       setGenerating(false);
-      notifySuccess('AI tailored 3 optimized multi-city recommendations for you!');
-    }, 700);
+      notifySuccess(`AI synthesized a ${duration}-day itinerary for ${formatMoney(budget)}!`);
+    }, 600);
   };
 
   const handleAdoptAIPlan = (rec) => {
