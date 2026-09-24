@@ -2128,6 +2128,1359 @@
       "collaborators": [],
       "createdAt": "2026-08-22T11:11:19.762Z",
       "updatedAt": "2026-08-22T11:15:23.964Z"
+    },
+    {
+      "_id": "trip-1787398301648",
+      "id": "trip-1787398301648",
+      "userId": "user-priya-sharma",
+      "title": "Goa (North & South) Exploration",
+      "name": "Goa (North & South) Exploration",
+      "destination": "Goa (North & South)",
+      "country": "India",
+      "startDate": "2026-08-27",
+      "endDate": "2026-08-31",
+      "durationDays": 5,
+      "travelersCount": 2,
+      "travelers": 2,
+      "budget": 16500,
+      "budgetBreakdown": {
+        "flights": 4125,
+        "accommodation": 5775,
+        "food": 2475,
+        "transportation": 1650,
+        "activities": 1650,
+        "shopping": 825
+      },
+      "currency": "INR",
+      "travelStyle": "Balanced Explorer",
+      "interests": [
+        "Heritage",
+        "Street Food",
+        "Scenic Photography",
+        "Beach"
+      ],
+      "coverImage": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80",
+      "description": "Sun-drenched beaches, Portuguese colonial quarters, water sports & beachside seafood shacks.",
+      "status": "Upcoming",
+      "cities": [
+        {
+          "id": "stop-1787398301593",
+          "cityId": "city-mumbai",
+          "name": "Goa (North & South)",
+          "country": "India",
+          "coordinates": [
+            18.922,
+            72.8347
+          ],
+          "nights": 5,
+          "arrivalDate": "2026-08-27",
+          "departureDate": "2026-08-31",
+          "transitToNext": null
+        }
+      ],
+      "days": [
+        {
+          "id": "day-trip-1787398301648-1",
+          "tripId": "trip-1787398301648",
+          "dayNumber": 1,
+          "date": "2026-08-27",
+          "cityName": "Goa (North & South)",
+          "title": "Arrival & Goa (North & South) Exploration",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398301648-1-1",
+              "activityId": "act-trip-1787398301648-1-1",
+              "title": "Hotel Check-in & Area Orientation",
+              "name": "Hotel Check-in & Area Orientation",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Goa (North & South)",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398301648-1-2",
+              "activityId": "act-trip-1787398301648-1-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Goa (North & South)",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398301648-2",
+          "tripId": "trip-1787398301648",
+          "dayNumber": 2,
+          "date": "2026-08-28",
+          "cityName": "Goa (North & South)",
+          "title": "Day 2 in Goa (North & South)",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398301648-2-1",
+              "activityId": "act-trip-1787398301648-2-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Goa (North & South)",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398301648-2-2",
+              "activityId": "act-trip-1787398301648-2-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Goa (North & South)",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398301648-3",
+          "tripId": "trip-1787398301648",
+          "dayNumber": 3,
+          "date": "2026-08-29",
+          "cityName": "Goa (North & South)",
+          "title": "Day 3 in Goa (North & South)",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398301648-3-1",
+              "activityId": "act-trip-1787398301648-3-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Goa (North & South)",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398301648-3-2",
+              "activityId": "act-trip-1787398301648-3-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Goa (North & South)",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398301648-4",
+          "tripId": "trip-1787398301648",
+          "dayNumber": 4,
+          "date": "2026-08-30",
+          "cityName": "Goa (North & South)",
+          "title": "Day 4 in Goa (North & South)",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398301648-4-1",
+              "activityId": "act-trip-1787398301648-4-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Goa (North & South)",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398301648-4-2",
+              "activityId": "act-trip-1787398301648-4-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Goa (North & South)",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398301648-5",
+          "tripId": "trip-1787398301648",
+          "dayNumber": 5,
+          "date": "2026-08-31",
+          "cityName": "Goa (North & South)",
+          "title": "Day 5 in Goa (North & South)",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398301648-5-1",
+              "activityId": "act-trip-1787398301648-5-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Goa (North & South)",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398301648-5-2",
+              "activityId": "act-trip-1787398301648-5-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Goa (North & South)",
+              "completed": false
+            }
+          ]
+        }
+      ],
+      "isPublic": false,
+      "likesCount": 0,
+      "collaborators": [],
+      "createdAt": "2026-08-22T11:31:41.774Z",
+      "updatedAt": "2026-08-22T11:31:41.774Z"
+    },
+    {
+      "_id": "trip-1787398558181",
+      "id": "trip-1787398558181",
+      "userId": "user-priya-sharma",
+      "title": "surat",
+      "name": "surat",
+      "destination": "Jaipur → Jaipur",
+      "country": "India",
+      "startDate": "2026-08-29",
+      "endDate": "2026-09-03",
+      "durationDays": 6,
+      "travelersCount": 4,
+      "travelers": 4,
+      "budget": 205000,
+      "budgetBreakdown": {
+        "flights": 51250,
+        "accommodation": 71750,
+        "food": 30750,
+        "transportation": 20500,
+        "activities": 20500,
+        "shopping": 10250
+      },
+      "currency": "INR",
+      "travelStyle": "Luxury",
+      "interests": [
+        "Culture",
+        "Food",
+        "Relaxation",
+        "Shopping",
+        "Nightlife"
+      ],
+      "coverImage": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80",
+      "description": "A customized multi-city vacation exploring the cultural wonders, local food trails, and scenic attractions of Mumbai.",
+      "status": "Upcoming",
+      "cities": [
+        {
+          "id": "stop-1787398557755-1",
+          "cityId": "city-jaipur",
+          "name": "Jaipur",
+          "country": "India",
+          "coordinates": [
+            26.9124,
+            75.7873
+          ],
+          "nights": 2,
+          "arrivalDate": "2026-08-29",
+          "departureDate": "2026-08-29",
+          "transitToNext": {
+            "toCity": "Jaipur",
+            "mode": "Train / AC Express",
+            "durationMinutes": 300,
+            "durationText": "5h 00m",
+            "departureTime": "11:00",
+            "arrivalTime": "16:00",
+            "cost": 1600
+          }
+        },
+        {
+          "id": "stop-1787398557755-2",
+          "cityId": "city-jaipur",
+          "name": "Jaipur",
+          "country": "India",
+          "coordinates": [
+            26.9124,
+            75.7873
+          ],
+          "nights": 3,
+          "arrivalDate": "2026-09-03",
+          "departureDate": "2026-09-03",
+          "transitToNext": null
+        }
+      ],
+      "days": [
+        {
+          "id": "day-trip-1787398558181-1",
+          "tripId": "trip-1787398558181",
+          "dayNumber": 1,
+          "date": "2026-08-29",
+          "cityName": "Jaipur",
+          "title": "Arrival & Jaipur Exploration",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398558181-1-1",
+              "activityId": "act-trip-1787398558181-1-1",
+              "title": "Hotel Check-in & Area Orientation",
+              "name": "Hotel Check-in & Area Orientation",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398558181-1-2",
+              "activityId": "act-trip-1787398558181-1-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398558181-2",
+          "tripId": "trip-1787398558181",
+          "dayNumber": 2,
+          "date": "2026-08-30",
+          "cityName": "Jaipur",
+          "title": "Day 2 in Jaipur",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398558181-2-1",
+              "activityId": "act-trip-1787398558181-2-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398558181-2-2",
+              "activityId": "act-trip-1787398558181-2-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398558181-3",
+          "tripId": "trip-1787398558181",
+          "dayNumber": 3,
+          "date": "2026-08-31",
+          "cityName": "Jaipur",
+          "title": "Day 3 in Jaipur",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398558181-3-1",
+              "activityId": "act-trip-1787398558181-3-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398558181-3-2",
+              "activityId": "act-trip-1787398558181-3-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398558181-4",
+          "tripId": "trip-1787398558181",
+          "dayNumber": 4,
+          "date": "2026-09-01",
+          "cityName": "Jaipur",
+          "title": "Day 4 in Jaipur",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398558181-4-1",
+              "activityId": "act-trip-1787398558181-4-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398558181-4-2",
+              "activityId": "act-trip-1787398558181-4-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398558181-5",
+          "tripId": "trip-1787398558181",
+          "dayNumber": 5,
+          "date": "2026-09-02",
+          "cityName": "Jaipur",
+          "title": "Day 5 in Jaipur",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398558181-5-1",
+              "activityId": "act-trip-1787398558181-5-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398558181-5-2",
+              "activityId": "act-trip-1787398558181-5-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398558181-6",
+          "tripId": "trip-1787398558181",
+          "dayNumber": 6,
+          "date": "2026-09-03",
+          "cityName": "Jaipur",
+          "title": "Day 6 in Jaipur",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398558181-6-1",
+              "activityId": "act-trip-1787398558181-6-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398558181-6-2",
+              "activityId": "act-trip-1787398558181-6-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        }
+      ],
+      "isPublic": false,
+      "likesCount": 0,
+      "collaborators": [],
+      "createdAt": "2026-08-22T11:35:58.358Z",
+      "updatedAt": "2026-08-22T11:35:58.358Z"
+    },
+    {
+      "_id": "trip-1787398681941",
+      "id": "trip-1787398681941",
+      "userId": "user-priya-sharma",
+      "title": "surat",
+      "name": "surat",
+      "destination": "Jaipur → Udaipur",
+      "country": "India",
+      "startDate": "2026-08-29",
+      "endDate": "2026-09-03",
+      "durationDays": 6,
+      "travelersCount": 4,
+      "travelers": 4,
+      "budget": 240000,
+      "budgetBreakdown": {
+        "flights": 60000,
+        "accommodation": 84000,
+        "food": 36000,
+        "transportation": 24000,
+        "activities": 24000,
+        "shopping": 12000
+      },
+      "currency": "INR",
+      "travelStyle": "Budget",
+      "interests": [
+        "Culture",
+        "Food",
+        "Relaxation",
+        "Shopping"
+      ],
+      "coverImage": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80",
+      "description": "A customized multi-city vacation exploring the cultural wonders, local food trails, and scenic attractions of Mumbai.",
+      "status": "Upcoming",
+      "cities": [
+        {
+          "id": "stop-1787398681514-1",
+          "cityId": "city-jaipur",
+          "name": "Jaipur",
+          "country": "India",
+          "coordinates": [
+            26.9124,
+            75.7873
+          ],
+          "nights": 2,
+          "arrivalDate": "2026-08-29",
+          "departureDate": "2026-08-29",
+          "transitToNext": {
+            "toCity": "Udaipur",
+            "mode": "Train / AC Express",
+            "durationMinutes": 300,
+            "durationText": "5h 00m",
+            "departureTime": "11:00",
+            "arrivalTime": "16:00",
+            "cost": 1600
+          }
+        },
+        {
+          "id": "stop-1787398681514-2",
+          "cityId": "city-udaipur",
+          "name": "Udaipur",
+          "country": "India",
+          "coordinates": [
+            24.5854,
+            73.7125
+          ],
+          "nights": 3,
+          "arrivalDate": "2026-09-03",
+          "departureDate": "2026-09-03",
+          "transitToNext": null
+        }
+      ],
+      "days": [
+        {
+          "id": "day-trip-1787398681941-1",
+          "tripId": "trip-1787398681941",
+          "dayNumber": 1,
+          "date": "2026-08-29",
+          "cityName": "Jaipur",
+          "title": "Arrival & Jaipur Exploration",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398681941-1-1",
+              "activityId": "act-trip-1787398681941-1-1",
+              "title": "Hotel Check-in & Area Orientation",
+              "name": "Hotel Check-in & Area Orientation",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398681941-1-2",
+              "activityId": "act-trip-1787398681941-1-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398681941-2",
+          "tripId": "trip-1787398681941",
+          "dayNumber": 2,
+          "date": "2026-08-30",
+          "cityName": "Jaipur",
+          "title": "Day 2 in Jaipur",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398681941-2-1",
+              "activityId": "act-trip-1787398681941-2-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398681941-2-2",
+              "activityId": "act-trip-1787398681941-2-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398681941-3",
+          "tripId": "trip-1787398681941",
+          "dayNumber": 3,
+          "date": "2026-08-31",
+          "cityName": "Jaipur",
+          "title": "Day 3 in Jaipur",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398681941-3-1",
+              "activityId": "act-trip-1787398681941-3-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398681941-3-2",
+              "activityId": "act-trip-1787398681941-3-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398681941-4",
+          "tripId": "trip-1787398681941",
+          "dayNumber": 4,
+          "date": "2026-09-01",
+          "cityName": "Jaipur",
+          "title": "Day 4 in Jaipur",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398681941-4-1",
+              "activityId": "act-trip-1787398681941-4-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398681941-4-2",
+              "activityId": "act-trip-1787398681941-4-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398681941-5",
+          "tripId": "trip-1787398681941",
+          "dayNumber": 5,
+          "date": "2026-09-02",
+          "cityName": "Jaipur",
+          "title": "Day 5 in Jaipur",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398681941-5-1",
+              "activityId": "act-trip-1787398681941-5-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398681941-5-2",
+              "activityId": "act-trip-1787398681941-5-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787398681941-6",
+          "tripId": "trip-1787398681941",
+          "dayNumber": 6,
+          "date": "2026-09-03",
+          "cityName": "Jaipur",
+          "title": "Day 6 in Jaipur",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787398681941-6-1",
+              "activityId": "act-trip-1787398681941-6-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Jaipur",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787398681941-6-2",
+              "activityId": "act-trip-1787398681941-6-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Jaipur",
+              "completed": false
+            }
+          ]
+        }
+      ],
+      "isPublic": false,
+      "likesCount": 0,
+      "collaborators": [],
+      "createdAt": "2026-08-22T11:38:02.075Z",
+      "updatedAt": "2026-08-22T11:38:02.075Z"
+    },
+    {
+      "_id": "trip-fork-1787398990869",
+      "id": "trip-fork-1787398990869",
+      "userId": "user-priya-sharma",
+      "title": "Golden Triangle & Royal Palaces Tour (Forked)",
+      "name": "Golden Triangle & Royal Palaces Tour (Forked)",
+      "destination": "Delhi → Jaipur → Agra",
+      "country": "India",
+      "coverImage": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=80",
+      "startDate": "2026-10-15",
+      "endDate": "2026-10-22",
+      "durationDays": 7,
+      "travelers": 2,
+      "travelersCount": 2,
+      "budget": 65000,
+      "budgetBreakdown": {
+        "flights": 15000,
+        "accommodation": 22000,
+        "food": 10000,
+        "transportation": 8000,
+        "activities": 7000,
+        "shopping": 3000
+      },
+      "currency": "INR",
+      "travelStyle": "Culture",
+      "interests": [
+        "Culture",
+        "Palaces",
+        "Food"
+      ],
+      "status": "Planning",
+      "description": "Immersive exploration of royal Rajasthani architecture, Mughal tombs, and vibrant night bazaars.",
+      "cities": [
+        {
+          "id": "stop-1",
+          "name": "Delhi",
+          "country": "India",
+          "coordinates": [
+            28.6139,
+            77.209
+          ],
+          "nights": 2
+        },
+        {
+          "id": "stop-2",
+          "name": "Jaipur",
+          "country": "India",
+          "coordinates": [
+            26.9124,
+            75.7873
+          ],
+          "nights": 3
+        },
+        {
+          "id": "stop-3",
+          "name": "Agra",
+          "country": "India",
+          "coordinates": [
+            27.1767,
+            78.0081
+          ],
+          "nights": 2
+        }
+      ],
+      "isPublic": true,
+      "likesCount": 14,
+      "createdAt": "2026-08-22T11:43:10.869Z",
+      "updatedAt": "2026-08-22T11:43:10.875Z"
+    },
+    {
+      "_id": "trip-1787399165628",
+      "id": "trip-1787399165628",
+      "userId": "user-priya-sharma",
+      "title": "surat",
+      "name": "surat",
+      "destination": "Mumbai → Goa",
+      "country": "India",
+      "startDate": "2026-08-29",
+      "endDate": "2026-09-03",
+      "durationDays": 6,
+      "travelersCount": 3,
+      "travelers": 3,
+      "budget": 195000,
+      "budgetBreakdown": {
+        "flights": 48750,
+        "accommodation": 68250,
+        "food": 29250,
+        "transportation": 19500,
+        "activities": 19500,
+        "shopping": 9750
+      },
+      "currency": "INR",
+      "travelStyle": "Luxury",
+      "interests": [
+        "Culture",
+        "Food",
+        "Relaxation",
+        "Shopping"
+      ],
+      "coverImage": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80",
+      "description": "A customized multi-city vacation exploring the cultural wonders, local food trails, and scenic attractions of Mumbai.",
+      "status": "Upcoming",
+      "cities": [
+        {
+          "id": "stop-1787399165191-1",
+          "cityId": "city-mumbai",
+          "name": "Mumbai",
+          "country": "India",
+          "coordinates": [
+            18.922,
+            72.8347
+          ],
+          "nights": 2,
+          "arrivalDate": "2026-08-29",
+          "departureDate": "2026-08-29",
+          "transitToNext": {
+            "toCity": "Goa",
+            "mode": "Train / AC Express",
+            "durationMinutes": 300,
+            "durationText": "5h 00m",
+            "departureTime": "11:00",
+            "arrivalTime": "16:00",
+            "cost": 1600
+          }
+        },
+        {
+          "id": "stop-1787399165191-2",
+          "cityId": "city-goa",
+          "name": "Goa",
+          "country": "India",
+          "coordinates": [
+            15.2993,
+            74.124
+          ],
+          "nights": 3,
+          "arrivalDate": "2026-09-03",
+          "departureDate": "2026-09-03",
+          "transitToNext": null
+        }
+      ],
+      "days": [
+        {
+          "id": "day-trip-1787399165628-1",
+          "tripId": "trip-1787399165628",
+          "dayNumber": 1,
+          "date": "2026-08-29",
+          "cityName": "Mumbai",
+          "title": "Arrival & Mumbai Exploration",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787399165628-1-1",
+              "activityId": "act-trip-1787399165628-1-1",
+              "title": "Hotel Check-in & Area Orientation",
+              "name": "Hotel Check-in & Area Orientation",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Mumbai",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787399165628-1-2",
+              "activityId": "act-trip-1787399165628-1-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Mumbai",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787399165628-2",
+          "tripId": "trip-1787399165628",
+          "dayNumber": 2,
+          "date": "2026-08-30",
+          "cityName": "Mumbai",
+          "title": "Day 2 in Mumbai",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787399165628-2-1",
+              "activityId": "act-trip-1787399165628-2-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Mumbai",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787399165628-2-2",
+              "activityId": "act-trip-1787399165628-2-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Mumbai",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787399165628-3",
+          "tripId": "trip-1787399165628",
+          "dayNumber": 3,
+          "date": "2026-08-31",
+          "cityName": "Mumbai",
+          "title": "Day 3 in Mumbai",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787399165628-3-1",
+              "activityId": "act-trip-1787399165628-3-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Mumbai",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787399165628-3-2",
+              "activityId": "act-trip-1787399165628-3-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Mumbai",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787399165628-4",
+          "tripId": "trip-1787399165628",
+          "dayNumber": 4,
+          "date": "2026-09-01",
+          "cityName": "Mumbai",
+          "title": "Day 4 in Mumbai",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787399165628-4-1",
+              "activityId": "act-trip-1787399165628-4-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Mumbai",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787399165628-4-2",
+              "activityId": "act-trip-1787399165628-4-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Mumbai",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787399165628-5",
+          "tripId": "trip-1787399165628",
+          "dayNumber": 5,
+          "date": "2026-09-02",
+          "cityName": "Mumbai",
+          "title": "Day 5 in Mumbai",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787399165628-5-1",
+              "activityId": "act-trip-1787399165628-5-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Mumbai",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787399165628-5-2",
+              "activityId": "act-trip-1787399165628-5-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Mumbai",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "day-trip-1787399165628-6",
+          "tripId": "trip-1787399165628",
+          "dayNumber": 6,
+          "date": "2026-09-03",
+          "cityName": "Mumbai",
+          "title": "Day 6 in Mumbai",
+          "weather": {
+            "condition": "Sunny",
+            "temp": 28,
+            "icon": "Sun"
+          },
+          "activities": [
+            {
+              "id": "act-trip-1787399165628-6-1",
+              "activityId": "act-trip-1787399165628-6-1",
+              "title": "Heritage Landmark & Walking Tour",
+              "name": "Heritage Landmark & Walking Tour",
+              "time": "10:00",
+              "startTime": "10:00",
+              "durationMinutes": 120,
+              "category": "Sightseeing",
+              "cost": 500,
+              "estimatedCost": 500,
+              "location": "Mumbai",
+              "completed": false
+            },
+            {
+              "id": "act-trip-1787399165628-6-2",
+              "activityId": "act-trip-1787399165628-6-2",
+              "title": "Authentic Local Food & Dinner Experience",
+              "name": "Authentic Local Food & Dinner Experience",
+              "time": "19:30",
+              "startTime": "19:30",
+              "durationMinutes": 90,
+              "category": "Food & Dining",
+              "cost": 800,
+              "estimatedCost": 800,
+              "location": "Mumbai",
+              "completed": false
+            }
+          ]
+        }
+      ],
+      "isPublic": false,
+      "likesCount": 0,
+      "collaborators": [],
+      "createdAt": "2026-08-22T11:46:06.100Z",
+      "updatedAt": "2026-08-22T11:46:06.100Z"
     }
   ],
   "itineraryDays": [
@@ -2186,8 +3539,114 @@
           "location": "Pandara Road Market",
           "notes": "Famous butter chicken and roomali roti.",
           "completed": false
+        },
+        {
+          "id": "act-1787398729236-u4zx",
+          "activityId": "act-1787398729236-u4zx",
+          "title": "gate way of india",
+          "name": "gate way of india",
+          "category": "Shopping",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 90,
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "notes": "must visit",
+          "completed": false
+        },
+        {
+          "id": "act-1787398750800-ye7x",
+          "activityId": "act-1787398750800-ye7x",
+          "title": "came moris",
+          "name": "came moris",
+          "category": "Food & Dining",
+          "time": "13:00",
+          "startTime": "13:00",
+          "durationMinutes": 45,
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "udaipur",
+          "notes": "must",
+          "completed": false
+        },
+        {
+          "id": "act-1787398878101-a1pb",
+          "activityId": "act-1787398878101-a1pb",
+          "title": "Elephanta Caves Boat Expedition",
+          "name": "Elephanta Caves Boat Expedition",
+          "category": "Culture & Heritage",
+          "time": "13:30",
+          "startTime": "13:30",
+          "durationMinutes": 240,
+          "cost": 1200,
+          "estimatedCost": 1200,
+          "location": "Mumbai",
+          "notes": "Ferry ride to UNESCO World Heritage rock-cut cave temples dedicated to Lord Shiva.",
+          "completed": false
+        },
+        {
+          "id": "act-1787398886236-bvdu",
+          "activityId": "act-1787398886236-bvdu",
+          "title": "Sunrise Walk & Local Breakfast",
+          "name": "Sunrise Walk & Local Breakfast",
+          "category": "Food & Dining",
+          "time": "08:00",
+          "startTime": "08:00",
+          "durationMinutes": 90,
+          "cost": 350,
+          "estimatedCost": 350,
+          "location": "Mumbai",
+          "notes": "Start the day with fresh regional breakfast specialties and morning stroll.",
+          "completed": false
+        },
+        {
+          "id": "act-1787398888791-idk0",
+          "activityId": "act-1787398888791-idk0",
+          "title": "Historic Landmark & Heritage Tour",
+          "name": "Historic Landmark & Heritage Tour",
+          "category": "Sightseeing",
+          "time": "10:30",
+          "startTime": "10:30",
+          "durationMinutes": 120,
+          "cost": 600,
+          "estimatedCost": 600,
+          "location": "Mumbai",
+          "notes": "Guided architectural exploration and iconic photography spots.",
+          "completed": false
+        },
+        {
+          "id": "act-1787399198599-dm88",
+          "activityId": "act-1787399198599-dm88",
+          "title": "Heritage Tour: Gateway of India & Taj Mahal Palace",
+          "name": "Heritage Tour: Gateway of India & Taj Mahal Palace",
+          "category": "Sightseeing",
+          "time": "10:30",
+          "startTime": "10:30",
+          "durationMinutes": 150,
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "notes": "Explore the iconic waterfront monument built in 1924 and the grand heritage architecture of South Bombay.",
+          "completed": false
+        },
+        {
+          "id": "act-1787399207420-st89",
+          "activityId": "act-1787399207420-st89",
+          "title": "Historic Landmark & Heritage Tour",
+          "name": "Historic Landmark & Heritage Tour",
+          "category": "Sightseeing",
+          "time": "10:30",
+          "startTime": "10:30",
+          "durationMinutes": 120,
+          "cost": 600,
+          "estimatedCost": 600,
+          "location": "Mumbai",
+          "notes": "Guided architectural exploration and iconic photography spots.",
+          "completed": false
         }
-      ]
+      ],
+      "updatedAt": "2026-08-22T11:46:47.432Z"
     },
     {
       "_id": "day-trip-1-2",
@@ -4232,6 +5691,1319 @@
       ],
       "createdAt": "2026-08-22T11:11:19.758Z",
       "updatedAt": "2026-08-22T11:11:19.758Z"
+    },
+    {
+      "_id": "day-trip-1787398301648-1",
+      "id": "day-trip-1787398301648-1",
+      "tripId": "trip-1787398301648",
+      "dayNumber": 1,
+      "date": "2026-08-27",
+      "cityName": "Goa (North & South)",
+      "title": "Arrival & Goa (North & South) Exploration",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398301648-1-1",
+          "activityId": "act-trip-1787398301648-1-1",
+          "title": "Hotel Check-in & Area Orientation",
+          "name": "Hotel Check-in & Area Orientation",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Goa (North & South)",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398301648-1-2",
+          "activityId": "act-trip-1787398301648-1-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Goa (North & South)",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:31:41.650Z",
+      "updatedAt": "2026-08-22T11:31:41.650Z"
+    },
+    {
+      "_id": "day-trip-1787398301648-2",
+      "id": "day-trip-1787398301648-2",
+      "tripId": "trip-1787398301648",
+      "dayNumber": 2,
+      "date": "2026-08-28",
+      "cityName": "Goa (North & South)",
+      "title": "Day 2 in Goa (North & South)",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398301648-2-1",
+          "activityId": "act-trip-1787398301648-2-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Goa (North & South)",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398301648-2-2",
+          "activityId": "act-trip-1787398301648-2-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Goa (North & South)",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:31:41.670Z",
+      "updatedAt": "2026-08-22T11:31:41.670Z"
+    },
+    {
+      "_id": "day-trip-1787398301648-3",
+      "id": "day-trip-1787398301648-3",
+      "tripId": "trip-1787398301648",
+      "dayNumber": 3,
+      "date": "2026-08-29",
+      "cityName": "Goa (North & South)",
+      "title": "Day 3 in Goa (North & South)",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398301648-3-1",
+          "activityId": "act-trip-1787398301648-3-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Goa (North & South)",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398301648-3-2",
+          "activityId": "act-trip-1787398301648-3-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Goa (North & South)",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:31:41.687Z",
+      "updatedAt": "2026-08-22T11:31:41.687Z"
+    },
+    {
+      "_id": "day-trip-1787398301648-4",
+      "id": "day-trip-1787398301648-4",
+      "tripId": "trip-1787398301648",
+      "dayNumber": 4,
+      "date": "2026-08-30",
+      "cityName": "Goa (North & South)",
+      "title": "Day 4 in Goa (North & South)",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398301648-4-1",
+          "activityId": "act-trip-1787398301648-4-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Goa (North & South)",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398301648-4-2",
+          "activityId": "act-trip-1787398301648-4-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Goa (North & South)",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:31:41.708Z",
+      "updatedAt": "2026-08-22T11:31:41.708Z"
+    },
+    {
+      "_id": "day-trip-1787398301648-5",
+      "id": "day-trip-1787398301648-5",
+      "tripId": "trip-1787398301648",
+      "dayNumber": 5,
+      "date": "2026-08-31",
+      "cityName": "Goa (North & South)",
+      "title": "Day 5 in Goa (North & South)",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398301648-5-1",
+          "activityId": "act-trip-1787398301648-5-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Goa (North & South)",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398301648-5-2",
+          "activityId": "act-trip-1787398301648-5-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Goa (North & South)",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:31:41.757Z",
+      "updatedAt": "2026-08-22T11:31:41.757Z"
+    },
+    {
+      "_id": "day-trip-1787398558181-1",
+      "id": "day-trip-1787398558181-1",
+      "tripId": "trip-1787398558181",
+      "dayNumber": 1,
+      "date": "2026-08-29",
+      "cityName": "Jaipur",
+      "title": "Arrival & Jaipur Exploration",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398558181-1-1",
+          "activityId": "act-trip-1787398558181-1-1",
+          "title": "Hotel Check-in & Area Orientation",
+          "name": "Hotel Check-in & Area Orientation",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398558181-1-2",
+          "activityId": "act-trip-1787398558181-1-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:35:58.190Z",
+      "updatedAt": "2026-08-22T11:35:58.190Z"
+    },
+    {
+      "_id": "day-trip-1787398558181-2",
+      "id": "day-trip-1787398558181-2",
+      "tripId": "trip-1787398558181",
+      "dayNumber": 2,
+      "date": "2026-08-30",
+      "cityName": "Jaipur",
+      "title": "Day 2 in Jaipur",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398558181-2-1",
+          "activityId": "act-trip-1787398558181-2-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398558181-2-2",
+          "activityId": "act-trip-1787398558181-2-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:35:58.202Z",
+      "updatedAt": "2026-08-22T11:35:58.202Z"
+    },
+    {
+      "_id": "day-trip-1787398558181-3",
+      "id": "day-trip-1787398558181-3",
+      "tripId": "trip-1787398558181",
+      "dayNumber": 3,
+      "date": "2026-08-31",
+      "cityName": "Jaipur",
+      "title": "Day 3 in Jaipur",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398558181-3-1",
+          "activityId": "act-trip-1787398558181-3-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398558181-3-2",
+          "activityId": "act-trip-1787398558181-3-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:35:58.215Z",
+      "updatedAt": "2026-08-22T11:35:58.215Z"
+    },
+    {
+      "_id": "day-trip-1787398558181-4",
+      "id": "day-trip-1787398558181-4",
+      "tripId": "trip-1787398558181",
+      "dayNumber": 4,
+      "date": "2026-09-01",
+      "cityName": "Jaipur",
+      "title": "Day 4 in Jaipur",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398558181-4-1",
+          "activityId": "act-trip-1787398558181-4-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398558181-4-2",
+          "activityId": "act-trip-1787398558181-4-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:35:58.233Z",
+      "updatedAt": "2026-08-22T11:35:58.233Z"
+    },
+    {
+      "_id": "day-trip-1787398558181-5",
+      "id": "day-trip-1787398558181-5",
+      "tripId": "trip-1787398558181",
+      "dayNumber": 5,
+      "date": "2026-09-02",
+      "cityName": "Jaipur",
+      "title": "Day 5 in Jaipur",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398558181-5-1",
+          "activityId": "act-trip-1787398558181-5-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398558181-5-2",
+          "activityId": "act-trip-1787398558181-5-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:35:58.254Z",
+      "updatedAt": "2026-08-22T11:35:58.254Z"
+    },
+    {
+      "_id": "day-trip-1787398558181-6",
+      "id": "day-trip-1787398558181-6",
+      "tripId": "trip-1787398558181",
+      "dayNumber": 6,
+      "date": "2026-09-03",
+      "cityName": "Jaipur",
+      "title": "Day 6 in Jaipur",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398558181-6-1",
+          "activityId": "act-trip-1787398558181-6-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398558181-6-2",
+          "activityId": "act-trip-1787398558181-6-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:35:58.282Z",
+      "updatedAt": "2026-08-22T11:35:58.282Z"
+    },
+    {
+      "_id": "day-trip-1787398681941-1",
+      "id": "day-trip-1787398681941-1",
+      "tripId": "trip-1787398681941",
+      "dayNumber": 1,
+      "date": "2026-08-29",
+      "cityName": "Jaipur",
+      "title": "Arrival & Jaipur Exploration",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398681941-1-1",
+          "activityId": "act-trip-1787398681941-1-1",
+          "title": "Hotel Check-in & Area Orientation",
+          "name": "Hotel Check-in & Area Orientation",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": true
+        },
+        {
+          "id": "act-trip-1787398681941-1-2",
+          "activityId": "act-trip-1787398681941-1-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:38:01.944Z",
+      "updatedAt": "2026-08-22T11:38:20.230Z"
+    },
+    {
+      "_id": "day-trip-1787398681941-2",
+      "id": "day-trip-1787398681941-2",
+      "tripId": "trip-1787398681941",
+      "dayNumber": 2,
+      "date": "2026-08-30",
+      "cityName": "Jaipur",
+      "title": "Day 2 in Jaipur",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398681941-2-1",
+          "activityId": "act-trip-1787398681941-2-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398681941-2-2",
+          "activityId": "act-trip-1787398681941-2-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:38:01.969Z",
+      "updatedAt": "2026-08-22T11:38:01.969Z"
+    },
+    {
+      "_id": "day-trip-1787398681941-3",
+      "id": "day-trip-1787398681941-3",
+      "tripId": "trip-1787398681941",
+      "dayNumber": 3,
+      "date": "2026-08-31",
+      "cityName": "Jaipur",
+      "title": "Day 3 in Jaipur",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398681941-3-1",
+          "activityId": "act-trip-1787398681941-3-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398681941-3-2",
+          "activityId": "act-trip-1787398681941-3-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:38:01.977Z",
+      "updatedAt": "2026-08-22T11:38:01.977Z"
+    },
+    {
+      "_id": "day-trip-1787398681941-4",
+      "id": "day-trip-1787398681941-4",
+      "tripId": "trip-1787398681941",
+      "dayNumber": 4,
+      "date": "2026-09-01",
+      "cityName": "Jaipur",
+      "title": "Day 4 in Jaipur",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398681941-4-1",
+          "activityId": "act-trip-1787398681941-4-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398681941-4-2",
+          "activityId": "act-trip-1787398681941-4-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:38:01.992Z",
+      "updatedAt": "2026-08-22T11:38:01.992Z"
+    },
+    {
+      "_id": "day-trip-1787398681941-5",
+      "id": "day-trip-1787398681941-5",
+      "tripId": "trip-1787398681941",
+      "dayNumber": 5,
+      "date": "2026-09-02",
+      "cityName": "Jaipur",
+      "title": "Day 5 in Jaipur",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398681941-5-1",
+          "activityId": "act-trip-1787398681941-5-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398681941-5-2",
+          "activityId": "act-trip-1787398681941-5-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:38:02.011Z",
+      "updatedAt": "2026-08-22T11:38:02.011Z"
+    },
+    {
+      "_id": "day-trip-1787398681941-6",
+      "id": "day-trip-1787398681941-6",
+      "tripId": "trip-1787398681941",
+      "dayNumber": 6,
+      "date": "2026-09-03",
+      "cityName": "Jaipur",
+      "title": "Day 6 in Jaipur",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787398681941-6-1",
+          "activityId": "act-trip-1787398681941-6-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Jaipur",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787398681941-6-2",
+          "activityId": "act-trip-1787398681941-6-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Jaipur",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:38:02.046Z",
+      "updatedAt": "2026-08-22T11:38:02.046Z"
+    },
+    {
+      "_id": "day-trip-fork-1787398990869-1",
+      "id": "day-trip-fork-1787398990869-1",
+      "tripId": "trip-fork-1787398990869",
+      "dayNumber": 1,
+      "date": "2026-10-15",
+      "cityName": "Delhi",
+      "title": "Arrival in Delhi & South Delhi Heritage",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 29,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-101",
+          "activityId": "act-101",
+          "title": "Hotel Check-in & Connaught Place Walk",
+          "name": "Hotel Check-in & Connaught Place Walk",
+          "time": "11:00",
+          "startTime": "11:00",
+          "durationMinutes": 90,
+          "category": "Sightseeing",
+          "cost": 0,
+          "location": "Connaught Place, New Delhi",
+          "notes": "Exchange currency and grab cold coffee at Wenger’s.",
+          "completed": true
+        },
+        {
+          "id": "act-102",
+          "activityId": "act-102",
+          "title": "Humayun’s Tomb UNESCO Garden Stroll",
+          "name": "Humayun’s Tomb UNESCO Garden Stroll",
+          "time": "15:30",
+          "startTime": "15:30",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 250,
+          "location": "Nizamuddin East, New Delhi",
+          "notes": "Magnificent Persian charbagh gardens.",
+          "completed": false
+        },
+        {
+          "id": "act-103",
+          "activityId": "act-103",
+          "title": "Welcome Mughlai Dinner & Kebabs",
+          "name": "Welcome Mughlai Dinner & Kebabs",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 1400,
+          "location": "Pandara Road Market",
+          "notes": "Famous butter chicken and roomali roti.",
+          "completed": false
+        },
+        {
+          "id": "act-1787398729236-u4zx",
+          "activityId": "act-1787398729236-u4zx",
+          "title": "gate way of india",
+          "name": "gate way of india",
+          "category": "Shopping",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 90,
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "notes": "must visit",
+          "completed": false
+        },
+        {
+          "id": "act-1787398750800-ye7x",
+          "activityId": "act-1787398750800-ye7x",
+          "title": "came moris",
+          "name": "came moris",
+          "category": "Food & Dining",
+          "time": "13:00",
+          "startTime": "13:00",
+          "durationMinutes": 45,
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "udaipur",
+          "notes": "must",
+          "completed": false
+        },
+        {
+          "id": "act-1787398878101-a1pb",
+          "activityId": "act-1787398878101-a1pb",
+          "title": "Elephanta Caves Boat Expedition",
+          "name": "Elephanta Caves Boat Expedition",
+          "category": "Culture & Heritage",
+          "time": "13:30",
+          "startTime": "13:30",
+          "durationMinutes": 240,
+          "cost": 1200,
+          "estimatedCost": 1200,
+          "location": "Mumbai",
+          "notes": "Ferry ride to UNESCO World Heritage rock-cut cave temples dedicated to Lord Shiva.",
+          "completed": false
+        },
+        {
+          "id": "act-1787398886236-bvdu",
+          "activityId": "act-1787398886236-bvdu",
+          "title": "Sunrise Walk & Local Breakfast",
+          "name": "Sunrise Walk & Local Breakfast",
+          "category": "Food & Dining",
+          "time": "08:00",
+          "startTime": "08:00",
+          "durationMinutes": 90,
+          "cost": 350,
+          "estimatedCost": 350,
+          "location": "Mumbai",
+          "notes": "Start the day with fresh regional breakfast specialties and morning stroll.",
+          "completed": false
+        },
+        {
+          "id": "act-1787398888791-idk0",
+          "activityId": "act-1787398888791-idk0",
+          "title": "Historic Landmark & Heritage Tour",
+          "name": "Historic Landmark & Heritage Tour",
+          "category": "Sightseeing",
+          "time": "10:30",
+          "startTime": "10:30",
+          "durationMinutes": 120,
+          "cost": 600,
+          "estimatedCost": 600,
+          "location": "Mumbai",
+          "notes": "Guided architectural exploration and iconic photography spots.",
+          "completed": false
+        }
+      ],
+      "updatedAt": "2026-08-22T11:43:10.904Z",
+      "createdAt": "2026-08-22T11:43:10.904Z"
+    },
+    {
+      "_id": "day-trip-fork-1787398990869-2",
+      "id": "day-trip-fork-1787398990869-2",
+      "tripId": "trip-fork-1787398990869",
+      "dayNumber": 2,
+      "date": "2026-10-16",
+      "cityName": "Delhi",
+      "title": "Old Delhi Food Trail & Jama Masjid",
+      "weather": {
+        "condition": "Clear Skies",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-104",
+          "activityId": "act-104",
+          "title": "Old Delhi Rickshaw Safari & Spice Bazaar",
+          "name": "Old Delhi Rickshaw Safari & Spice Bazaar",
+          "time": "09:30",
+          "startTime": "09:30",
+          "durationMinutes": 150,
+          "category": "Sightseeing",
+          "cost": 600,
+          "location": "Khari Baoli & Chandni Chowk",
+          "notes": "Visit the largest wholesale spice market in Asia.",
+          "completed": false
+        },
+        {
+          "id": "act-105",
+          "activityId": "act-105",
+          "title": "Jama Masjid & Karim’s Feast",
+          "name": "Jama Masjid & Karim’s Feast",
+          "time": "13:00",
+          "startTime": "13:00",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 1100,
+          "location": "Gali Kababian, Jama Masjid",
+          "notes": "Mutton Burra and crisp naan.",
+          "completed": false
+        },
+        {
+          "id": "act-106",
+          "activityId": "act-106",
+          "title": "Qutub Minar Complex & Sunset Tea",
+          "name": "Qutub Minar Complex & Sunset Tea",
+          "time": "16:30",
+          "startTime": "16:30",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 250,
+          "location": "Mehrauli, New Delhi",
+          "notes": "Iconic 12th-century tower and iron pillar.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:43:10.922Z",
+      "updatedAt": "2026-08-22T11:43:10.922Z"
+    },
+    {
+      "_id": "day-trip-fork-1787398990869-3",
+      "id": "day-trip-fork-1787398990869-3",
+      "tripId": "trip-fork-1787398990869",
+      "dayNumber": 3,
+      "date": "2026-10-17",
+      "cityName": "Jaipur",
+      "title": "Express Train to Jaipur & Amber Fort",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 27,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-107",
+          "activityId": "act-107",
+          "title": "Vande Bharat Express to Jaipur",
+          "name": "Vande Bharat Express to Jaipur",
+          "time": "06:10",
+          "startTime": "06:10",
+          "durationMinutes": 240,
+          "category": "Transport",
+          "cost": 1200,
+          "location": "New Delhi Railway Station to Jaipur Junction",
+          "notes": "Scenic 4-hour high-speed train transit.",
+          "completed": false
+        },
+        {
+          "id": "act-108",
+          "activityId": "act-108",
+          "title": "Amber Palace & Sheesh Mahal Exploration",
+          "name": "Amber Palace & Sheesh Mahal Exploration",
+          "time": "14:00",
+          "startTime": "14:00",
+          "durationMinutes": 180,
+          "category": "Sightseeing",
+          "cost": 500,
+          "location": "Amer, Jaipur",
+          "notes": "Incredible mirrored ceilings and royal courtyards.",
+          "completed": false
+        },
+        {
+          "id": "act-109",
+          "activityId": "act-109",
+          "title": "Nahargarh Fort Sunset Viewpoint & Chai",
+          "name": "Nahargarh Fort Sunset Viewpoint & Chai",
+          "time": "17:30",
+          "startTime": "17:30",
+          "durationMinutes": 90,
+          "category": "Sightseeing",
+          "cost": 200,
+          "location": "Padao Restaurant, Nahargarh Fort",
+          "notes": "Sweeping panoramic view of the entire Pink City.",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:43:11.009Z",
+      "updatedAt": "2026-08-22T11:43:11.009Z"
+    },
+    {
+      "_id": "day-trip-1787399165628-1",
+      "id": "day-trip-1787399165628-1",
+      "tripId": "trip-1787399165628",
+      "dayNumber": 1,
+      "date": "2026-08-29",
+      "cityName": "Mumbai",
+      "title": "Arrival & Mumbai Exploration",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787399165628-1-1",
+          "activityId": "act-trip-1787399165628-1-1",
+          "title": "Hotel Check-in & Area Orientation",
+          "name": "Hotel Check-in & Area Orientation",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787399165628-1-2",
+          "activityId": "act-trip-1787399165628-1-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Mumbai",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:46:05.638Z",
+      "updatedAt": "2026-08-22T11:46:05.638Z"
+    },
+    {
+      "_id": "day-trip-1787399165628-2",
+      "id": "day-trip-1787399165628-2",
+      "tripId": "trip-1787399165628",
+      "dayNumber": 2,
+      "date": "2026-08-30",
+      "cityName": "Mumbai",
+      "title": "Day 2 in Mumbai",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787399165628-2-1",
+          "activityId": "act-trip-1787399165628-2-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787399165628-2-2",
+          "activityId": "act-trip-1787399165628-2-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Mumbai",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:46:05.676Z",
+      "updatedAt": "2026-08-22T11:46:05.676Z"
+    },
+    {
+      "_id": "day-trip-1787399165628-3",
+      "id": "day-trip-1787399165628-3",
+      "tripId": "trip-1787399165628",
+      "dayNumber": 3,
+      "date": "2026-08-31",
+      "cityName": "Mumbai",
+      "title": "Day 3 in Mumbai",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787399165628-3-1",
+          "activityId": "act-trip-1787399165628-3-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787399165628-3-2",
+          "activityId": "act-trip-1787399165628-3-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Mumbai",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:46:05.713Z",
+      "updatedAt": "2026-08-22T11:46:05.714Z"
+    },
+    {
+      "_id": "day-trip-1787399165628-4",
+      "id": "day-trip-1787399165628-4",
+      "tripId": "trip-1787399165628",
+      "dayNumber": 4,
+      "date": "2026-09-01",
+      "cityName": "Mumbai",
+      "title": "Day 4 in Mumbai",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787399165628-4-1",
+          "activityId": "act-trip-1787399165628-4-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787399165628-4-2",
+          "activityId": "act-trip-1787399165628-4-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Mumbai",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:46:05.864Z",
+      "updatedAt": "2026-08-22T11:46:05.906Z"
+    },
+    {
+      "_id": "day-trip-1787399165628-5",
+      "id": "day-trip-1787399165628-5",
+      "tripId": "trip-1787399165628",
+      "dayNumber": 5,
+      "date": "2026-09-02",
+      "cityName": "Mumbai",
+      "title": "Day 5 in Mumbai",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787399165628-5-1",
+          "activityId": "act-trip-1787399165628-5-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787399165628-5-2",
+          "activityId": "act-trip-1787399165628-5-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Mumbai",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:46:05.973Z",
+      "updatedAt": "2026-08-22T11:46:05.973Z"
+    },
+    {
+      "_id": "day-trip-1787399165628-6",
+      "id": "day-trip-1787399165628-6",
+      "tripId": "trip-1787399165628",
+      "dayNumber": 6,
+      "date": "2026-09-03",
+      "cityName": "Mumbai",
+      "title": "Day 6 in Mumbai",
+      "weather": {
+        "condition": "Sunny",
+        "temp": 28,
+        "icon": "Sun"
+      },
+      "activities": [
+        {
+          "id": "act-trip-1787399165628-6-1",
+          "activityId": "act-trip-1787399165628-6-1",
+          "title": "Heritage Landmark & Walking Tour",
+          "name": "Heritage Landmark & Walking Tour",
+          "time": "10:00",
+          "startTime": "10:00",
+          "durationMinutes": 120,
+          "category": "Sightseeing",
+          "cost": 500,
+          "estimatedCost": 500,
+          "location": "Mumbai",
+          "completed": false
+        },
+        {
+          "id": "act-trip-1787399165628-6-2",
+          "activityId": "act-trip-1787399165628-6-2",
+          "title": "Authentic Local Food & Dinner Experience",
+          "name": "Authentic Local Food & Dinner Experience",
+          "time": "19:30",
+          "startTime": "19:30",
+          "durationMinutes": 90,
+          "category": "Food & Dining",
+          "cost": 800,
+          "estimatedCost": 800,
+          "location": "Mumbai",
+          "completed": false
+        }
+      ],
+      "createdAt": "2026-08-22T11:46:06.007Z",
+      "updatedAt": "2026-08-22T11:46:06.007Z"
     }
   ],
   "expenses": [
@@ -4289,6 +7061,21 @@
       "currency": "INR",
       "date": "2026-10-16",
       "notes": "Amber Fort, Qutub Minar, Humayun Tomb"
+    },
+    {
+      "_id": "exp-1787399361794-g3e9",
+      "id": "exp-1787399361794-g3e9",
+      "tripId": "trip-1",
+      "userId": "user-priya-sharma",
+      "title": "streetfodd",
+      "description": "streetfodd",
+      "category": "Transport",
+      "amount": 1500,
+      "currency": "INR",
+      "date": "2026-08-22",
+      "notes": "must",
+      "createdAt": "2026-08-22T11:49:21.798Z",
+      "updatedAt": "2026-08-22T11:49:21.799Z"
     }
   ],
   "destinations": [
@@ -5272,6 +8059,25 @@
         48.8566,
         2.3522
       ]
+    },
+    {
+      "_id": "sav-1787398391774-xuqkr",
+      "id": "sav-1787398391774-xuqkr",
+      "userId": "user-priya-sharma",
+      "destinationId": "dest-bali",
+      "name": "Bali",
+      "country": "Indonesia",
+      "type": "Destination",
+      "description": "The Island of the Gods — tropical volcanic island filled with terraced emerald rice paddies in Ubud, ancient sea temples, world-class surf breaks in Uluwatu, and serene yoga retreats.",
+      "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80",
+      "rating": 4.9,
+      "avgCost": 4800,
+      "coordinates": [
+        -8.4095,
+        115.1889
+      ],
+      "createdAt": "2026-08-22T11:33:11.774Z",
+      "updatedAt": "2026-08-22T11:33:11.774Z"
     }
   ],
   "checklists": [],
